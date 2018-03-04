@@ -41,9 +41,9 @@ const appRouter = () => (
             <Header/>
             <Switch>
                 <Route path="/" component={HomePage} exact={true} />
-                <Route path="/portfolio" component={portfolioPage} exact={true} />
-                <Route path="/portfolio/:id" component={portfolioArticlePage} />
-                <Route path="/help" component={helpPage} />
+                <Route path="/electronics" component={portfolioPage} exact={true} />
+                <Route path="/books" component={portfolioArticlePage} exact={true} />
+                <Route path="/homerequirements" component={helpPage} exact={true} />
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>

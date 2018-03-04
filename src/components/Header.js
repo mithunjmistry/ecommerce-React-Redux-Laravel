@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-export default class Header extends React.Component{
+class Header extends React.Component{
 
     state = {
         isOpenElectronics: false,
@@ -10,48 +10,37 @@ export default class Header extends React.Component{
         isOpenHome: false
     };
 
-    handleOpenElectronics = () => {
-        this.setState({ isOpenElectronics: true })
+    categoryOnHoverIn = (e) => {
+        switch(e.target.id){
+            case "electronics-nav-dropdown":{
+                this.setState({ isOpenElectronics: true });
+                break;
+            }
+            case "books-nav-dropdown":{
+                this.setState({ isOpenBook: true });
+                break;
+            }
+            case "home-requirements-nav-dropdown":{
+                this.setState({ isOpenHome: true });
+                break;
+            }
+        }
+
     };
 
-    handleCloseElectronics = () => {
-        this.setState({ isOpenElectronics: false })
+    categoryOnHoverOut = () => {
+        this.setState(() => {
+           return {
+               isOpenElectronics: false,
+               isOpenBook: false,
+               isOpenHome: false
+           }
+        });
+
     };
 
-    handleToggleElectronics = () => {
-        this.setState((prevState) => ({
-            isOpenElectronics: !prevState.isOpenElectronics
-        }))
-    };
-
-    handleOpenBooks = () => {
-        this.setState({ isOpenBook: true })
-    };
-
-    handleCloseBooks = () => {
-        this.setState({ isOpenBook: false })
-    };
-
-    handleToggleBooks = () => {
-
-        this.setState((prevState) => ({
-            isOpenBook: !prevState.isOpenBook
-        }))
-    };
-
-    handleOpenHome = () => {
-        this.setState({ isOpenHome: true })
-    };
-
-    handleCloseHome = () => {
-        this.setState({ isOpenHome: false })
-    };
-
-    handleToggleHome = () => {
-
-        this.setState((prevState) => ({
-            isOpenHome: !prevState.isOpenHome
-        }))
+    categoryClickHandler = (routeName) => {
+        this.props.history.push(routeName);
     };
 
     render(){
@@ -68,10 +57,10 @@ export default class Header extends React.Component{
                         <NavDropdown
                             title="Electronics"
                             id="electronics-nav-dropdown"
-                            onMouseEnter = { this.handleOpenElectronics }
-                            onMouseLeave = { this.handleCloseElectronics }
+                            onMouseEnter = { this.categoryOnHoverIn }
+                            onMouseLeave = { this.categoryOnHoverOut }
                             open={ this.state.isOpenElectronics }
-                            onToggle={this.handleToggleElectronics}
+                            onToggle={() => this.categoryClickHandler("/electronics")}
                             noCaret
                         >
                             <MenuItem>TV</MenuItem>
@@ -83,10 +72,10 @@ export default class Header extends React.Component{
                         <NavDropdown
                             title="Books"
                             id="books-nav-dropdown"
-                            onMouseEnter = { this.handleOpenBooks }
-                            onMouseLeave = { this.handleCloseBooks }
+                            onMouseEnter = { this.categoryOnHoverIn }
+                            onMouseLeave = { this.categoryOnHoverOut }
                             open={ this.state.isOpenBook }
-                            onToggle={this.handleToggleBooks}
+                            onToggle={() => this.categoryClickHandler("/books")}
                             noCaret
                         >
                             <MenuItem>Novel</MenuItem>
@@ -96,10 +85,10 @@ export default class Header extends React.Component{
                         <NavDropdown
                             title="Home Requirements"
                             id="home-requirements-nav-dropdown"
-                            onMouseEnter = { this.handleOpenHome }
-                            onMouseLeave = { this.handleCloseHome }
+                            onMouseEnter = { this.categoryOnHoverIn }
+                            onMouseLeave = { this.categoryOnHoverOut }
                             open={ this.state.isOpenHome }
-                            onToggle={this.handleToggleHome}
+                            onToggle={() => this.categoryClickHandler("/homerequirements")}
                             noCaret
                         >
                             <MenuItem>Furniture</MenuItem>
@@ -118,3 +107,5 @@ export default class Header extends React.Component{
         )
     }
 }
+
+export default withRouter(Header);
