@@ -21,7 +21,7 @@ export default class HomePage extends React.Component{
                 </Col>
 
                 <Col lg={12} md={12} className={'temp'}>
-                    <p>This is below images.</p>
+                    <p></p>
                 </Col>
             </Row>
         </Grid>

@@ -28,9 +28,11 @@ class CategoryBase extends React.Component{
             <div className={"subcategory-div"}>
                 <h1>Welcome to our {this.props.sectionName} section - </h1>
                 <h4>It is the perfect destination for you to shop: </h4>
-                <ListGroup>
+                <ListGroup className={"subcategory-ul"}>
                     {this.state.subcategories.map((subcategory) => (
-                        <ListGroupItem key={subcategory}><Link to={"/"}>{subcategory}</Link></ListGroupItem>
+                        <ListGroupItem key={subcategory} className={"subcategory-li"}>
+                            <Link to={this.props.location.pathname + "/" + subcategory.toLowerCase()}>{subcategory}</Link>
+                        </ListGroupItem>
                     ))
                     }
                 </ListGroup>
