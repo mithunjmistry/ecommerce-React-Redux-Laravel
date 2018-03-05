@@ -2,6 +2,8 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HomePage from '../components/HomePage';
+import Category from '../components/CategoryBase';
+
 import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 
 import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
@@ -41,9 +43,18 @@ const appRouter = () => (
             <Header/>
             <Switch>
                 <Route path="/" component={HomePage} exact={true} />
-                <Route path="/electronics" component={portfolioPage} exact={true} />
-                <Route path="/books" component={portfolioArticlePage} exact={true} />
-                <Route path="/homerequirements" component={helpPage} exact={true} />
+                <Route path="/electronics" exact={true}
+                       render={(routeProps) => (<Category {...routeProps}
+                                                          apiName={"electronics"}
+                                                          sectionName={"Electronics"}/>)}/>
+                <Route path="/books" exact={true}
+                       render={(routeProps) => (<Category {...routeProps}
+                                                          apiName={"books"}
+                                                          sectionName={"Books"}/>)}/>
+                <Route path="/homerequirements" exact={true}
+                       render={(routeProps) => (<Category {...routeProps}
+                                                          apiName={"homerequirements"}
+                                                          sectionName={"Home Requirements"}/>)}/>
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>
