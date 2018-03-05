@@ -16,7 +16,6 @@ class CategoryBase extends React.Component{
 
     componentDidUpdate(prevProps){
         if(prevProps.location.pathname !== this.props.location.pathname) {
-            console.log("Here");
             fetch("http://127.0.0.1:8000/subitems/" + this.props.apiName)
                 .then(response => response.json())
                 .then(subcategories => this.setState({ subcategories }));

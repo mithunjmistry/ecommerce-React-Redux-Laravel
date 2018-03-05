@@ -60,13 +60,13 @@ class Header extends React.Component{
                             onMouseEnter = { this.categoryOnHoverIn }
                             onMouseLeave = { this.categoryOnHoverOut }
                             open={ this.state.isOpenElectronics }
-                            onToggle={() => this.categoryClickHandler("/electronics")}
+                            onClick={() => this.categoryClickHandler("/electronics")}
                             noCaret
                         >
-                            <MenuItem>TV</MenuItem>
-                            <MenuItem>Cellphone</MenuItem>
-                            <MenuItem>Camera</MenuItem>
-                            <MenuItem>Laptops</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/electronics/tv")}>TV</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/electronics/cellphone")}>Cellphone</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/electronics/camera")}>Camera</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/electronics/laptops")}>Laptops</MenuItem>
                         </NavDropdown>
 
                         <NavDropdown
@@ -75,11 +75,11 @@ class Header extends React.Component{
                             onMouseEnter = { this.categoryOnHoverIn }
                             onMouseLeave = { this.categoryOnHoverOut }
                             open={ this.state.isOpenBook }
-                            onToggle={() => this.categoryClickHandler("/books")}
+                            onClick={() => this.categoryClickHandler("/books")}
                             noCaret
                         >
-                            <MenuItem>Novel</MenuItem>
-                            <MenuItem>Magazine</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/books/novel")}>Novel</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/books/magazine")}>Magazine</MenuItem>
                         </NavDropdown>
 
                         <NavDropdown
@@ -88,18 +88,18 @@ class Header extends React.Component{
                             onMouseEnter = { this.categoryOnHoverIn }
                             onMouseLeave = { this.categoryOnHoverOut }
                             open={ this.state.isOpenHome }
-                            onToggle={() => this.categoryClickHandler("/homerequirements")}
+                            onClick={() => this.categoryClickHandler("/homerequirements")}
                             noCaret
                         >
-                            <MenuItem>Furniture</MenuItem>
-                            <MenuItem>Lighting</MenuItem>
-                            <MenuItem>Mattress</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/homerequirements/furniture")}>Furniture</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/homerequirements/lighting")}>Lighting</MenuItem>
+                            <MenuItem onClick={() => this.categoryClickHandler("/homerequirements/mattress")}>Mattress</MenuItem>
                         </NavDropdown>
 
                     </Nav>
                     <Navbar.Form pullRight>
                         <FormGroup>
-                            <FormControl type="text" placeholder="Search" />
+                            <FormControl type="text" placeholder="Search All Categories" />
                         </FormGroup>
                     </Navbar.Form>
                 </Navbar.Collapse>

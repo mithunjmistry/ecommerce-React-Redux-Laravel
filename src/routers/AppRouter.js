@@ -23,9 +23,10 @@ const portfolioArticlePage = (props) => (
     </div>
 );
 
-const helpPage = () => (
+const helpPage = (props) => (
     <div>
-        <p>This is the help page.</p>
+        <p>This is the help page. {props.match.params.subcategory}</p>
+        {/*<p>{props.match.params.id}</p>*/}
     </div>
 );
 
@@ -55,6 +56,10 @@ const appRouter = () => (
                        render={(routeProps) => (<Category {...routeProps}
                                                           apiName={"homerequirements"}
                                                           sectionName={"Home Requirements"}/>)}/>
+                <Route path="/electronics/:subcategory" component={helpPage} exact={true}/>
+                <Route path="/books/:subcategory" component={helpPage} exact={true}/>
+                <Route path="/homerequirements/:subcategory" component={helpPage} exact={true}/>
+                <Route path="/electronics/:subcategory/:id" component={portfolioArticlePage}/>
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>
