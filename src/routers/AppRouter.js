@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import HomePage from '../components/HomePage';
 import Category from '../components/CategoryBase';
+import SubCategory from '../components/SubCategory';
 
 import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 
@@ -56,9 +57,11 @@ const appRouter = () => (
                        render={(routeProps) => (<Category {...routeProps}
                                                           apiName={"homerequirements"}
                                                           sectionName={"Home Requirements"}/>)}/>
-                <Route path="/electronics/:subcategory" component={helpPage} exact={true}/>
-                <Route path="/books/:subcategory" component={helpPage} exact={true}/>
-                <Route path="/homerequirements/:subcategory" component={helpPage} exact={true}/>
+                <Route path="/electronics/:subcategory" component={SubCategory} exact={true}/>
+                <Route path="/books/:subcategory" component={SubCategory} exact={true}/>
+                <Route path="/homerequirements/:subcategory" exact={true}
+                       render={(routeProps) => (<SubCategory {...routeProps}
+                                                          />)} />
                 <Route path="/electronics/:subcategory/:id" component={portfolioArticlePage}/>
                 <Route component={noMatchFound} />
             </Switch>

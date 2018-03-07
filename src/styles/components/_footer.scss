@@ -3,8 +3,12 @@
 }
 
 .footer {
-  position: absolute;
+  position: relative;
   margin-top: 2%;
   bottom: 0;
   width: 100%;
+
+  .navbar {
+    margin-bottom: 0;
+  }
 }
