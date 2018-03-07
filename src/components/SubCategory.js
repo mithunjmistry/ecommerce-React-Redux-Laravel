@@ -8,7 +8,7 @@ class SubCategory extends React.Component{
         console.log("Comes in will receive props");
     }
 
-    firstLetterUppercase(s){
+    static firstLetterUppercase(s){
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
 
@@ -17,7 +17,7 @@ class SubCategory extends React.Component{
             <Grid>
                 <Row>
                     <Col lg={12} md={12}>
-                        <h1 className={"text-center subcategory-heading"}>Explore Great Deals on {this.firstLetterUppercase(this.props.match.params.subcategory)} - </h1>
+                        <h1 className={"text-center subcategory-heading"}>Explore Great Deals on {SubCategory.firstLetterUppercase(this.props.match.params.subcategory)} - </h1>
                     </Col>
                 </Row>
 
@@ -53,7 +53,7 @@ class SubCategory extends React.Component{
 
                 <Row>
                     <Col lg={12} md={12}>
-                        <p>Couldn't find what you are looking for? You can directly search for {this.firstLetterUppercase(this.props.match.params.subcategory)}</p>
+                        <p>Couldn't find what you are looking for? You can directly search for {SubCategory.firstLetterUppercase(this.props.match.params.subcategory)}</p>
                     </Col>
                 </Row>
             </Grid>
