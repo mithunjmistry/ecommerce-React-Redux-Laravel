@@ -11,10 +11,22 @@
   h4{
     font-size: 1.6em;
     color: #020816;
+    margin-left: 1%;
   }
 
   a{
     color: #108c46;
-    font-size: 1.2em;
   }
+}
+
+.subcategory-deal-price{
+  color: #108c46;
+  font-weight: 500;
+  margin-left: 1.5%;
+}
+
+.subcategory-deal-price-st{
+  margin-left: 1%;
+  text-decoration: line-through;
+  color: #a81a1a;
 }

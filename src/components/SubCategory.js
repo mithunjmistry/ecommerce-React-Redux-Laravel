@@ -1,5 +1,6 @@
 import React from 'react';
-import {Grid, Row, Col, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Grid, Row, Col, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
+import CustomListGroupItem from '../components/CustomListGroupItem';
 import { Link, withRouter } from 'react-router-dom';
 
 class SubCategory extends React.Component{
@@ -30,9 +31,21 @@ class SubCategory extends React.Component{
 
                     <Col lg={10} md={10}>
                         <ListGroup className={"subcategory-deals-list"}>
-                            <ListGroupItem header={"Deal One"}><Link to={"/"}>View</Link></ListGroupItem>
-                            <ListGroupItem header={"Deal Two"}>Two</ListGroupItem>
-                            <ListGroupItem header={"Deal Three"}>Three</ListGroupItem>
+                            <CustomListGroupItem
+                                currentPrice={20.99}
+                                prevPrice={"39.99"}>
+                                Product Name
+                            </CustomListGroupItem>
+                            <CustomListGroupItem
+                                currentPrice={20.99}
+                                prevPrice={"39.99"}>
+                                Product Name
+                            </CustomListGroupItem>
+                            <CustomListGroupItem
+                                currentPrice={20.99}
+                                prevPrice={"39.99"}>
+                                Product Name
+                            </CustomListGroupItem>
                         </ListGroup>
                     </Col>
                 </Row>
@@ -44,9 +57,21 @@ class SubCategory extends React.Component{
 
                     <Col lg={10} md={10}>
                         <ListGroup className={"subcategory-deals-list"}>
-                            <ListGroupItem header={"Deal One"}>One</ListGroupItem>
-                            <ListGroupItem header={"Deal Two"}>Two</ListGroupItem>
-                            <ListGroupItem header={"Deal Three"}>Three</ListGroupItem>
+                            <CustomListGroupItem
+                                currentPrice={20.99}
+                                prevPrice={"39.99"}>
+                                Product Name
+                            </CustomListGroupItem>
+                            <CustomListGroupItem
+                                currentPrice={20.99}
+                                prevPrice={"39.99"}>
+                                Product Name
+                            </CustomListGroupItem>
+                            <CustomListGroupItem
+                                currentPrice={20.99}
+                                prevPrice={"39.99"}>
+                                Product Name
+                            </CustomListGroupItem>
                         </ListGroup>
                     </Col>
                 </Row>
