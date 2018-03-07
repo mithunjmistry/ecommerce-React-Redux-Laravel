@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem, Button, Glyphicon, DropdownButton, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 
 class Header extends React.Component{
@@ -99,7 +99,19 @@ class Header extends React.Component{
                     </Nav>
                     <Navbar.Form pullRight>
                         <FormGroup>
-                            <FormControl type="text" placeholder="Search All Categories" />
+                            <InputGroup>
+                            <FormControl type="text" placeholder="Search" />
+                            <DropdownButton
+                                componentClass={InputGroup.Button}
+                                id="input-dropdown-addon"
+                                title="All"
+                            >
+                                <MenuItem key="2">Electronics</MenuItem>
+                                <MenuItem key="3">Books</MenuItem>
+                                <MenuItem key="4">Home Requirements</MenuItem>
+                            </DropdownButton>
+                            </InputGroup>
+                            <Button><Glyphicon glyph={"search"}/></Button>
                         </FormGroup>
                     </Navbar.Form>
                 </Navbar.Collapse>
