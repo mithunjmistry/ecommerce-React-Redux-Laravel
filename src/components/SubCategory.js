@@ -17,7 +17,7 @@ class SubCategory extends React.Component{
             <Grid>
                 <Row>
                     <Col lg={12} md={12}>
-                        <h1 className={"text-center subcategory-heading"}>Explore Great Deals on {this.firstLetterUppercase(this.props.match.params.subcategory)}</h1>
+                        <h1 className={"text-center subcategory-heading"}>Explore Great Deals on {this.firstLetterUppercase(this.props.match.params.subcategory)} - </h1>
                     </Col>
                 </Row>
 
