@@ -1,7 +1,6 @@
 import React from 'react';
-import {Grid, Row, Col, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
+import {Grid, Row, Col, ListGroup} from 'react-bootstrap';
 import CustomListGroupItem from '../components/CustomListGroupItem';
-import { Link, withRouter } from 'react-router-dom';
 
 class SubCategory extends React.Component{
 
@@ -37,8 +36,7 @@ class SubCategory extends React.Component{
                                 Product Name
                             </CustomListGroupItem>
                             <CustomListGroupItem
-                                currentPrice={20.99}
-                                prevPrice={"39.99"}>
+                                currentPrice={20.99}>
                                 Product Name
                             </CustomListGroupItem>
                             <CustomListGroupItem
