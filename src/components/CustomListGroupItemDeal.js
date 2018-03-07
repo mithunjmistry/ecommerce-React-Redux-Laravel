@@ -2,7 +2,7 @@ import React from "react";
 import {Button} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 
-class CustomListGroupItem extends React.Component{
+class CustomListGroupItemDeal extends React.Component{
 
     viewClickHandler = (routeName) => {
         this.props.history.push(routeName);
@@ -27,4 +27,4 @@ class CustomListGroupItem extends React.Component{
     }
 }
 
-export default withRouter(CustomListGroupItem);
+export default withRouter(CustomListGroupItemDeal);

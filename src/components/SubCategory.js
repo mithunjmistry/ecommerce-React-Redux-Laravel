@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid, Row, Col, ListGroup} from 'react-bootstrap';
-import CustomListGroupItem from '../components/CustomListGroupItem';
+import CustomListGroupItem from '../components/CustomListGroupItemDeal';
 
 class SubCategory extends React.Component{
 
