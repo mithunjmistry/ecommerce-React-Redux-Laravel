@@ -7,8 +7,67 @@ class Header extends React.Component{
     state = {
         isOpenElectronics: false,
         isOpenBook: false,
-        isOpenHome: false
+        isOpenHome: false,
+        placeholder: "Search All",
+        searchMenuItems: ["Electronics", "Books", "Home"],
+        dropDownSelected: "All"
     };
+
+    componentWillReceiveProps(nextProps){
+        let currentPath = this.props.location.pathname;
+        let nextPath = nextProps.location.pathname;
+        if(currentPath !== nextPath){
+            // path is been changed
+            let t = nextPath.split('/',2)[1];
+            switch(t.toLowerCase()){
+                case 'electronics':
+                    this.setState((prevState) => {
+                        return {
+                            placeholder: "Search Electronics",
+                            searchMenuItems:
+                                prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                                    menuItem !== "Electronics"
+                                    )),
+                            dropDownSelected: "Electronics"
+                        }
+                    });
+                    break;
+                case 'books':
+                    this.setState((prevState) => {
+                        return {
+                            placeholder: "Search Books",
+                            searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                                menuItem !== "Books"
+                            )),
+                            dropDownSelected: "Books"
+                        }
+                    });
+                    break;
+                case 'homerequirements':
+                    this.setState((prevState) => {
+                        return {
+                            placeholder: "Search Home Requirements",
+                            searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                                menuItem !== "Home"
+                            )),
+                            dropDownSelected: "Home"
+                        }
+                    });
+                    break;
+                default:
+                    this.setState((prevState) => {
+                        return {
+                            placeholder: "Search All",
+                            searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                                menuItem !== "All"
+                            )),
+                            dropDownSelected: "All"
+                        }
+                    });
+                    break;
+            }
+        }
+    }
 
     categoryOnHoverIn = (e) => {
         switch(e.target.id){
@@ -100,15 +159,17 @@ class Header extends React.Component{
                     <Navbar.Form pullRight>
                         <FormGroup>
                             <InputGroup>
-                            <FormControl type="text" placeholder="Search" />
+                            <FormControl type="text" placeholder={this.state.placeholder} />
                             <DropdownButton
                                 componentClass={InputGroup.Button}
                                 id="input-dropdown-addon"
-                                title="All"
+                                title={this.state.dropDownSelected}
                             >
-                                <MenuItem key="2">Electronics</MenuItem>
-                                <MenuItem key="3">Books</MenuItem>
-                                <MenuItem key="4">Home Requirements</MenuItem>
+                                {
+                                    this.state.searchMenuItems.map((menuItem) => (
+                                        <MenuItem key={menuItem}>{menuItem}</MenuItem>
+                                    ))
+                                }
                             </DropdownButton>
                             </InputGroup>
                             <Button><Glyphicon glyph={"search"}/></Button>
