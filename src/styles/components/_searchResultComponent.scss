@@ -5,3 +5,20 @@
 #dropdown-sort-by:focus{
   background-color: transparent;
 }
+
+.pagination-div{
+  float:right;
+  position:relative;
+  left:-50%;
+  text-align:left;
+}
+.pagination-div ul{
+  list-style:none;
+  position:relative;
+  left:50%;
+}
+
+.pagination-div li{
+  float:left;
+  position:relative;
+}

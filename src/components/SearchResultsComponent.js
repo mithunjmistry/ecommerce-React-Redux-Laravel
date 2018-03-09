@@ -1,11 +1,13 @@
 import React from 'react';
 import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem} from 'react-bootstrap';
+import Pagination from "react-js-pagination";
 
 class SearchResultsComponent extends React.Component{
 
     state = {
       sortBySelected: "Relevance",
-      sortByOptions: ["Price: Low to High", "Price: High to Low", "New"]
+      sortByOptions: ["Price: Low to High", "Price: High to Low", "New"],
+      activePage: 1
     };
 
     componentDidMount(){
@@ -25,6 +27,11 @@ class SearchResultsComponent extends React.Component{
             console.log("Query changed");
         }
     }
+
+    handlePageChange = (pageNumber) => {
+        console.log(`active page is ${pageNumber}`);
+        this.setState({activePage: pageNumber});
+    };
 
     sortByChange = (selectedSortBy) => {
         switch(selectedSortBy){
@@ -93,6 +100,15 @@ class SearchResultsComponent extends React.Component{
                                     <MenuItem key={sortByOption} onClick={() => this.sortByChange(sortByOption)}>{sortByOption}</MenuItem>
                                 ))}
                             </DropdownButton>
+                        </div>
+
+                        <div className={'pagination-div'}>
+                            <Pagination
+                                activePage={this.state.activePage}
+                                itemsCountPerPage={10}
+                                totalItemsCount={50}
+                                onChange={this.handlePageChange}
+                            />
                         </div>
                     </Col>
                     <Col lg={2} md={2}>
