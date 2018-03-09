@@ -14,59 +14,74 @@ class Header extends React.Component{
         searchBoxText: ""
     };
 
+    categoryStateChangeHelper = (t) => {
+        switch(t.toLowerCase()){
+            case 'electronics':
+                this.setState((prevState) => {
+                    return {
+                        placeholder: "Search Electronics",
+                        searchMenuItems:
+                            prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                                menuItem !== "Electronics"
+                            )),
+                        dropDownSelected: "Electronics"
+                    }
+                });
+                break;
+            case 'books':
+                this.setState((prevState) => {
+                    return {
+                        placeholder: "Search Books",
+                        searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                            menuItem !== "Books"
+                        )),
+                        dropDownSelected: "Books"
+                    }
+                });
+                break;
+            case 'homerequirements':
+                this.setState((prevState) => {
+                    return {
+                        placeholder: "Search Home Requirements",
+                        searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                            menuItem !== "Home"
+                        )),
+                        dropDownSelected: "Home"
+                    }
+                });
+                break;
+            case 'home':
+                this.setState((prevState) => {
+                    return {
+                        placeholder: "Search Home Requirements",
+                        searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                            menuItem !== "Home"
+                        )),
+                        dropDownSelected: "Home"
+                    }
+                });
+                break;
+            default:
+                this.setState((prevState) => {
+                    return {
+                        placeholder: "Search All",
+                        searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
+                            menuItem !== "All"
+                        )),
+                        dropDownSelected: "All"
+                    }
+                });
+                break;
+        }
+    };
+
     componentWillReceiveProps(nextProps){
         let currentPath = this.props.location.pathname;
         let nextPath = nextProps.location.pathname;
         if(currentPath !== nextPath){
             // path is been changed
             let t = nextPath.split('/',2)[1];
-            switch(t.toLowerCase()){
-                case 'electronics':
-                    this.setState((prevState) => {
-                        return {
-                            placeholder: "Search Electronics",
-                            searchMenuItems:
-                                prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
-                                    menuItem !== "Electronics"
-                                    )),
-                            dropDownSelected: "Electronics"
-                        }
-                    });
-                    break;
-                case 'books':
-                    this.setState((prevState) => {
-                        return {
-                            placeholder: "Search Books",
-                            searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
-                                menuItem !== "Books"
-                            )),
-                            dropDownSelected: "Books"
-                        }
-                    });
-                    break;
-                case 'homerequirements':
-                    this.setState((prevState) => {
-                        return {
-                            placeholder: "Search Home Requirements",
-                            searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
-                                menuItem !== "Home"
-                            )),
-                            dropDownSelected: "Home"
-                        }
-                    });
-                    break;
-                default:
-                    this.setState((prevState) => {
-                        return {
-                            placeholder: "Search All",
-                            searchMenuItems: prevState.searchMenuItems.concat(prevState.dropDownSelected).filter((menuItem) => (
-                                menuItem !== "All"
-                            )),
-                            dropDownSelected: "All"
-                        }
-                    });
-                    break;
-            }
+            this.categoryStateChangeHelper(t);
         }
     }
 
@@ -109,12 +124,24 @@ class Header extends React.Component{
         e.preventDefault();
         let searchCategorySelected = this.state.dropDownSelected;
         let searchQuery = this.state.searchBoxText;
-        this.props.history.push("/search/"+searchCategorySelected.toLowerCase()+"/"+searchQuery);
+        if(searchQuery.length > 0){
+            this.props.history.push("/search/"+searchCategorySelected.toLowerCase()+"/"+searchQuery);
+        }
+        else{
+            this.input.focus();
+        }
+
     };
 
     searchBoxChange = (e) => {
         let searchBoxText = e.target.value;
-        this.setState(() => ({searchBoxText}));
+        if(searchBoxText.length < 25){
+            this.setState(() => ({searchBoxText}));
+        }
+    };
+
+    searchCategoryChange = (selectedCategory) => {
+        this.categoryStateChangeHelper(selectedCategory);
     };
 
     render(){
@@ -179,6 +206,7 @@ class Header extends React.Component{
                                          placeholder={this.state.placeholder}
                                          value={this.state.searchBoxText}
                                          onChange={this.searchBoxChange}
+                                         inputRef={ref => { this.input = ref; }}
                             />
                             <DropdownButton
                                 componentClass={InputGroup.Button}
@@ -187,7 +215,7 @@ class Header extends React.Component{
                             >
                                 {
                                     this.state.searchMenuItems.map((menuItem) => (
-                                        <MenuItem key={menuItem}>{menuItem}</MenuItem>
+                                        <MenuItem key={menuItem} onSelect={() => this.searchCategoryChange(menuItem)}>{menuItem}</MenuItem>
                                     ))
                                 }
                             </DropdownButton>
