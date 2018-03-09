@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import HomePage from '../components/HomePage';
 import Category from '../components/CategoryBase';
 import SubCategory from '../components/SubCategory';
+import SearchResultsComponent from '../components/SearchResultsComponent';
 
 import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 
@@ -63,6 +64,7 @@ const appRouter = () => (
                        render={(routeProps) => (<SubCategory {...routeProps}
                                                           />)} />
                 <Route path="/electronics/:subcategory/:id" component={portfolioArticlePage}/>
+                <Route path="/search/:category/:query" exact={true} component={SearchResultsComponent} />
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>
