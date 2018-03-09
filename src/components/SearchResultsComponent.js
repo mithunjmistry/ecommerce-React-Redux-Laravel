@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem} from 'react-bootstrap';
 import Pagination from "react-js-pagination";
+import CustomListGroupItem from '../components/CustomListGroupItemSearch';
 
 class SearchResultsComponent extends React.Component{
 
@@ -102,11 +103,26 @@ class SearchResultsComponent extends React.Component{
                             </DropdownButton>
                         </div>
 
+                        <div>
+                            <ListGroup className={'search-results-list'}>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    prevPrice={"39.99"}>
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    prevPrice={"39.99"}>
+                                    Product Name
+                                </CustomListGroupItem>
+                            </ListGroup>
+                        </div>
+
                         <div className={'pagination-div'}>
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={10}
-                                totalItemsCount={50}
+                                totalItemsCount={55}
                                 onChange={this.handlePageChange}
                             />
                         </div>
