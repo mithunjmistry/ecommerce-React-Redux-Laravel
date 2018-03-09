@@ -107,12 +107,72 @@ class SearchResultsComponent extends React.Component{
                             <ListGroup className={'search-results-list'}>
                                 <CustomListGroupItem
                                     currentPrice={20.99}
-                                    prevPrice={"39.99"}>
+                                    sellerName={"Seller Name"}
+                                    ratings={4.5}
+                                >
                                     Product Name
                                 </CustomListGroupItem>
                                 <CustomListGroupItem
                                     currentPrice={20.99}
-                                    prevPrice={"39.99"}>
+                                    prevPrice={"39.99"}
+                                    sellerName={"Seller Name 2"}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    sellerName={"Seller Name"}
+                                    ratings={4.5}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    prevPrice={"39.99"}
+                                    sellerName={"Seller Name 2"}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    sellerName={"Seller Name"}
+                                    ratings={4.5}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    prevPrice={"39.99"}
+                                    sellerName={"Seller Name 2"}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    sellerName={"Seller Name"}
+                                    ratings={4.5}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    prevPrice={"39.99"}
+                                    sellerName={"Seller Name 2"}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    sellerName={"Seller Name"}
+                                    ratings={4.5}
+                                >
+                                    Product Name
+                                </CustomListGroupItem>
+                                <CustomListGroupItem
+                                    currentPrice={20.99}
+                                    prevPrice={"39.99"}
+                                    sellerName={"Seller Name 2"}
+                                >
                                     Product Name
                                 </CustomListGroupItem>
                             </ListGroup>
