@@ -10,7 +10,8 @@ class Header extends React.Component{
         isOpenHome: false,
         placeholder: "Search All",
         searchMenuItems: ["Electronics", "Books", "Home"],
-        dropDownSelected: "All"
+        dropDownSelected: "All",
+        searchBoxText: ""
     };
 
     componentWillReceiveProps(nextProps){
@@ -69,6 +70,8 @@ class Header extends React.Component{
         }
     }
 
+
+
     categoryOnHoverIn = (e) => {
         switch(e.target.id){
             case "electronics-nav-dropdown":{
@@ -100,6 +103,18 @@ class Header extends React.Component{
 
     categoryClickHandler = (routeName) => {
         this.props.history.push(routeName);
+    };
+
+    onSearchFormSubmit = (e) => {
+        e.preventDefault();
+        let searchCategorySelected = this.state.dropDownSelected;
+        let searchQuery = this.state.searchBoxText;
+        this.props.history.push("/search/"+searchCategorySelected.toLowerCase()+"/"+searchQuery);
+    };
+
+    searchBoxChange = (e) => {
+        let searchBoxText = e.target.value;
+        this.setState(() => ({searchBoxText}));
     };
 
     render(){
@@ -157,9 +172,14 @@ class Header extends React.Component{
 
                     </Nav>
                     <Navbar.Form pullRight>
+                        <form onSubmit={this.onSearchFormSubmit}>
                         <FormGroup>
                             <InputGroup>
-                            <FormControl type="text" placeholder={this.state.placeholder} />
+                            <FormControl type="text"
+                                         placeholder={this.state.placeholder}
+                                         value={this.state.searchBoxText}
+                                         onChange={this.searchBoxChange}
+                            />
                             <DropdownButton
                                 componentClass={InputGroup.Button}
                                 id="input-dropdown-addon"
@@ -172,8 +192,9 @@ class Header extends React.Component{
                                 }
                             </DropdownButton>
                             </InputGroup>
-                            <Button><Glyphicon glyph={"search"}/></Button>
+                            <Button type="submit"><Glyphicon glyph={"search"}/></Button>
                         </FormGroup>
+                        </form>
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>
