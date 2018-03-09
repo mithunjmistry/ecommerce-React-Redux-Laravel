@@ -17,7 +17,7 @@ class CustomListGroupItemSearch extends React.Component{
                 </div>
                 <div className={"media-body"}>
                     <Row>
-                        <Col lg={7} md={7}>
+                        <Col lg={7} md={7} sm={12} xs={12}>
                             <h4 className={"media-heading"}>{this.props.children}</h4>
                             <div className={"seller-name-div"}>
                                 <span>{this.props.sellerName}</span>
@@ -28,7 +28,7 @@ class CustomListGroupItemSearch extends React.Component{
                             </div>
                         </Col>
 
-                        <Col lg={3} md={3}>
+                        <Col lg={3} md={3} sm={12} xs={12}>
                             <div className={"star-rating-div"}>
                                 {(this.props.ratings && this.props.ratings > 0) ?
                                     <StarRatingComponent
@@ -43,11 +43,11 @@ class CustomListGroupItemSearch extends React.Component{
                             </div>
                         </Col>
 
-                        <Col md={2} lg={2}>
+                        <Col md={2} lg={2} sm={12} xs={12}>
                             <div>
                               <span>
-                                  <Button bsStyle={"link"} onClick={() => this.viewClickHandler("/")}>View</Button>
-                                  <Button bsStyle={"link"}>Add to Cart</Button>
+                                  <Button bsStyle={"default"} className={"btn-sm view-atc-button"} onClick={() => this.viewClickHandler("/")}>View</Button>
+                                  <Button bsStyle={"primary"} className={"btn-sm view-atc-button"}>Add to Cart</Button>
                               </span>
                             </div>
                         </Col>
