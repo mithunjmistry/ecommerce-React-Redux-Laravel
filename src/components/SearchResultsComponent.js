@@ -8,7 +8,8 @@ class SearchResultsComponent extends React.Component{
     state = {
       sortBySelected: "Relevance",
       sortByOptions: ["Price: Low to High", "Price: High to Low", "New"],
-      activePage: 1
+      activePage: 1,
+      totalItemsCount: 55
     };
 
     componentDidMount(){
@@ -182,13 +183,13 @@ class SearchResultsComponent extends React.Component{
                             <Pagination
                                 activePage={this.state.activePage}
                                 itemsCountPerPage={10}
-                                totalItemsCount={55}
+                                totalItemsCount={this.state.totalItemsCount}
                                 onChange={this.handlePageChange}
                             />
                         </div>
                     </Col>
                     <Col lg={2} md={2}>
-                        <p>Advanced Filters</p>
+                        <h4 className={"advanced-filter-heading"}>Advanced Filters</h4>
                     </Col>
                 </Row>
             </Grid>
