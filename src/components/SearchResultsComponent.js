@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem} from 'react-bootstrap';
+import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem, FormControl, Form, FormGroup, ControlLabel} from 'react-bootstrap';
 import Pagination from "react-js-pagination";
 import CustomListGroupItem from './CustomListGroupItemProduct';
 
@@ -190,6 +190,31 @@ class SearchResultsComponent extends React.Component{
                     </Col>
                     <Col lg={2} md={2}>
                         <h4 className={"advanced-filter-heading"}>Advanced Filters</h4>
+                        <Row>
+                            <Col lg={12} md={12}>
+                                <div className={"text-center margin-below"}>
+                                    <p>Ratings: </p>
+                                    <FormControl componentClass="select" placeholder="All">
+                                        <option value="select">All</option>
+                                        <option value="other">More than 4</option>
+                                        <option value="other">More than 3</option>
+                                        <option value="other">1 to 3</option>
+                                    </FormControl>
+                                </div>
+
+                                <div className={"text-center"}>
+                                    <p>Price Range: </p>
+                                    <Form inline>
+                                        <FormGroup controlId="formInlineFrom">
+                                            <FormControl type="number" placeholder="From" />
+                                        </FormGroup>{'to'}
+                                        <FormGroup controlId="formInlineTo">
+                                            <FormControl type="number" placeholder="To" />
+                                        </FormGroup>{' '}
+                                    </Form>
+                                </div>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
             </Grid>
