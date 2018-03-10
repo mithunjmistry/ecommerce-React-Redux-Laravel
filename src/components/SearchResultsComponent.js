@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem} from 'react-bootstrap';
 import Pagination from "react-js-pagination";
-import CustomListGroupItem from '../components/CustomListGroupItemSearch';
+import CustomListGroupItem from './CustomListGroupItemProduct';
 
 class SearchResultsComponent extends React.Component{
 

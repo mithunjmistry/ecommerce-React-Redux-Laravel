@@ -3,7 +3,7 @@ import {Button, Row, Col} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import StarRatingComponent from 'react-star-ratings';
 
-class CustomListGroupItemSearch extends React.Component{
+class CustomListGroupItemProduct extends React.Component{
 
     viewClickHandler = (routeName) => {
         this.props.history.push(routeName);
@@ -58,4 +58,4 @@ class CustomListGroupItemSearch extends React.Component{
     }
 }
 
-export default withRouter(CustomListGroupItemSearch);
+export default withRouter(CustomListGroupItemProduct);
