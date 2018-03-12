@@ -6,7 +6,7 @@ class ShoppingCart extends React.Component{
     render(){
         return (
             <Modal show={this.props.show} onHide={this.props.handleClose} bsSize="large">
-                <Modal.Header>
+                <Modal.Header closeButton>
                     <Modal.Title>Shopping Cart</Modal.Title>
                 </Modal.Header>
 
