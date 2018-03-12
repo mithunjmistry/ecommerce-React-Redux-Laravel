@@ -3,6 +3,7 @@ import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem, Button} from 'react
 import Pagination from "react-js-pagination";
 import CustomListGroupItem from './CustomListGroupItemProduct';
 import AdvancedFilters from './AdvancedFilters';
+import AdvancedFiltersModal from './AdvancedFiltersModal';
 
 class SearchResultsComponent extends React.Component{
 
@@ -10,7 +11,8 @@ class SearchResultsComponent extends React.Component{
       sortBySelected: "Relevance",
       sortByOptions: ["Price: Low to High", "Price: High to Low", "New"],
       activePage: 1,
-      totalItemsCount: 55
+      totalItemsCount: 55,
+      advancedFilterModalShow: false
     };
 
     componentDidMount(){
@@ -85,6 +87,14 @@ class SearchResultsComponent extends React.Component{
         }
     };
 
+    advancedFiltersModalShow = () => {
+      this.setState(() => ({advancedFilterModalShow: true}));
+    };
+
+    advancedFiltersModalHide = () => {
+        this.setState(() => ({advancedFilterModalShow: false}));
+    };
+
     render() {
         return (
             <Grid>
@@ -92,7 +102,7 @@ class SearchResultsComponent extends React.Component{
                     <Col lg={10} md={10} sm={12} xs={12}>
                         <div>
                             <label className={'sort-by-label'}>Sort By - </label>
-                            <Button className={"pull-right hidden-lg hidden-md"} bsStyle={"link"}>Advanced Filters</Button>
+                            <Button className={"pull-right hidden-lg hidden-md"} bsStyle={"link"} onClick={this.advancedFiltersModalShow}>Advanced Filters</Button>
                             <DropdownButton
                                 bsStyle={'default'}
                                 title={this.state.sortBySelected}
@@ -199,6 +209,7 @@ class SearchResultsComponent extends React.Component{
                         </Row>
                     </Col>
                 </Row>
+                <AdvancedFiltersModal handleClose={this.advancedFiltersModalHide} show={this.state.advancedFilterModalShow}/>
             </Grid>
         )
     }
