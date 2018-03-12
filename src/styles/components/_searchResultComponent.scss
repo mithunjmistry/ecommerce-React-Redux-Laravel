@@ -1,0 +1,39 @@
+.sort-by-label {
+  margin-right: 1%;
+}
+
+#dropdown-sort-by:focus{
+  background-color: transparent;
+}
+
+.pagination-div{
+  float:right;
+  position:relative;
+  left:-50%;
+  text-align:left;
+}
+.pagination-div ul{
+  list-style:none;
+  position:relative;
+  left:50%;
+}
+
+.pagination-div li{
+  float:left;
+  position:relative;
+}
+
+.search-results-list {
+  margin-top: 2%;
+
+  li{
+    border: none;
+    margin-bottom: 2%;
+  }
+}
+
+.advanced-filter-heading{
+  font-size: 1em;
+  text-align: center;
+  font-weight: 600;
+}
