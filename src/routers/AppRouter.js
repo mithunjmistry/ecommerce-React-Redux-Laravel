@@ -5,6 +5,7 @@ import HomePage from '../components/HomePage';
 import Category from '../components/CategoryBase';
 import SubCategory from '../components/SubCategory';
 import SearchResultsComponent from '../components/SearchResultsComponent';
+import ProductInfo from '../components/ProductInfo';
 
 import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 
@@ -65,6 +66,7 @@ const appRouter = () => (
                                                           />)} />
                 <Route path="/electronics/:subcategory/:id" component={portfolioArticlePage}/>
                 <Route path="/search/:category/:query" exact={true} component={SearchResultsComponent} />
+                <Route path="/product/:id" exact={true} component={ProductInfo} />
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>
