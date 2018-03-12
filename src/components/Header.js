@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem, Button, Glyphicon, DropdownButton, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
+import ShoppingCart from '../components/ShoppingCart';
 
 class Header extends React.Component{
 
@@ -11,7 +12,8 @@ class Header extends React.Component{
         placeholder: "Search All",
         searchMenuItems: ["Electronics", "Books", "Home"],
         dropDownSelected: "All",
-        searchBoxText: ""
+        searchBoxText: "",
+        shoppingCartOpen: false
     };
 
     categoryStateChangeHelper = (t) => {
@@ -144,6 +146,14 @@ class Header extends React.Component{
         this.categoryStateChangeHelper(selectedCategory);
     };
 
+    shoppingCartModalShow = () => {
+        this.setState(() => ({shoppingCartOpen: true}));
+    };
+
+    shoppingCartModalHide = () => {
+        this.setState(() => ({shoppingCartOpen: false}));
+    };
+
     render(){
         return (
             <Navbar>
@@ -221,9 +231,11 @@ class Header extends React.Component{
                             </DropdownButton>
                             </InputGroup>
                             <Button type="submit"><Glyphicon glyph={"search"}/></Button>
+                            <Button onClick={this.shoppingCartModalShow}><Glyphicon glyph={"shopping-cart"}/></Button>
                         </FormGroup>
                         </form>
                     </Navbar.Form>
+                    <ShoppingCart handleClose={this.shoppingCartModalHide} show={this.state.shoppingCartOpen}/>
                 </Navbar.Collapse>
             </Navbar>
         )
