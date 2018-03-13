@@ -1,5 +1,6 @@
 import React from "react";
-import {Modal, Button} from "react-bootstrap";
+import {Modal, Button, ListGroup} from "react-bootstrap";
+import CustomListGroupItem from "../components/CustomListGroupItemCart";
 
 class ShoppingCart extends React.Component{
 
@@ -11,8 +12,18 @@ class ShoppingCart extends React.Component{
                 </Modal.Header>
 
                 <Modal.Body>
-                    One fine body...
-                    <footer>All our products comes with easy return and 100% customer protection policy.</footer>
+                    <ListGroup className={"shopping-cart-listgroup"}>
+                        <CustomListGroupItem
+                            productName={"Product Name"}
+                            sellerName={"Seller Name"}
+                            ratings={4.3}
+                        />
+                    </ListGroup>
+                    <hr/>
+                    <div className={"total-cart-label-div"}>
+                        <span className={"total-cart-label"}>Total:</span>
+                    </div>
+                    {/*<footer>All our products comes with easy return and 100% customer protection policy.</footer>*/}
                 </Modal.Body>
 
                 <Modal.Footer>
