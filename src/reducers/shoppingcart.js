@@ -20,7 +20,7 @@ export default (state = shoppingCartReducerDefaultState, action) => {
                 ];
             }
         case 'REMOVE_FROM_CART':
-            return state.filter(({ id }) => id !== action.id);
+            return state.filter(({ productID }) => productID !== action.productID);
         case 'EDIT_CART':
             return state.map((shoppingCart) => {
                 if (shoppingCart.id === action.id) {

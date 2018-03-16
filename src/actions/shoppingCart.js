@@ -25,9 +25,9 @@ export const addToCart = (
 });
 
 // REMOVE_FROM_CART
-export const removeFromCart = ({ id } = {}) => ({
+export const removeFromCart = ({ productID } = {}) => ({
     type: 'REMOVE_FROM_CART',
-    id
+    productID
 });
 
 // EDIT_CART

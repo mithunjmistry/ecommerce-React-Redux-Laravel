@@ -1,6 +1,8 @@
 import React from "react";
 import {Row, Col, Button, FormControl, Glyphicon, Tooltip, OverlayTrigger} from "react-bootstrap";
 import StarRatingComponent from 'react-star-ratings';
+import ProductInfo from "./ProductInfo";
+import { connect } from 'react-redux';
 
 const tooltip = (
     <Tooltip id="tooltip">
@@ -11,7 +13,8 @@ const tooltip = (
 class CustomListGroupItemCart extends React.Component{
 
     state = {
-        quantity: this.props.quantity
+        quantity: this.props.quantity,
+        productID: this.props.productID
     };
 
     onQuantityChange = (e) => {
@@ -37,6 +40,10 @@ class CustomListGroupItemCart extends React.Component{
         if(this.state.quantity.length === 0 || (this.state.quantity.length > 0 && parseInt(this.state.quantity) < 1)){
             this.setState(() => ({quantity: 1}))
         }
+    };
+
+    removeFromCart = () => {
+        ProductInfo.removeItemFromCart(this.state.productID, this.props);
     };
 
     render() {
@@ -93,7 +100,7 @@ class CustomListGroupItemCart extends React.Component{
                         <Col md={1} lg={1} sm={12} xs={12}>
                             <div className={"cart-remove-div"}>
                                 <OverlayTrigger placement="top" overlay={tooltip}>
-                                    <span><Glyphicon glyph={"remove"}/></span>
+                                    <span onClick={this.removeFromCart}><Glyphicon glyph={"remove"}/></span>
                                 </OverlayTrigger>
                             </div>
                         </Col>
@@ -104,4 +111,4 @@ class CustomListGroupItemCart extends React.Component{
     }
 }
 
-export default CustomListGroupItemCart;
+export default connect()(CustomListGroupItemCart);

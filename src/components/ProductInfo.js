@@ -3,7 +3,7 @@ import {Grid, Row, Col, ControlLabel, FormGroup, FormControl, Button} from "reac
 import ReactImageZoom from 'react-image-zoom';
 import StarRatingComponent from 'react-star-ratings';
 import {imageWatch} from "./image";
-import {addToCart} from "../actions/shoppingCart";
+import {addToCart, removeFromCart} from "../actions/shoppingCart";
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
 
@@ -70,8 +70,15 @@ class ProductInfo extends React.Component {
         });
     };
 
+    static removeItemFromCart = (productID, props) => {
+        let productToRemove = {
+            productID
+        };
+        props.dispatch(removeFromCart(productToRemove));
+    };
+
     handleUndoAction = () => {
-        console.log("Here we will remove from the cart again");
+        ProductInfo.removeItemFromCart(this.state.productID, this.props);
     };
 
     render(){
