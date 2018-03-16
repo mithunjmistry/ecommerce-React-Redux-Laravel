@@ -14,7 +14,7 @@ class ShoppingCart extends React.Component{
                 <div>
                     <ListGroup className={"shopping-cart-listgroup"}>
                         {this.props.shoppingCart.map((item) => {
-                            total = item.quantity * item.price;
+                            total = parseInt(item.quantity) * parseFloat(item.price);
                             return <CustomListGroupItem key={item.productID} {...item} />;
                         })}
                     </ListGroup>

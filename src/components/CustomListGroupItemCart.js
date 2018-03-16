@@ -102,7 +102,7 @@ class CustomListGroupItemCart extends React.Component{
                         <Col md={1} lg={1} sm={12} xs={12}>
                             <div className={"cart-price-div"}>
                               <span className={"cart-price"}>
-                                  ${this.props.price * this.props.quantity}
+                                  ${(parseFloat(this.props.price) * parseInt(this.props.quantity))}
                               </span>
                             </div>
                         </Col>
