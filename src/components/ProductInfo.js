@@ -6,11 +6,6 @@ import {imageWatch} from "./image";
 import {addToCart} from "../actions/shoppingCart";
 import { connect } from 'react-redux';
 
-const items = [];
-for (let i = 1; i < 6; i++ ) {
-    items.push(<option value={i} key={i}>{i}</option>);
-}
-
 class ProductInfo extends React.Component {
 
     state = {
@@ -22,8 +17,21 @@ class ProductInfo extends React.Component {
       quantity: 1,
       numberOfRatings: 239,
       description: "This is some product description.",
-      sellerName: "Seller Name"
+      sellerName: "Seller Name",
+      productID: undefined
     };
+
+    componentWillReceiveProps(nextProps){
+        if(this.props.match.params.id !== nextProps.match.params.id){
+            let productID = nextProps.match.params.id;
+            this.setState(() => ({productID}))
+        }
+    }
+
+    componentDidMount(){
+        let productID = this.props.match.params.id;
+        this.setState(() => ({productID}))
+    }
 
     addToCartOnClick = () => {
         // dispatching an action to redux store
@@ -33,7 +41,8 @@ class ProductInfo extends React.Component {
             sellerName: this.state.sellerName,
             ratings: this.state.ratings,
             quantity: this.state.quantity,
-            price: this.state.currentPrice
+            price: this.state.currentPrice,
+            productID: this.state.productID
         };
         this.props.dispatch(addToCart(product));
     };

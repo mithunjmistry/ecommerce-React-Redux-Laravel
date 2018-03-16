@@ -7,7 +7,8 @@ export const addToCart = (
         sellerName,
         ratings = undefined,
         quantity = 1,
-        price
+        price,
+        productID
     } = {}
 ) => ({
     type: 'ADD_TO_CART',
@@ -18,7 +19,8 @@ export const addToCart = (
         sellerName,
         ratings,
         quantity,
-        price
+        price,
+        productID
     }
 });
 
