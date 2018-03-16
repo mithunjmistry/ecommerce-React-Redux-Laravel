@@ -5,14 +5,21 @@ import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
 const store = configureStore();
 console.log(store.getState());
 
+const App = () => (
+    <MuiThemeProvider>
+        <AppRouter />
+    </MuiThemeProvider>
+);
+
 const jsx = (
     <Provider store={store}>
-        <AppRouter />
+        <App />
     </Provider>
 );
 

@@ -5,6 +5,7 @@ import StarRatingComponent from 'react-star-ratings';
 import {imageWatch} from "./image";
 import {addToCart} from "../actions/shoppingCart";
 import { connect } from 'react-redux';
+import Snackbar from 'material-ui/Snackbar';
 
 class ProductInfo extends React.Component {
 
@@ -18,7 +19,9 @@ class ProductInfo extends React.Component {
       numberOfRatings: 239,
       description: "This is some product description.",
       sellerName: "Seller Name",
-      productID: undefined
+      productID: undefined,
+      autoHideDuration: 3000,
+      snackbarOpen:false
     };
 
     componentWillReceiveProps(nextProps){
@@ -45,6 +48,7 @@ class ProductInfo extends React.Component {
             productID: this.state.productID
         };
         this.props.dispatch(addToCart(product));
+        this.setState(() => ({snackbarOpen: true}))
     };
 
     onQuantityChange = (e) => {
@@ -58,6 +62,16 @@ class ProductInfo extends React.Component {
         if(this.state.quantity.length === 0 || (this.state.quantity.length > 0 && parseInt(this.state.quantity) < 1)){
             this.setState(() => ({quantity: 1}))
         }
+    };
+
+    handleSnackbarRequestClose = () => {
+        this.setState({
+            snackbarOpen: false,
+        });
+    };
+
+    handleUndoAction = () => {
+        console.log("Here we will remove from the cart again");
     };
 
     render(){
@@ -153,7 +167,19 @@ class ProductInfo extends React.Component {
                         </div>
                     </Col>
                 </Row>
+
+                <div>
+                    <Snackbar
+                        open={this.state.snackbarOpen}
+                        message={"Added to Cart"}
+                        action="undo"
+                        autoHideDuration={this.state.autoHideDuration}
+                        onActionClick={this.handleUndoAction}
+                        onRequestClose={this.handleSnackbarRequestClose}
+                    />
+                </div>
             </Grid>
+
         )
     }
 }
