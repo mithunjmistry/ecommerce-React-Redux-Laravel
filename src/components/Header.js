@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem, Button, Glyphicon, DropdownButton, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import ShoppingCart from '../components/ShoppingCart';
+import { connect } from 'react-redux';
 
 class Header extends React.Component{
 
@@ -231,7 +232,12 @@ class Header extends React.Component{
                             </DropdownButton>
                             </InputGroup>
                             <Button type="submit"><Glyphicon glyph={"search"}/></Button>
-                            <Button onClick={this.shoppingCartModalShow}><Glyphicon glyph={"shopping-cart"}/></Button>
+                            <Button onClick={this.shoppingCartModalShow} bsStyle={"link"}>
+                                <Glyphicon glyph={"shopping-cart"} className={"cart-symbol-size"}/>
+                                {this.props.shoppingCart.length > 0 &&
+                                    <span className="badge custom-cart-badge">{this.props.shoppingCart.length}</span>
+                                }
+                            </Button>
                         </FormGroup>
                         </form>
                     </Navbar.Form>
@@ -242,4 +248,10 @@ class Header extends React.Component{
     }
 }
 
-export default withRouter(Header);
+const mapStateToProps = (state) => {
+    return {
+        shoppingCart: state.shoppingCart
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(Header));
