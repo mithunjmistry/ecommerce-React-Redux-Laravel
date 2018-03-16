@@ -1,6 +1,7 @@
 import React from "react";
 import {Modal, Button, ListGroup} from "react-bootstrap";
 import CustomListGroupItem from "../components/CustomListGroupItemCart";
+import { connect } from 'react-redux';
 
 class ShoppingCart extends React.Component{
 
@@ -13,11 +14,9 @@ class ShoppingCart extends React.Component{
 
                 <Modal.Body>
                     <ListGroup className={"shopping-cart-listgroup"}>
-                        <CustomListGroupItem
-                            productName={"Product Name"}
-                            sellerName={"Seller Name"}
-                            ratings={4.3}
-                        />
+                        {this.props.shoppingCart.map((item) => {
+                            return <CustomListGroupItem key={item.id} {...item} />;
+                        })}
                     </ListGroup>
                     <hr/>
                     <div className={"total-cart-label-div"}>
@@ -35,4 +34,10 @@ class ShoppingCart extends React.Component{
     }
 }
 
-export default ShoppingCart;
+const mapStateToProps = (state) => {
+    return {
+        shoppingCart: state.shoppingCart
+    };
+};
+
+export default connect(mapStateToProps)(ShoppingCart);
