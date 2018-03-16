@@ -31,8 +31,8 @@ export const removeFromCart = ({ productID } = {}) => ({
 });
 
 // EDIT_CART
-export const editCart = (id, updates) => ({
+export const editCart = (productID, updates) => ({
     type: 'EDIT_CART',
-    id,
+    productID,
     updates
 });

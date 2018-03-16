@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Button, ListGroup} from "react-bootstrap";
+import {Modal, Button, ListGroup, Row, Col} from "react-bootstrap";
 import CustomListGroupItem from "../components/CustomListGroupItemCart";
 import { connect } from 'react-redux';
 
@@ -8,17 +8,27 @@ class ShoppingCart extends React.Component{
     render(){
         let itemCount = this.props.shoppingCart.length;
         let CartContent;
+        let total = 0;
         if(itemCount > 0){
             CartContent = () => (
                 <div>
                     <ListGroup className={"shopping-cart-listgroup"}>
                         {this.props.shoppingCart.map((item) => {
-                            return <CustomListGroupItem key={item.id} {...item} />;
+                            total = item.quantity * item.price;
+                            return <CustomListGroupItem key={item.productID} {...item} />;
                         })}
                     </ListGroup>
                     <hr/>
                     <div className={"total-cart-label-div"}>
-                        <span className={"total-cart-label"}>Total:</span>
+                        <Row>
+                            <Col lg={10} md={10}>
+                                <span className={"total-cart-label"}>Total:</span>
+                            </Col>
+
+                            <Col lg={2} md={2}>
+                                <span className={"total-cart-amount"}>${total}</span>
+                            </Col>
+                        </Row>
                     </div>
                 </div>)
         }

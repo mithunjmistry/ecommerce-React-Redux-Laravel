@@ -3,6 +3,7 @@ import {Row, Col, Button, FormControl, Glyphicon, Tooltip, OverlayTrigger} from 
 import StarRatingComponent from 'react-star-ratings';
 import ProductInfo from "./ProductInfo";
 import { connect } from 'react-redux';
+import {editCart} from "../actions/shoppingCart";
 
 const tooltip = (
     <Tooltip id="tooltip">
@@ -17,28 +18,37 @@ class CustomListGroupItemCart extends React.Component{
         productID: this.props.productID
     };
 
+    editCart = (quantity) => {
+        let updates = {
+          quantity
+        };
+        this.props.dispatch(editCart(this.state.productID, updates));
+    };
+
     onQuantityChange = (e) => {
         let quantity = e.target.value;
-        if(parseInt(quantity.length) < 3){
-            this.setState(() => ({quantity}));
-        }
+        this.setState(() => ({quantity}));
     };
 
     onQuantityIncrease = () => {
         if(parseInt(this.state.quantity) < 99){
-            this.setState((prevState) => ({quantity: parseInt(prevState.quantity) + 1}));
+            this.editCart(parseInt(this.state.quantity) + 1);
         }
     };
 
     onQuantityDecrease = () => {
         if(parseInt(this.state.quantity) > 1) {
-            this.setState((prevState) => ({quantity: parseInt(prevState.quantity) - 1}));
+            this.editCart(parseInt(this.state.quantity) - 1);
         }
     };
 
-    onQuantityBlur = () => {
-        if(this.state.quantity.length === 0 || (this.state.quantity.length > 0 && parseInt(this.state.quantity) < 1)){
-            this.setState(() => ({quantity: 1}))
+    onQuantityBlur = (e) => {
+        let quantity = e.target.value;
+        if(quantity.length > 0 && parseInt(quantity) > 0 && parseInt(quantity) < 100){
+            this.editCart(parseInt(quantity));
+        }
+        else{
+            this.editCart(1);
         }
     };
 
@@ -92,7 +102,7 @@ class CustomListGroupItemCart extends React.Component{
                         <Col md={1} lg={1} sm={12} xs={12}>
                             <div className={"cart-price-div"}>
                               <span className={"cart-price"}>
-                                  ${this.props.price * this.state.quantity}
+                                  ${this.props.price * this.props.quantity}
                               </span>
                             </div>
                         </Col>
