@@ -1,9 +1,10 @@
 .subcategory-heading{
-  color: #031533;
+  font-weight: 500;
+  font-size: 2em;
 }
 
 .deal-heading{
-  font-size: 1.8em;
+  font-size: 1.6em;
   color: #091c4c;
 }
 
@@ -17,6 +18,8 @@
   a{
     color: #108c46;
   }
+
+  border: none !important;
 }
 
 .subcategory-deal-price{

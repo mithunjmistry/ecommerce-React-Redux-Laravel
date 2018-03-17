@@ -1,0 +1,36 @@
+.shopping-cart-listgroup li{
+  border: none !important;
+}
+
+.cart-quantity{
+  margin-left: 2%;
+  margin-right: 2%;
+  border: none !important;
+  width: 25% !important;
+  display: inline !important;
+}
+
+.cart-quantity:focus{
+  border: none !important;
+}
+
+.remove-item-cart-button{
+  border-color: transparent !important;
+}
+
+.cart-price{
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.cart-price-div{
+  margin-top: 30%;
+}
+
+.cart-price-div{
+  margin-top: 30%;
+}
+
+.cart-remove-div{
+  margin-top: 35%;
+}

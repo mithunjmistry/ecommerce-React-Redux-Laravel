@@ -21,7 +21,7 @@ class SubCategory extends React.Component{
                     </Col>
                 </Row>
 
-                <br/>
+                <hr/>
 
                 <Row>
                     <Col lg={2} md={2}>
@@ -49,6 +49,8 @@ class SubCategory extends React.Component{
                         </ListGroup>
                     </Col>
                 </Row>
+
+                <hr/>
 
                 <Row>
                     <Col lg={2} md={2}>

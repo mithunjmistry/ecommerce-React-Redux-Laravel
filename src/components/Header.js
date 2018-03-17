@@ -1,6 +1,8 @@
 import React from 'react';
 import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem, Button, Glyphicon, DropdownButton, InputGroup } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
+import ShoppingCart from '../components/ShoppingCart';
+import { connect } from 'react-redux';
 
 class Header extends React.Component{
 
@@ -11,7 +13,8 @@ class Header extends React.Component{
         placeholder: "Search All",
         searchMenuItems: ["Electronics", "Books", "Home"],
         dropDownSelected: "All",
-        searchBoxText: ""
+        searchBoxText: "",
+        shoppingCartOpen: false
     };
 
     categoryStateChangeHelper = (t) => {
@@ -144,6 +147,14 @@ class Header extends React.Component{
         this.categoryStateChangeHelper(selectedCategory);
     };
 
+    shoppingCartModalShow = () => {
+        this.setState(() => ({shoppingCartOpen: true}));
+    };
+
+    shoppingCartModalHide = () => {
+        this.setState(() => ({shoppingCartOpen: false}));
+    };
+
     render(){
         return (
             <Navbar>
@@ -221,13 +232,26 @@ class Header extends React.Component{
                             </DropdownButton>
                             </InputGroup>
                             <Button type="submit"><Glyphicon glyph={"search"}/></Button>
+                            <Button onClick={this.shoppingCartModalShow} bsStyle={"link"}>
+                                <Glyphicon glyph={"shopping-cart"} className={"cart-symbol-size"}/>
+                                {this.props.shoppingCart.length > 0 &&
+                                    <span className="badge custom-cart-badge">{this.props.shoppingCart.length}</span>
+                                }
+                            </Button>
                         </FormGroup>
                         </form>
                     </Navbar.Form>
+                    <ShoppingCart handleClose={this.shoppingCartModalHide} show={this.state.shoppingCartOpen}/>
                 </Navbar.Collapse>
             </Navbar>
         )
     }
 }
 
-export default withRouter(Header);
+const mapStateToProps = (state) => {
+    return {
+        shoppingCart: state.shoppingCart
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(Header));

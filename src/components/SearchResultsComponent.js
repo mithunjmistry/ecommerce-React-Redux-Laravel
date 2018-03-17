@@ -5,6 +5,20 @@ import CustomListGroupItem from './CustomListGroupItemProduct';
 import AdvancedFilters from './AdvancedFilters';
 import AdvancedFiltersModal from './AdvancedFiltersModal';
 
+const items = [];
+for (let i = 1; i < 11; i++ ) {
+    items.push(<CustomListGroupItem
+        key={i}
+        currentPrice={20.99}
+        prevPrice={40.99}
+        sellerName={`Seller Name ${i}`}
+        ratings={4.5}
+        productID={i}
+    >
+        Product Name {i}
+    </CustomListGroupItem>);
+}
+
 class SearchResultsComponent extends React.Component{
 
     state = {
@@ -118,76 +132,7 @@ class SearchResultsComponent extends React.Component{
 
                         <div>
                             <ListGroup className={'search-results-list'}>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    sellerName={"Seller Name"}
-                                    ratings={4.5}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    prevPrice={"39.99"}
-                                    sellerName={"Seller Name 2"}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    sellerName={"Seller Name"}
-                                    ratings={4.5}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    prevPrice={"39.99"}
-                                    sellerName={"Seller Name 2"}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    sellerName={"Seller Name"}
-                                    ratings={4.5}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    prevPrice={"39.99"}
-                                    sellerName={"Seller Name 2"}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    sellerName={"Seller Name"}
-                                    ratings={4.5}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    prevPrice={"39.99"}
-                                    sellerName={"Seller Name 2"}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    sellerName={"Seller Name"}
-                                    ratings={4.5}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
-                                <CustomListGroupItem
-                                    currentPrice={20.99}
-                                    prevPrice={"39.99"}
-                                    sellerName={"Seller Name 2"}
-                                >
-                                    Product Name
-                                </CustomListGroupItem>
+                                {items}
                             </ListGroup>
                         </div>
 
