@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 
 class CustomListGroupItemProduct extends React.Component{
 
-    addToCartOnClick = () => {
+    addToCartOnClick = (e) => {
+        e.stopPropagation();
         // dispatching an action to redux store
         const product = {
             productName: this.props.children,
@@ -28,7 +29,7 @@ class CustomListGroupItemProduct extends React.Component{
 
     render() {
         return (
-            <li className="list-group-item">
+            <li className="list-group-item" onClick={() => this.viewClickHandler(`/product/${this.props.productID}`)}>
                 <div className={"media-left"}>
                     <img className="media-object" src={image} alt="..." />
                 </div>
