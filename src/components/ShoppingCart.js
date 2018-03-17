@@ -7,6 +7,7 @@ import {withRouter} from "react-router-dom";
 class ShoppingCart extends React.Component{
 
     onCheckoutClick = () => {
+      this.props.handleClose();
       this.props.history.push("/checkout");
     };
 
