@@ -2,8 +2,25 @@ import React from "react";
 import {Button, Row, Col} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import StarRatingComponent from 'react-star-ratings';
+import {addToCart} from "../actions/shoppingCart";
+import {image} from "./image";
+import { connect } from 'react-redux';
 
 class CustomListGroupItemProduct extends React.Component{
+
+    addToCartOnClick = () => {
+        // dispatching an action to redux store
+        const product = {
+            productName: this.props.children,
+            productImage: image,
+            sellerName: this.props.sellerName,
+            ratings: this.props.ratings ? this.props.ratings : undefined,
+            quantity: 1,
+            price: this.props.currentPrice,
+            productID: this.props.productID
+        };
+        this.props.dispatch(addToCart(product));
+    };
 
     viewClickHandler = (routeName) => {
         this.props.history.push(routeName);
@@ -13,7 +30,7 @@ class CustomListGroupItemProduct extends React.Component{
         return (
             <li className="list-group-item">
                 <div className={"media-left"}>
-                    <img className="media-object" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjEzLjQ2MDkzNzUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==" alt="..." />
+                    <img className="media-object" src={image} alt="..." />
                 </div>
                 <div className={"media-body"}>
                     <Row>
@@ -46,8 +63,8 @@ class CustomListGroupItemProduct extends React.Component{
                         <Col md={2} lg={2} sm={12} xs={12}>
                             <div>
                               <span>
-                                  <Button bsStyle={"default"} className={"btn-sm view-atc-button"} onClick={() => this.viewClickHandler("/")}>View</Button>
-                                  <Button bsStyle={"primary"} className={"btn-sm view-atc-button"}>Add to Cart</Button>
+                                  <Button bsStyle={"default"} className={"btn-sm view-atc-button"} onClick={() => this.viewClickHandler(`/product/${this.props.productID}`)}>View</Button>
+                                  <Button bsStyle={"primary"} className={"btn-sm view-atc-button"} onClick={this.addToCartOnClick}>Add to Cart</Button>
                               </span>
                             </div>
                         </Col>
@@ -58,4 +75,4 @@ class CustomListGroupItemProduct extends React.Component{
     }
 }
 
-export default withRouter(CustomListGroupItemProduct);
+export default connect()(withRouter(CustomListGroupItemProduct));
