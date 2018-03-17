@@ -33,7 +33,7 @@ const product = {
     price: 19.99,
     productID: 1
 };
-store.dispatch(addToCart(product));
+// store.dispatch(addToCart(product));
 
 const appRoot = document.getElementById('app');
 ReactDOM.render(jsx, appRoot);
