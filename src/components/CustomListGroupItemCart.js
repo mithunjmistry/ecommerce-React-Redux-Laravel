@@ -32,12 +32,14 @@ class CustomListGroupItemCart extends React.Component{
 
     onQuantityIncrease = () => {
         if(parseInt(this.state.quantity) < 99){
+            this.setState((prevState) => ({quantity: prevState.quantity + 1}));
             this.editCart(parseInt(this.state.quantity) + 1);
         }
     };
 
     onQuantityDecrease = () => {
         if(parseInt(this.state.quantity) > 1) {
+            this.setState((prevState) => ({quantity: prevState.quantity - 1}));
             this.editCart(parseInt(this.state.quantity) - 1);
         }
     };
@@ -45,9 +47,11 @@ class CustomListGroupItemCart extends React.Component{
     onQuantityBlur = (e) => {
         let quantity = e.target.value;
         if(quantity.length > 0 && parseInt(quantity) > 0 && parseInt(quantity) < 100){
+            this.setState(() => ({quantity}));
             this.editCart(parseInt(quantity));
         }
         else{
+            this.setState(() => ({quantity: 1}));
             this.editCart(1);
         }
     };
@@ -102,7 +106,7 @@ class CustomListGroupItemCart extends React.Component{
                         <Col md={1} lg={1} sm={12} xs={12}>
                             <div className={"cart-price-div"}>
                               <span className={"cart-price"}>
-                                  ${(parseFloat(this.props.price) * parseInt(this.props.quantity))}
+                                  ${parseFloat(parseFloat(this.props.price) * parseInt(this.state.quantity)).toFixed(2)}
                               </span>
                             </div>
                         </Col>

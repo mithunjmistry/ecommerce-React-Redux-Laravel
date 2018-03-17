@@ -7,14 +7,14 @@ class ShoppingCart extends React.Component{
 
     render(){
         let itemCount = this.props.shoppingCart.length;
-        let CartContent;
-        let total = 0;
+        let cartContent;
+        let total = 0.0;
         if(itemCount > 0){
-            CartContent = () => (
+            cartContent = (
                 <div>
                     <ListGroup className={"shopping-cart-listgroup"}>
                         {this.props.shoppingCart.map((item) => {
-                            total = parseInt(item.quantity) * parseFloat(item.price);
+                            total += item.quantity * item.price;
                             return <CustomListGroupItem key={item.productID} {...item} />;
                         })}
                     </ListGroup>
@@ -26,14 +26,14 @@ class ShoppingCart extends React.Component{
                             </Col>
 
                             <Col lg={2} md={2}>
-                                <span className={"total-cart-amount"}>${total}</span>
+                                <span className={"total-cart-amount"}>${total.toFixed(2)}</span>
                             </Col>
                         </Row>
                     </div>
                 </div>)
         }
         else{
-            CartContent = () => (
+            cartContent = (
                 <div>
                     <span>You have no items in your cart. Please choose products from our wide range of selection and add to cart.</span>
                 </div>
@@ -46,7 +46,7 @@ class ShoppingCart extends React.Component{
                 </Modal.Header>
 
                 <Modal.Body>
-                    <CartContent/>
+                    {cartContent}
                 </Modal.Body>
 
                 <Modal.Footer>
