@@ -6,6 +6,8 @@ import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {addToCart} from "./actions/shoppingCart";
+import {imageWatch} from "./components/image";
 
 
 const store = configureStore();
@@ -22,6 +24,16 @@ const jsx = (
         <App />
     </Provider>
 );
+
+const product = {
+    productName: "Product Name",
+    productImage: imageWatch,
+    sellerName: "Seller Name",
+    quantity: 1,
+    price: 19.99,
+    productID: 1
+};
+store.dispatch(addToCart(product));
 
 const appRoot = document.getElementById('app');
 ReactDOM.render(jsx, appRoot);
