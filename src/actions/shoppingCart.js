@@ -36,3 +36,8 @@ export const editCart = (productID, updates) => ({
     productID,
     updates
 });
+
+// EMPTY_CART
+export const emptyCart = () => ({
+    type: 'EMPTY_CART'
+});

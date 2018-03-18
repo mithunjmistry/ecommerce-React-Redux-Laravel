@@ -2,8 +2,14 @@ import React from "react";
 import {Modal, Button, ListGroup, Row, Col} from "react-bootstrap";
 import CustomListGroupItem from "../components/CustomListGroupItemCart";
 import { connect } from 'react-redux';
+import {withRouter} from "react-router-dom";
 
 class ShoppingCart extends React.Component{
+
+    onCheckoutClick = () => {
+      this.props.handleClose();
+      this.props.history.push("/checkout");
+    };
 
     render(){
         let itemCount = this.props.shoppingCart.length;
@@ -52,7 +58,7 @@ class ShoppingCart extends React.Component{
                 <Modal.Footer>
                     <Button onClick={this.props.handleClose}>Continue Shopping</Button>
                     {this.props.shoppingCart.length > 0 &&
-                        <Button bsStyle="primary" disabled={this.props.shoppingCart.length === 0}>Checkout</Button>
+                        <Button bsStyle="primary" onClick={this.onCheckoutClick}>Checkout</Button>
                     }
                 </Modal.Footer>
             </Modal>
@@ -66,4 +72,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(ShoppingCart);
+export default connect(mapStateToProps)(withRouter(ShoppingCart));
