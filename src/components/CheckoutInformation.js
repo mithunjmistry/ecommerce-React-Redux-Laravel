@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {Row, Col, FormGroup, ControlLabel, FormControl, Radio} from "react-bootstrap";
 import AddressForm from "./AddressForm";
+import {withRouter} from "react-router-dom";
 
 const FieldGroup = ({ id, label, validationState=null, ...props }) => (
         <FormGroup controlId={id} validationState={validationState}>
@@ -28,7 +29,8 @@ class CheckoutInformation extends React.Component {
         email: '',
         paymentMethod: 1,
         nameValidation: null,
-        emailValidation: null
+        emailValidation: null,
+        orderID: 1
     };
 
     handleNext = () => {
@@ -37,6 +39,9 @@ class CheckoutInformation extends React.Component {
             stepIndex: stepIndex + 1,
             finished: stepIndex >= 2,
         });
+        if(stepIndex >= 2){
+            this.props.history.push("/order");
+        }
     };
 
     handlePrev = () => {
@@ -171,22 +176,9 @@ class CheckoutInformation extends React.Component {
                         </StepContent>
                     </Step>
                 </Stepper>
-                {/*{finished && (*/}
-                    {/*<p style={{margin: '20px 0', textAlign: 'center'}}>*/}
-                        {/*<a*/}
-                            {/*href="#"*/}
-                            {/*onClick={(event) => {*/}
-                                {/*event.preventDefault();*/}
-                                {/*this.setState({stepIndex: 0, finished: false});*/}
-                            {/*}}*/}
-                        {/*>*/}
-                            {/*Click here*/}
-                        {/*</a> to reset the example.*/}
-                    {/*</p>*/}
-                {/*)}*/}
             </div>
         );
     }
 }
 
-export default CheckoutInformation;
+export default withRouter(CheckoutInformation);

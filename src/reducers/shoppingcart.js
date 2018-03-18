@@ -32,6 +32,8 @@ export default (state = shoppingCartReducerDefaultState, action) => {
                     return shoppingCart;
                 }
             });
+        case 'EMPTY_CART':
+            return (state.length = 0);
         default:
             return state;
     }
