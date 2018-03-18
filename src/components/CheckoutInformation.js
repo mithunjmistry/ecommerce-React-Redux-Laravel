@@ -26,7 +26,9 @@ class CheckoutInformation extends React.Component {
         stepIndex: 0,
         name: '',
         email: '',
-        paymentMethod: 1
+        paymentMethod: 1,
+        nameValidation: null,
+        emailValidation: null
     };
 
     handleNext = () => {
@@ -46,12 +48,30 @@ class CheckoutInformation extends React.Component {
 
     onNameChange = (e) => {
         let name = e.target.value;
-        this.setState(() => ({name}));
+        let nameValidation = "success";
+        if(name.trim().length === 0){
+            nameValidation = "error";
+        }
+        if(name.length <= 45){
+            this.setState(() => ({name, nameValidation}));
+        }
+    };
+
+    static emailValidation = (email) => {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     };
 
     onEmailChange = (e) => {
         let email = e.target.value;
-        this.setState(() => ({email}));
+        let emailValidation = "error";
+        if(CheckoutInformation.emailValidation(email.trim())){
+            emailValidation = "success";
+        }
+
+        if(email.length <= 45){
+            this.setState(() => ({email, emailValidation}));
+        }
     };
 
     handlePaymentMethod = (e) => {
@@ -102,6 +122,7 @@ class CheckoutInformation extends React.Component {
                                             id="formControlsText"
                                             type="text"
                                             label="Full Name"
+                                            validationState={this.state.nameValidation}
                                             placeholder="Enter Full Name"
                                             value={this.state.name}
                                             onChange={this.onNameChange}
@@ -110,6 +131,7 @@ class CheckoutInformation extends React.Component {
                                             id="formControlsEmail"
                                             type="email"
                                             label="Email address"
+                                            validationState={this.state.emailValidation}
                                             placeholder="Enter email"
                                             value={this.state.email}
                                             onChange={this.onEmailChange}
@@ -117,7 +139,7 @@ class CheckoutInformation extends React.Component {
                                     </form>
                                 </Col>
                             </Row>
-                            {this.renderStepActions(0)}
+                            {this.state.nameValidation === "success" && this.state.emailValidation === "success" && this.renderStepActions(0)}
                         </StepContent>
                     </Step>
                     <Step>
@@ -125,10 +147,9 @@ class CheckoutInformation extends React.Component {
                         <StepContent>
                             <Row>
                                 <Col lg={12} md={12}>
-                                    <AddressForm/>
+                                    <AddressForm renderStepAction={this.renderStepActions(1)}/>
                                 </Col>
                             </Row>
-                            {this.renderStepActions(1)}
                         </StepContent>
                     </Step>
                     <Step>

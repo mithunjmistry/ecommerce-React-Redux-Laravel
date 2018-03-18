@@ -1,6 +1,8 @@
 import React from "react";
 import {FormGroup, ControlLabel, FormControl, Row, Col} from "react-bootstrap";
 
+const s = "success";
+
 export default class AddressForm extends React.Component {
 
     state = {
@@ -169,6 +171,12 @@ export default class AddressForm extends React.Component {
                     />
                     <FormControl.Feedback />
                 </FormGroup>
+                {this.state.addressValidation === s &&
+                this.state.cityValidation === s &&
+                this.state.zipValidation === s &&
+                this.state.phoneValidation === s &&
+                this.props.renderStepAction
+                }
             </form>
         )
     }
