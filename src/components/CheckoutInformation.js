@@ -30,7 +30,8 @@ class CheckoutInformation extends React.Component {
         paymentMethod: 1,
         nameValidation: null,
         emailValidation: null,
-        orderID: 1
+        creditCardChecked: true,
+        debitCardChecked: false
     };
 
     handleNext = () => {
@@ -82,6 +83,10 @@ class CheckoutInformation extends React.Component {
     handlePaymentMethod = (e) => {
         let paymentMethod = e.target.value;
         this.setState(() => ({paymentMethod}));
+    };
+
+    handlePaymentChange = () => {
+      this.setState((prevState) => ({creditCardChecked: !prevState.creditCardChecked, debitCardChecked: !prevState.debitCardChecked}));
     };
 
     renderStepActions(step) {
@@ -163,10 +168,18 @@ class CheckoutInformation extends React.Component {
                             <Row>
                                 <Col lg={12} md={12}>
                                     <FormGroup>
-                                        <Radio name="radioGroup" value="1" onClick={this.handlePaymentMethod}>
+                                        <Radio name="radioGroup" value="1"
+                                               onClick={this.handlePaymentMethod}
+                                               checked={this.state.creditCardChecked}
+                                               onChange={this.handlePaymentChange}
+                                        >
                                             Credit Card
                                         </Radio>
-                                        <Radio name="radioGroup" value="2" onClick={this.handlePaymentMethod}>
+                                        <Radio name="radioGroup" value="2"
+                                               onClick={this.handlePaymentMethod}
+                                               checked={this.state.debitCardChecked}
+                                               onChange={this.handlePaymentChange}
+                                        >
                                             Debit Card
                                         </Radio>
                                     </FormGroup>
