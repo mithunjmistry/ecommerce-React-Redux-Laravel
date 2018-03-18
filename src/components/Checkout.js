@@ -3,6 +3,7 @@ import {Grid, Col, Row} from "react-bootstrap";
 import {connect} from "react-redux";
 import CheckoutItems from "../components/CheckoutItems";
 import NoCheckoutItems from "../components/NoCheckoutItems";
+import CheckoutInformation from "../components/CheckoutInformation";
 
 const Checkout = (props) => (
     <Grid>
@@ -14,7 +15,7 @@ const Checkout = (props) => (
             </Col>
 
             <Col lg={6} md={6}>
-                <p>Here will be the stepper.</p>
+                {props.shoppingCart.length > 0 ? <CheckoutInformation/> : ''}
             </Col>
         </Row>
     </Grid>
