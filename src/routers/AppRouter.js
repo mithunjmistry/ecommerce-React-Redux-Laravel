@@ -12,6 +12,7 @@ import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
 import Checkout from "../components/Checkout";
 import Order from "../components/Order";
+import LoadingScreen from "../components/LoadingScreen";
 
 const portfolioPage = () => (
     <div>
@@ -71,6 +72,7 @@ const appRouter = () => (
                 <Route path="/product/:id" exact={true} component={ProductInfo} />
                 <Route path="/checkout" exact={true} component={Checkout} />
                 <Route path="/order" exact={true} component={Order}/>
+                <Route path="/test" component={LoadingScreen}/>
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>
