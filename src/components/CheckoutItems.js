@@ -2,10 +2,11 @@ import React from "react";
 import {ListGroup, Row, Col} from "react-bootstrap";
 import {connect} from "react-redux";
 import CustomListGroupItem from "../components/CustomListGroupItemCheckout";
+import {totalReducer} from "./ShoppingCart";
 
 class CheckoutItems extends React.Component{
     render(){
-        let total = 0;
+        let total = this.props.shoppingCart.reduce(totalReducer, 0);
         return (
             <div>
                 <h4>Item(s) for checkout: </h4>
@@ -13,7 +14,6 @@ class CheckoutItems extends React.Component{
                 <ListGroup className={"checkout-items-listgroup"}>
                     {
                         this.props.shoppingCart.map((item) => {
-                            total += item.quantity * item.price;
                             return <CustomListGroupItem key={item.productID} {...item} />
                         })
                     }
@@ -26,7 +26,7 @@ class CheckoutItems extends React.Component{
                         </Col>
 
                         <Col lg={2} md={2}>
-                            <span className={"total-cart-amount"}>${total.toFixed(2)}</span>
+                            <span className={"total-cart-amount"}>${parseFloat(total).toFixed(2)}</span>
                         </Col>
                     </Row>
                 </div>

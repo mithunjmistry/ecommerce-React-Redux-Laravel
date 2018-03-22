@@ -4,6 +4,10 @@ import CustomListGroupItem from "../components/CustomListGroupItemCart";
 import { connect } from 'react-redux';
 import {withRouter} from "react-router-dom";
 
+export const totalReducer = (accumulator, item) => {
+    return accumulator + (item.quantity * item.price);
+};
+
 class ShoppingCart extends React.Component{
 
     onCheckoutClick = () => {
@@ -14,13 +18,12 @@ class ShoppingCart extends React.Component{
     render(){
         let itemCount = this.props.shoppingCart.length;
         let cartContent;
-        let total = 0.0;
         if(itemCount > 0){
+            let total = this.props.shoppingCart.reduce(totalReducer, 0);
             cartContent = (
                 <div>
                     <ListGroup className={"shopping-cart-listgroup"}>
                         {this.props.shoppingCart.map((item) => {
-                            total += item.quantity * item.price;
                             return <CustomListGroupItem key={item.productID} {...item} />;
                         })}
                     </ListGroup>
@@ -32,11 +35,13 @@ class ShoppingCart extends React.Component{
                             </Col>
 
                             <Col lg={2} md={2}>
-                                <span className={"total-cart-amount"}>${total.toFixed(2)}</span>
+                                <span className={"total-cart-amount"}>
+                                    ${parseFloat(total).toFixed(2)}
+                                </span>
                             </Col>
                         </Row>
                     </div>
-                </div>)
+                </div>);
         }
         else{
             cartContent = (
