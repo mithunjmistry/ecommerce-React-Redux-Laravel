@@ -156,6 +156,9 @@ class Header extends React.Component{
     };
 
     render(){
+        let shoppingCartTotal = this.props.shoppingCart.reduce((accumulator, item) => {
+            return accumulator + item.quantity;
+        }, 0);
         return (
             <Navbar>
                 <Navbar.Header>
@@ -234,8 +237,10 @@ class Header extends React.Component{
                             <Button type="submit"><Glyphicon glyph={"search"}/></Button>
                             <Button onClick={this.shoppingCartModalShow} bsStyle={"link"}>
                                 <Glyphicon glyph={"shopping-cart"} className={"cart-symbol-size"}/>
-                                {this.props.shoppingCart.length > 0 &&
-                                    <span className="badge custom-cart-badge">{this.props.shoppingCart.length}</span>
+                                {shoppingCartTotal > 0 &&
+                                    <span className="badge custom-cart-badge">
+                                        {shoppingCartTotal}
+                                    </span>
                                 }
                             </Button>
                         </FormGroup>
