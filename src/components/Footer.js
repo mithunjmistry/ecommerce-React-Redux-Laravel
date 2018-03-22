@@ -13,22 +13,17 @@ const Footer = () => (
                         <tr>
                             <td>My Account</td>
                             <td>About</td>
-                            <td>Customer Service</td>
+                            <td>FAQs</td>
                         </tr>
                         <tr>
                             <td>Orders</td>
                             <td>Mission</td>
-                            <td>FAQ</td>
+                            <td>Become a Seller</td>
                         </tr>
                         <tr>
-                            <td>Email</td>
+                            <td>Offers</td>
                             <td>Contact Us</td>
                             <td>Shipping Policy</td>
-                        </tr>
-                        <tr>
-                            <td>Payment</td>
-                            <td></td>
-                            <td>Become a Seller</td>
                         </tr>
                         </tbody>
                     </Table>
