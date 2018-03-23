@@ -156,9 +156,9 @@ class Header extends React.Component{
     };
 
     render(){
-        let shoppingCartTotal = this.props.shoppingCart.reduce((accumulator, item) => {
+        let shoppingCartTotal = this.props.shoppingCart ? this.props.shoppingCart.reduce((accumulator, item) => {
             return accumulator + item.quantity;
-        }, 0);
+        }, 0) : 0;
         return (
             <Navbar>
                 <Navbar.Header>
