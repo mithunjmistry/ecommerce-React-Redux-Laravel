@@ -9,7 +9,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {addToCart} from "./actions/shoppingCart";
 import {imageWatch} from "./components/image";
 
-
 const store = configureStore();
 console.log(store.getState());
 

@@ -6,6 +6,7 @@ import Category from '../components/CategoryBase';
 import SubCategory from '../components/SubCategory';
 import SearchResultsComponent from '../components/SearchResultsComponent';
 import ProductInfo from '../components/ProductInfo';
+import axios from 'axios';
 
 import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 
@@ -43,6 +44,8 @@ const noMatchFound = () => (
         <Link to="/">Go home</Link>
     </div>
 );
+
+axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
 
 const appRouter = () => (
     <BrowserRouter>

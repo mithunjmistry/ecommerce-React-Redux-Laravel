@@ -1,6 +1,8 @@
 import React from 'react';
 import {ListGroup, ListGroupItem} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
+import {subitemsAPI} from "../api/apiURLs";
+import axios from "axios";
 
 class CategoryBase extends React.Component{
     state = {
@@ -8,17 +10,15 @@ class CategoryBase extends React.Component{
     };
 
     componentDidMount(){
+        const url = subitemsAPI(this.props.apiName);
         // fetch data in this function
-        fetch("http://127.0.0.1:8000/subitems/" + this.props.apiName)
-            .then(response => response.json())
-            .then(subcategories => this.setState({ subcategories }));
+        axios.get(url).then((response) => (this.setState({ subcategories: response.data })));
     }
 
     componentWillReceiveProps(nextProps){
         if(this.props.location.pathname !== nextProps.location.pathname){
-            fetch("http://127.0.0.1:8000/subitems/" + nextProps.apiName)
-                .then(response => response.json())
-                .then(subcategories => this.setState({ subcategories }));
+            const url = subitemsAPI(nextProps.apiName);
+            axios.get(url).then((response) => (this.setState({ subcategories: response.data })));
         }
     }
 
