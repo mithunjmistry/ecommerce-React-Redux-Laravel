@@ -32,4 +32,4 @@ mix.react('resources/assets/js/app.js', 'public/js')
         module: {
             rules: rules
         }
-    });
+    }).sourceMaps();
