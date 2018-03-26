@@ -4,20 +4,9 @@ import Pagination from "react-js-pagination";
 import CustomListGroupItem from './CustomListGroupItemProduct';
 import AdvancedFilters from './AdvancedFilters';
 import AdvancedFiltersModal from './AdvancedFiltersModal';
-
-const items = [];
-for (let i = 1; i < 11; i++ ) {
-    items.push(<CustomListGroupItem
-        key={i}
-        currentPrice={20.99}
-        prevPrice={40.99}
-        sellerName={`Seller Name ${i}`}
-        ratings={4.5}
-        productID={i}
-    >
-        Product Name {i}
-    </CustomListGroupItem>);
-}
+import axios from "axios";
+import {searchProductsAPI} from "../api/apiURLs";
+import LoadingScreen from "../components/LoadingScreen";
 
 class SearchResultsComponent extends React.Component{
 
@@ -26,14 +15,25 @@ class SearchResultsComponent extends React.Component{
       sortByOptions: ["Price: Low to High", "Price: High to Low", "New"],
       activePage: 1,
       totalItemsCount: 55,
-      advancedFilterModalShow: false
+      advancedFilterModalShow: false,
+      products: [],
+      isLoading: false
     };
 
     componentDidMount(){
         let category = this.props.match.params.category;
         let query = this.props.match.params.query;
-        console.log(category + " " + query);
+        const url = searchProductsAPI(category, query);
         // fetch initial data in this function here
+        this.setState(() => ({isLoading: true}));
+        axios.get(url).then((response) => (this.setState(
+                {
+                    products: response.data,
+                    totalItemsCount: response.data.length,
+                    isLoading: false,
+                    activePage: 1
+                }
+            )));
     }
 
     componentWillReceiveProps(nextProps){
@@ -43,12 +43,21 @@ class SearchResultsComponent extends React.Component{
         let newCategory = nextProps.match.params.category;
         let newQuery = nextProps.match.params.query;
         if((currentCategory !== newCategory) || (currentQuery !== newQuery)){
-            console.log("Query changed");
+            const url = searchProductsAPI(newCategory, newQuery);
+            this.setState(() => ({isLoading: true}));
+            axios.get(url).then((response) => (this.setState(
+                {
+                    products: response.data,
+                    totalItemsCount: response.data.length,
+                    isLoading: false,
+                    activePage: 1
+                }
+                )));
         }
     }
 
     handlePageChange = (pageNumber) => {
-        console.log(`active page is ${pageNumber}`);
+        window.scrollTo(0, 0);
         this.setState({activePage: pageNumber});
     };
 
@@ -110,6 +119,30 @@ class SearchResultsComponent extends React.Component{
     };
 
     render() {
+        if(this.state.isLoading){
+            return <LoadingScreen/>
+        }
+
+        let items = [];
+        const {activePage, products} = this.state;
+        const end = (activePage*10) - 1;
+        const start = end - 9;
+        for (let i = start; i <= end; i++ ) {
+            if(i < products.length) {
+                items.push(<CustomListGroupItem
+                    key={i}
+                    currentPrice={products[i].price}
+                    sellerName={products[i].sellerName}
+                    ratings={products[i].ratings}
+                    productID={products[i].productId}
+                >
+                    {products[i].name}
+                </CustomListGroupItem>);
+            }else{
+                break;
+            }
+        }
+
         return (
             <Grid>
                 <Row>
