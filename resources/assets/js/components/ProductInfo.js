@@ -6,45 +6,64 @@ import {imageWatch} from "./image";
 import {addToCart, removeFromCart} from "../actions/shoppingCart";
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
+import axios from "axios";
+import {productInfoAPI} from "../api/apiURLs";
+import LoadingScreen from "../components/LoadingScreen";
+import ProductNotFound from "../components/ProductNotFound";
 
 class ProductInfo extends React.Component {
 
     state = {
-      ratings: 4.3,
-      prevPrice: 40.00,
-      currentPrice: 20.00,
-      productName: "Product Name",
+      product: {},
+      prevPrice: null,
       productImage: imageWatch,
       quantity: 1,
       numberOfRatings: 239,
-      description: "This is some product description.",
-      sellerName: "Seller Name",
       productID: undefined,
       autoHideDuration: 3000,
-      snackbarOpen:false
+      snackbarOpen:false,
+      isLoading: false,
+      productNotFound: false
+    };
+
+    loadProductDetails = (productID) => {
+        this.setState(() => ({productID, isLoading:true}));
+        const url = productInfoAPI(productID);
+        axios.get(url).then((response) => (this.setState(
+            {
+                product: response.data,
+                isLoading: false
+            }
+        ))).catch((error) => (
+            this.setState(() => ({
+                isLoading: false,
+                productNotFound: true
+            }))
+        ));
     };
 
     componentWillReceiveProps(nextProps){
         if(this.props.match.params.id !== nextProps.match.params.id){
             let productID = nextProps.match.params.id;
-            this.setState(() => ({productID}))
+            this.loadProductDetails(productID);
         }
     }
 
     componentDidMount(){
         let productID = this.props.match.params.id;
-        this.setState(() => ({productID}))
+        // load the product details here
+        this.loadProductDetails(productID);
     }
 
     addToCartOnClick = () => {
         // dispatching an action to redux store
         const product = {
-            productName: this.state.productName,
+            productName: this.state.product.name,
             productImage: this.state.productImage,
-            sellerName: this.state.sellerName,
-            ratings: this.state.ratings,
+            sellerName: this.state.product.sellerName,
+            ratings: this.state.product.ratings,
             quantity: this.state.quantity,
-            price: this.state.currentPrice,
+            price: this.state.product.price,
             productID: this.state.productID
         };
         this.props.dispatch(addToCart(product));
@@ -82,6 +101,14 @@ class ProductInfo extends React.Component {
     };
 
     render(){
+
+        if(this.state.isLoading){
+            return <LoadingScreen/>
+        }
+        else if(this.state.productNotFound){
+            return <ProductNotFound/>
+        }
+
         return (
             <Grid>
                 <Row>
@@ -100,12 +127,12 @@ class ProductInfo extends React.Component {
 
                     <Col lg={6} md={6}>
                         <div className={"margin-div-five"}>
-                            <h2>{this.state.productName}</h2>
+                            <h2>{this.state.product.name}</h2>
                             <div className={"product-info-star-rating"}>
-                                {(this.state.ratings && this.state.ratings > 0) ?
+                                {(this.state.product.ratings && this.state.product.ratings > 0) ?
                                     <div>
                                         <StarRatingComponent
-                                            rating={this.state.ratings}
+                                            rating={this.state.product.ratings}
                                             starDimension={"20px"}
                                             starSpacing={"0px"}
                                             starRatedColor={"rgb(247, 202, 37)"}
@@ -121,7 +148,7 @@ class ProductInfo extends React.Component {
                                 }
                             </div>
                             <div className={"product-info-seller-name"}>
-                                <span>Sold by: {this.state.sellerName}</span>
+                                <span>Sold by: {this.state.product.sellerName}</span>
                             </div>
                             <hr />
                         </div>
@@ -129,10 +156,10 @@ class ProductInfo extends React.Component {
                         <div className={"product-info-price"}>
                             {this.state.prevPrice &&
                             <span className={"product-deal-price-st"}>${this.state.prevPrice} </span>}
-                            <span className={"product-deal-price"}>${this.state.currentPrice}</span>
+                            <span className={"product-deal-price"}>${this.state.product.price}</span>
                             {this.state.prevPrice &&
                                 <p className={"product-info-savings"}>
-                                    You save - ${this.state.prevPrice - this.state.currentPrice}
+                                    You save - ${this.state.prevPrice - this.state.product.price}
                                 </p>
                             }
                         </div>
@@ -170,7 +197,7 @@ class ProductInfo extends React.Component {
                         <div className={"product-info-left-margin"}>
                             <h2 className={"product-description-heading"}>Product Description:</h2>
                             <hr/>
-                            <p className={"product-description"}>{this.state.description}</p>
+                            <p className={"product-description"}>{this.state.product.productDescription}</p>
                         </div>
                     </Col>
                 </Row>

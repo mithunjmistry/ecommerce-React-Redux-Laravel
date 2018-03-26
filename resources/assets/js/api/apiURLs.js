@@ -7,3 +7,7 @@ export const subitemsAPI = (subCategory) => (
 export const searchProductsAPI = (category, query) => (
     `${base_url}search/${category}/${query}`
 );
+
+export const productInfoAPI = (productID) => (
+    `${base_url}product/${productID}`
+);
