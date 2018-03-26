@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Product;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -24,5 +25,15 @@ class ProductController extends Controller
 
         return response()->json($products);
 
+    }
+
+    public function product_info($product_id){
+        try {
+            $product = Product::where('productId', $product_id)->firstOrFail();
+        }catch(ModelNotFoundException $e){
+            return response(json_encode("Product not found"), 400);
+        }
+
+        return response()->json($product);
     }
 }
