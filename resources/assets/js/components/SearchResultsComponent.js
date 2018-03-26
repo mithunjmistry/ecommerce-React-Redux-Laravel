@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem, Button} from 'react-bootstrap';
+import {Grid, Row, Col, ListGroup, DropdownButton, MenuItem, Button, Panel, Glyphicon} from 'react-bootstrap';
 import Pagination from "react-js-pagination";
 import CustomListGroupItem from './CustomListGroupItemProduct';
 import AdvancedFilters from './AdvancedFilters';
@@ -7,6 +7,7 @@ import AdvancedFiltersModal from './AdvancedFiltersModal';
 import axios from "axios";
 import {searchProductsAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
+import {Link} from "react-router-dom";
 
 class SearchResultsComponent extends React.Component{
 
@@ -145,7 +146,8 @@ class SearchResultsComponent extends React.Component{
 
         return (
             <Grid>
-                <Row>
+                {this.state.products.length > 0 ?
+                    <Row>
                     <Col lg={10} md={10} sm={12} xs={12}>
                         <div>
                             <label className={'sort-by-label'}>Sort By - </label>
@@ -161,6 +163,10 @@ class SearchResultsComponent extends React.Component{
                                     <MenuItem key={sortByOption} onClick={() => this.sortByChange(sortByOption)}>{sortByOption}</MenuItem>
                                 ))}
                             </DropdownButton>
+                        </div>
+
+                        <div className={"total-products-count"}>
+                            <p>Total {this.state.products.length} product found</p>
                         </div>
 
                         <div>
@@ -186,7 +192,26 @@ class SearchResultsComponent extends React.Component{
                             </Col>
                         </Row>
                     </Col>
-                </Row>
+                </Row> :
+                <Row>
+                    <Col lg={12}>
+                        <div className={"page-height-for-navbar"}>
+                            <Panel bsStyle="primary">
+                                <Panel.Heading>
+                                    <Panel.Title componentClass="h3">No results found</Panel.Title>
+                                </Panel.Heading>
+                                <Panel.Body>
+                                    <h4>We will try to get this product for you in future!</h4>
+                                    <p>Please give a chance by searching for another product.</p>
+                                    <div>
+                                        <Glyphicon glyph={"shopping-cart"} className={"empty-checkout-size"}/>
+                                    </div>
+                                    <Link to={"/"}>Continue Shopping</Link>
+                                </Panel.Body>
+                            </Panel>
+                        </div>
+                    </Col>
+                </Row>}
                 <AdvancedFiltersModal handleClose={this.advancedFiltersModalHide} show={this.state.advancedFilterModalShow}/>
             </Grid>
         )
