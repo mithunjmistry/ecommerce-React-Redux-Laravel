@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Row, Col, ListGroup} from 'react-bootstrap';
 import CustomListGroupItem from './CustomListGroupItemProduct';
-import axios from "axios/index";
+import axios from "../api/axiosInstance";
 import {subcategoryProductAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import InformationPanel from "../components/InformationPanel";

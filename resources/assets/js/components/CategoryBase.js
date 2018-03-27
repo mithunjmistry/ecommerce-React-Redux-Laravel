@@ -2,7 +2,7 @@ import React from 'react';
 import {ListGroup, ListGroupItem} from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import {subitemsAPI} from "../api/apiURLs";
-import axios from "axios";
+import axios from "../api/axiosInstance";
 
 class CategoryBase extends React.Component{
     state = {
