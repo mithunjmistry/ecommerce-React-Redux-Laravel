@@ -9,7 +9,7 @@ import Snackbar from 'material-ui/Snackbar';
 import axios from "axios";
 import {productInfoAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
-import ProductNotFound from "../components/ProductNotFound";
+import InformationPanel from "../components/InformationPanel";
 
 class ProductInfo extends React.Component {
 
@@ -32,7 +32,8 @@ class ProductInfo extends React.Component {
         axios.get(url).then((response) => (this.setState(
             {
                 product: response.data,
-                isLoading: false
+                isLoading: false,
+                productNotFound: false
             }
         ))).catch((error) => (
             this.setState(() => ({
@@ -106,7 +107,11 @@ class ProductInfo extends React.Component {
             return <LoadingScreen/>
         }
         else if(this.state.productNotFound){
-            return <ProductNotFound/>
+            return <InformationPanel
+                    panelTitle={"Product Not available"}
+                    informationHeading={"You are on the wrong page!"}
+                    message={"Please click on the appropriate product link to view this product."}
+                    />
         }
 
         return (

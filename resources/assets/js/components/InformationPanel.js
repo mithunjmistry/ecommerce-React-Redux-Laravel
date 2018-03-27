@@ -2,18 +2,18 @@ import React from 'react';
 import {Row, Col, Grid, Panel, Glyphicon} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
-const ProductNotFound = () => (
+const InformationPanel = (props) => (
     <Grid>
         <Row>
             <Col lg={12}>
                 <div className={"page-height-for-navbar"}>
                     <Panel bsStyle="primary">
                         <Panel.Heading>
-                            <Panel.Title componentClass="h3">Product Not available</Panel.Title>
+                            <Panel.Title componentClass="h3">{props.panelTitle}</Panel.Title>
                         </Panel.Heading>
                         <Panel.Body>
-                            <h4>You are on the wrong page!</h4>
-                            <p>Please click on the appropriate product link to view this product.</p>
+                            <h4>{props.informationHeading}</h4>
+                            <p>{props.message}</p>
                             <div>
                                 <Glyphicon glyph={"shopping-cart"} className={"empty-checkout-size"}/>
                             </div>
@@ -26,4 +26,4 @@ const ProductNotFound = () => (
     </Grid>
 );
 
-export default ProductNotFound;
+export default InformationPanel;

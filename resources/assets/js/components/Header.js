@@ -193,6 +193,7 @@ class Header extends React.Component{
                             onClick={() => this.categoryClickHandler("/books")}
                             noCaret
                         >
+                            <MenuItem onClick={() => this.categoryClickHandler("/books/book")}>Book</MenuItem>
                             <MenuItem onClick={() => this.categoryClickHandler("/books/novel")}>Novel</MenuItem>
                             <MenuItem onClick={() => this.categoryClickHandler("/books/magazine")}>Magazine</MenuItem>
                         </NavDropdown>
