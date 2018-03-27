@@ -4,7 +4,7 @@ import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 export default class HomePage extends React.Component{
     render(){
         return (
-        <Grid>
+        <Grid className={"page-height-for-navbar"}>
             <Row>
                 <Col lg={12} md={12}>
                     <Carousel interval={2500}>
