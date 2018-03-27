@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination";
 import CustomListGroupItem from './CustomListGroupItemProduct';
 import AdvancedFilters from './AdvancedFilters';
 import AdvancedFiltersModal from './AdvancedFiltersModal';
-import axios from "axios";
+import axios from "../api/axiosInstance";
 import {searchProductsAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import {Link} from "react-router-dom";

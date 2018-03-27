@@ -6,7 +6,7 @@ import {imageWatch} from "./image";
 import {addToCart, removeFromCart} from "../actions/shoppingCart";
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
-import axios from "axios";
+import axios from "../api/axiosInstance";
 import {productInfoAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import InformationPanel from "../components/InformationPanel";

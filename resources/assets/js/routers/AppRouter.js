@@ -45,8 +45,6 @@ const noMatchFound = () => (
     </div>
 );
 
-axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
-
 const appRouter = () => (
     <BrowserRouter>
         <div>
