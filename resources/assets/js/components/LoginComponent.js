@@ -37,9 +37,10 @@ class LoginComponent extends React.Component{
 
     render(){
         return (
-            <Grid className={"page-height-for-navbar margin-top-five"}>
+            <Grid className={"page-height-for-navbar"}>
                 <Row>
                     <Col mdOffset={2} lgOffset={2} lg={7} md={7}>
+                        <h3 className={"text-center"}>Login</h3>
                         <form onSubmit={this.onLoginSubmit}>
                             <FieldGroup
                                 id="formControlsUsername"

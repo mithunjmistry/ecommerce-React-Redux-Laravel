@@ -15,6 +15,7 @@ import Checkout from "../components/Checkout";
 import Order from "../components/Order";
 import LoadingScreen from "../components/LoadingScreen";
 import LoginComponent from "../components/LoginComponent";
+import RegistrationComponent from "../components/RegistrationComponent";
 
 const portfolioPage = () => (
     <div>
@@ -75,6 +76,7 @@ const appRouter = () => (
                 <Route path="/checkout" exact={true} component={Checkout} />
                 <Route path="/order" exact={true} component={Order}/>
                 <Route path="/login" exact={true} component={LoginComponent}/>
+                <Route path="/register" exact={true} component={RegistrationComponent}/>
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>
