@@ -120,12 +120,6 @@ class SubCategory extends React.Component{
                         </ListGroup>
                     </Col>
                 </Row>
-
-                <Row>
-                    <Col lg={12} md={12}>
-                        <p>Couldn't find what you are looking for? You can directly search for {SubCategory.firstLetterUppercase(this.props.match.params.subcategory)}</p>
-                    </Col>
-                </Row>
             </Grid>
         )
     }

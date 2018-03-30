@@ -17,7 +17,7 @@ class CategoryController extends Controller
                 return response()->json($e);
                 break;
             case "books":
-                $b = ["Novel", "Magazine"];
+                $b = ["Book", "Novel", "Magazine"];
                 return response()->json($b);
                 break;
             case "homerequirements":
