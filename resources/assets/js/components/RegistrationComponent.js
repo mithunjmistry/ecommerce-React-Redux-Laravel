@@ -209,7 +209,6 @@ class RegistrationComponent extends React.Component{
 
                             <FormGroup
                                 controlId="formBasicPassword"
-                                validationState={this.state.passwordValidation}
                             >
                                 <ControlLabel>Password</ControlLabel>
                                 <FormControl
@@ -223,7 +222,6 @@ class RegistrationComponent extends React.Component{
 
                             <FormGroup
                                 controlId="formBasicConfirmPassword"
-                                validationState={this.state.confirmPasswordValidation}
                             >
                                 <ControlLabel>Confirm Password</ControlLabel>
                                 <FormControl
