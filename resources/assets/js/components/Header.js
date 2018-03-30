@@ -18,7 +18,8 @@ class Header extends React.Component{
         searchMenuItems: ["Electronics", "Books", "Home"],
         dropDownSelected: "All",
         searchBoxText: "",
-        shoppingCartOpen: false
+        shoppingCartOpen: false,
+        menuItemMUI: ["Log In", "Register"]
     };
 
     categoryStateChangeHelper = (t) => {
@@ -140,6 +141,11 @@ class Header extends React.Component{
 
     };
 
+    menuOptionsClick = (menuItemName) => {
+        const url = menuItemName.split(" ").join("").toLowerCase();
+        this.props.history.push(url);
+    };
+
     searchBoxChange = (e) => {
         let searchBoxText = e.target.value;
         if(searchBoxText.length < 25){
@@ -259,11 +265,9 @@ class Header extends React.Component{
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                         className={"icon-menu"}
                     >
-                        <MenuItemMUI primaryText="Refresh" />
-                        <MenuItemMUI primaryText="Send feedback" />
-                        <MenuItemMUI primaryText="Settings" />
-                        <MenuItemMUI primaryText="Help" />
-                        <MenuItemMUI primaryText="Sign out" />
+                        {this.state.menuItemMUI.map((item, key) => (
+                            <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)} />
+                        ))}
                     </IconMenu>
                     </div>
                 </Navbar.Collapse>
