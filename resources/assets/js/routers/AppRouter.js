@@ -14,6 +14,7 @@ import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
 import Checkout from "../components/Checkout";
 import Order from "../components/Order";
 import LoadingScreen from "../components/LoadingScreen";
+import LoginComponent from "../components/LoginComponent";
 
 const portfolioPage = () => (
     <div>
@@ -73,7 +74,7 @@ const appRouter = () => (
                 <Route path="/product/:id" exact={true} component={ProductInfo} />
                 <Route path="/checkout" exact={true} component={Checkout} />
                 <Route path="/order" exact={true} component={Order}/>
-                <Route path="/test" component={LoadingScreen}/>
+                <Route path="/login" exact={true} component={LoginComponent}/>
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>

@@ -3,6 +3,10 @@ import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem, Button, Gly
 import { Link, withRouter } from 'react-router-dom';
 import ShoppingCart from '../components/ShoppingCart';
 import { connect } from 'react-redux';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItemMUI from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 class Header extends React.Component{
 
@@ -213,7 +217,8 @@ class Header extends React.Component{
                         </NavDropdown>
 
                     </Nav>
-                    <Navbar.Form pullRight>
+                    <div className={"pull-right display-header-right"}>
+                    <Navbar.Form>
                         <form onSubmit={this.onSearchFormSubmit}>
                         <FormGroup>
                             <InputGroup>
@@ -248,6 +253,19 @@ class Header extends React.Component{
                         </form>
                     </Navbar.Form>
                     <ShoppingCart handleClose={this.shoppingCartModalHide} show={this.state.shoppingCartOpen}/>
+                    <IconMenu
+                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                        className={"icon-menu"}
+                    >
+                        <MenuItemMUI primaryText="Refresh" />
+                        <MenuItemMUI primaryText="Send feedback" />
+                        <MenuItemMUI primaryText="Settings" />
+                        <MenuItemMUI primaryText="Help" />
+                        <MenuItemMUI primaryText="Sign out" />
+                    </IconMenu>
+                    </div>
                 </Navbar.Collapse>
             </Navbar>
         )
