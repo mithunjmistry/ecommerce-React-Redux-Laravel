@@ -6,7 +6,7 @@ import Category from '../components/CategoryBase';
 import SubCategory from '../components/SubCategory';
 import SearchResultsComponent from '../components/SearchResultsComponent';
 import ProductInfo from '../components/ProductInfo';
-import axios from 'axios';
+import axios from '../api/axiosInstance';
 
 import { Grid, Col, Row, Carousel } from 'react-bootstrap';
 

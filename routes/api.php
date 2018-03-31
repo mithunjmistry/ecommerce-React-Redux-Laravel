@@ -20,5 +20,5 @@ Route::get('/product/{product_id}', 'ProductController@product_info');
 Route::get('/category/{subcategory}', 'CategoryController@subcategory_products');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json($request->user());
 });

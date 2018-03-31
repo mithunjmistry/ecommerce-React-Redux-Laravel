@@ -11,7 +11,8 @@
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
-            'base_url' => env("BASE_URL")
+            'base_url' => env("BASE_URL"),
+            'client_secret' => env("PASSWORD_CLIENT_SECRET")
         ]) !!};
     </script>
 </head>

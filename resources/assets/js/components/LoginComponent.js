@@ -1,6 +1,12 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, Button, Grid, Row, Col } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
+import axios from 'axios';
+import {loginAPI, getUserAPI} from "../api/apiURLs";
+import {loginUser, logoutUser} from "../actions/authentication";
+import { connect } from 'react-redux';
+import {ACCESS_TOKEN, REFRESH_TOKEN} from "../api/strings";
+import LoadingScreen from "../components/LoadingScreen";
 
 const FieldGroup = ({ id, label, help, ...props }) => (
         <FormGroup controlId={id}>
@@ -14,8 +20,29 @@ class LoginComponent extends React.Component{
 
     state = {
         passwordHelp: undefined,
-        usernameHelp: undefined
+        usernameHelp: undefined,
+        invalidCredentials: undefined,
+        isLoading: false
     };
+
+    componentDidMount(){
+        if(window.localStorage.getItem(ACCESS_TOKEN) !== null){
+            // means the user is already logged in, check if it is valid
+            this.setState(() => ({isLoading: true}));
+            const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+            const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
+            axios.get(getUserAPI, {headers})
+                .then((response) => {
+                    this.props.dispatch(loginUser());
+                    this.props.history.push("/");
+                })
+                .catch((error) => {
+                    window.localStorage.removeItem(ACCESS_TOKEN);
+                    this.props.dispatch(logoutUser());
+                    this.setState(() => ({isLoading: false}));
+            });
+        }
+    }
 
     onLoginSubmit = (e) => {
         e.preventDefault();
@@ -33,9 +60,38 @@ class LoginComponent extends React.Component{
         }else{
             this.setState(() => ({usernameHelp: undefined}));
         }
+
+        if(email.length > 0 && password.length > 0){
+            const data = {
+              grant_type: "password",
+              client_id: "2",
+              client_secret: window.Laravel.client_secret,
+              username: email,
+              password: password,
+              scope: "*"
+            };
+            axios.post(loginAPI, data)
+                .then((response) => {
+                    window.localStorage.setItem(ACCESS_TOKEN, response.data.access_token);
+                    window.localStorage.setItem(REFRESH_TOKEN, response.data.refresh_token);
+                    this.setState(() => ({invalidCredentials: undefined}));
+                    this.props.dispatch(loginUser());
+                    this.props.history.push("/");
+                })
+                .catch((error) => (
+                    this.setState(() => ({
+                        invalidCredentials: true
+                    }))
+                ));
+        }
     };
 
     render(){
+
+        if(this.state.isLoading){
+            return <LoadingScreen/>
+        }
+
         return (
             <Grid className={"page-height-for-navbar"}>
                 <Row>
@@ -56,6 +112,7 @@ class LoginComponent extends React.Component{
                                 placeholder="Enter password"
                                 help={this.state.passwordHelp}
                             />
+                            {this.state.invalidCredentials && <p className={"error-message"}>Username or password not valid.</p>}
                             <Button type={"submit"}>Login</Button>
                         </form>
                         <div>
@@ -70,4 +127,10 @@ class LoginComponent extends React.Component{
     }
 }
 
-export default LoginComponent;
+const mapStateToProps = (state) => {
+    return {
+        authentication: state.authentication
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(LoginComponent));

@@ -7,6 +7,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItemMUI from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import {logoutUser} from "../actions/authentication";
+import {ACCESS_TOKEN} from "../api/strings";
 
 class Header extends React.Component{
 
@@ -83,6 +85,19 @@ class Header extends React.Component{
         }
     };
 
+    changeMenuMUIOptionsAuthenticated = () => {
+        this.setState(() => ({menuItemMUI: ["My account", "Log out"]}));
+    };
+
+    changeMenuMUIOptionsUnauthenticated = () => {
+        this.setState(() => ({menuItemMUI: ["Log In", "Register"]}));
+    };
+
+    logout = () => {
+        window.localStorage.removeItem(ACCESS_TOKEN);
+        this.props.dispatch(logoutUser());
+    };
+
     componentWillReceiveProps(nextProps){
         let currentPath = this.props.location.pathname;
         let nextPath = nextProps.location.pathname;
@@ -90,6 +105,21 @@ class Header extends React.Component{
             // path is been changed
             let t = nextPath.split('/',2)[1];
             this.categoryStateChangeHelper(t);
+            if(this.props.authentication.isAuthenticated){
+                this.changeMenuMUIOptionsAuthenticated();
+            }
+            else{
+                this.changeMenuMUIOptionsUnauthenticated();
+            }
+        }
+    }
+
+    componentDidMount(){
+        if(this.props.authentication.isAuthenticated){
+            this.changeMenuMUIOptionsAuthenticated();
+        }
+        else{
+            this.changeMenuMUIOptionsUnauthenticated();
         }
     }
 
@@ -265,9 +295,14 @@ class Header extends React.Component{
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                         className={"icon-menu"}
                     >
-                        {this.state.menuItemMUI.map((item, key) => (
-                            <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)} />
-                        ))}
+                        {this.state.menuItemMUI.map((item, key) => {
+                            if(item.toLowerCase() === "log out"){
+                                return <MenuItemMUI primaryText={item} key={key} onClick={this.logout}/>
+                            }
+                            else{
+                                return <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
+                            }
+                        })}
                     </IconMenu>
                     </div>
                 </Navbar.Collapse>
@@ -278,7 +313,8 @@ class Header extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        shoppingCart: state.shoppingCart
+        shoppingCart: state.shoppingCart,
+        authentication: state.authentication
     };
 };
 
