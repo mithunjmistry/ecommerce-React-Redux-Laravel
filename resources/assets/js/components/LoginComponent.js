@@ -114,12 +114,12 @@ class LoginComponent extends React.Component{
                                 help={this.state.passwordHelp}
                             />
                             {this.state.invalidCredentials && <p className={"error-message"}>Username or password not valid.</p>}
-                            <Button type={"submit"}>Login</Button>
+                            <Button type={"submit"} className={'btn btn-primary'}>Login</Button>
                         </form>
                         <div>
                             <br/>
                             <p>Don't have an account?</p>
-                            <Link to={"/register"}>Register</Link>
+                            <Link to={"/register"} className='btn btn-default'>Register</Link>
                         </div>
                     </Col>
                 </Row>

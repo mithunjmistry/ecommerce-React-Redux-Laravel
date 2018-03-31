@@ -1,6 +1,11 @@
 import React from 'react';
 import { Button, Grid, Row, Col, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import axios from "../api/axiosInstance";
+import {getUserAPI} from "../api/apiURLs";
+import {loginUser, logoutUser} from "../actions/authentication";
+import {ACCESS_TOKEN} from "../api/strings";
+import LoadingScreen from "../components/LoadingScreen";
 
 const s = "success";
 
@@ -9,8 +14,7 @@ class RegistrationComponent extends React.Component{
     state = {
         usernameValidation: null,
         passwordValidation: false,
-        firstNameValidation: null,
-        lastNameValidation: null,
+        fullNameValidation: null,
         address1: '',
         address2: '',
         city: '',
@@ -21,12 +25,31 @@ class RegistrationComponent extends React.Component{
         cityValidation: null,
         zipValidation: null,
         phoneValidation: null,
-        firstName: '',
-        lastName: '',
+        fullName: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        isLoading: false
     };
+
+    componentDidMount(){
+        if(window.localStorage.getItem(ACCESS_TOKEN) !== null){
+            // means the user is already logged in, check if it is valid
+            this.setState(() => ({isLoading: true}));
+            const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+            const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
+            axios.get(getUserAPI, {headers})
+                .then((response) => {
+                    this.props.dispatch(loginUser());
+                    this.props.history.push("/");
+                })
+                .catch((error) => {
+                    window.localStorage.removeItem(ACCESS_TOKEN);
+                    this.props.dispatch(logoutUser());
+                    this.setState(() => ({isLoading: false}));
+                });
+        }
+    }
 
     passwordChange = (e) => {
         const password = e.target.value;
@@ -114,29 +137,16 @@ class RegistrationComponent extends React.Component{
         }
     };
 
-    handleFirstNameChange = (e) => {
-        const firstName = e.target.value;
-        let firstNameValidation = null;
-        if(firstName.length > 0 && firstName.length < 45){
-            firstNameValidation = "success";
-            this.setState(() => ({firstName, firstNameValidation}));
+    handleFullNameChange = (e) => {
+        const fullName = e.target.value;
+        let fullNameValidation = null;
+        if(fullName.length > 0 && fullName.length < 45){
+            fullNameValidation = "success";
+            this.setState(() => ({fullName, fullNameValidation}));
         }
         else{
-            firstNameValidation = "error";
-            this.setState(() => ({firstNameValidation}));
-        }
-    };
-
-    handleLastNameChange = (e) => {
-        const lastName = e.target.value;
-        let lastNameValidation = null;
-        if(lastName.length > 0 && lastName.length < 45){
-            lastNameValidation = "success";
-            this.setState(() => ({lastName, lastNameValidation}));
-        }
-        else{
-            lastNameValidation = "error";
-            this.setState(() => ({lastNameValidation}));
+            fullNameValidation = "error";
+            this.setState(() => ({fullNameValidation}));
         }
     };
 
@@ -158,6 +168,11 @@ class RegistrationComponent extends React.Component{
     };
 
     render(){
+
+        if(this.state.isLoading){
+            return <LoadingScreen/>
+        }
+
         return (
             <Grid>
                 <Row>
@@ -166,29 +181,15 @@ class RegistrationComponent extends React.Component{
                         <form>
 
                             <FormGroup
-                                controlId="formBasicFirstName"
-                                validationState={this.state.firstNameValidation}
+                                controlId="formBasicFullName"
+                                validationState={this.state.fullNameValidation}
                             >
-                                <ControlLabel>First Name</ControlLabel>
+                                <ControlLabel>Full Name</ControlLabel>
                                 <FormControl
                                     type="text"
-                                    value={this.state.firstName}
-                                    placeholder="First Name"
-                                    onChange={this.handleFirstNameChange}
-                                />
-                                <FormControl.Feedback />
-                            </FormGroup>
-
-                            <FormGroup
-                                controlId="formBasicLastName"
-                                validationState={this.state.lastNameValidation}
-                            >
-                                <ControlLabel>Last Name</ControlLabel>
-                                <FormControl
-                                    type="text"
-                                    value={this.state.lastName}
-                                    placeholder="First Name"
-                                    onChange={this.handleLastNameChange}
+                                    value={this.state.fullName}
+                                    placeholder="Full Name"
+                                    onChange={this.handleFullNameChange}
                                 />
                                 <FormControl.Feedback />
                             </FormGroup>
@@ -323,8 +324,7 @@ class RegistrationComponent extends React.Component{
                             this.state.cityValidation === s &&
                             this.state.zipValidation === s &&
                             this.state.phoneValidation === s &&
-                            this.state.firstNameValidation === s &&
-                            this.state.lastNameValidation === s &&
+                            this.state.fullNameValidation === s &&
                             !this.state.passwordValidation &&
                             this.state.emailValidation === s &&
                             <Button type={"submit"}>Register</Button>
@@ -333,7 +333,7 @@ class RegistrationComponent extends React.Component{
                         <div>
                             <br/>
                             <p>Already have an account?</p>
-                            <Link to={"/login"}>Login</Link>
+                            <Link to={"/login"} className='btn btn-primary'>Login</Link>
                         </div>
                     </Col>
                 </Row>
