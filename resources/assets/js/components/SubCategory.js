@@ -110,6 +110,7 @@ class SubCategory extends React.Component{
                                 <CustomListGroupItem
                                     key={key}
                                     currentPrice={item.price}
+                                    prevPrice={item.originalPrice}
                                     sellerName={item.sellerName}
                                     ratings={item.ratings}
                                     productID={item.productId}

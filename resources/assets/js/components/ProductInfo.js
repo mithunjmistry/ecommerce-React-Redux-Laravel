@@ -142,9 +142,9 @@ class ProductInfo extends React.Component {
                                             starSpacing={"0px"}
                                             starRatedColor={"rgb(247, 202, 37)"}
                                         />
-                                        {this.state.numberOfRatings &&
+                                        {this.state.product.numberOfRatings &&
                                             <span className={"product-info-number-of-ratings"}>
-                                                {this.state.numberOfRatings} ratings
+                                                {this.state.product.numberOfRatings} ratings
                                             </span>
                                         }
                                     </div>
@@ -159,12 +159,12 @@ class ProductInfo extends React.Component {
                         </div>
 
                         <div className={"product-info-price"}>
-                            {this.state.prevPrice &&
-                            <span className={"product-deal-price-st"}>${this.state.prevPrice} </span>}
+                            {this.state.product.originalPrice &&
+                            <span className={"product-deal-price-st"}>${this.state.product.originalPrice} </span>}
                             <span className={"product-deal-price"}>${this.state.product.price}</span>
-                            {this.state.prevPrice &&
+                            {this.state.product.originalPrice &&
                                 <p className={"product-info-savings"}>
-                                    You save - ${this.state.prevPrice - this.state.product.price}
+                                    You save - ${(this.state.product.originalPrice - this.state.product.price).toFixed(2)}
                                 </p>
                             }
                         </div>
