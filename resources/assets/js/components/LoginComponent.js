@@ -26,7 +26,7 @@ class LoginComponent extends React.Component{
     };
 
     componentDidMount(){
-        if(window.localStorage.getItem(ACCESS_TOKEN) !== null && this.props.isAuthenticated){
+        if(window.localStorage.getItem(ACCESS_TOKEN) !== null){
             // means the user is already logged in, check if it is valid
             this.setState(() => ({isLoading: true}));
             const access_token = window.localStorage.getItem(ACCESS_TOKEN);
@@ -62,6 +62,7 @@ class LoginComponent extends React.Component{
         }
 
         if(email.length > 0 && password.length > 0){
+            this.setState(() => ({isLoading: true}));
             const data = {
               grant_type: "password",
               client_id: "2",
@@ -74,13 +75,13 @@ class LoginComponent extends React.Component{
                 .then((response) => {
                     window.localStorage.setItem(ACCESS_TOKEN, response.data.access_token);
                     window.localStorage.setItem(REFRESH_TOKEN, response.data.refresh_token);
-                    this.setState(() => ({invalidCredentials: undefined}));
                     this.props.dispatch(loginUser());
                     this.props.history.push("/");
                 })
                 .catch((error) => (
                     this.setState(() => ({
-                        invalidCredentials: true
+                        invalidCredentials: true,
+                        isLoading: false
                     }))
                 ));
         }

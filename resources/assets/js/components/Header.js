@@ -96,7 +96,7 @@ class Header extends React.Component{
     componentWillReceiveProps(nextProps){
         let currentPath = this.props.location.pathname;
         let nextPath = nextProps.location.pathname;
-        if(currentPath !== nextPath){
+        if(currentPath !== nextPath || this.props.authentication.isAuthenticated !== nextProps.authentication.isAuthenticated){
             // path is been changed
             let t = nextPath.split('/',2)[1];
             this.categoryStateChangeHelper(t);
