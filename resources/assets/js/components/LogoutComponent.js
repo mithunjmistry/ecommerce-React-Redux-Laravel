@@ -13,7 +13,8 @@ class LogoutComponent extends React.Component{
     };
 
     componentDidMount(){
-        if(this.props.authentication.isAuthenticated){
+        const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+        if(this.props.authentication.isAuthenticated && access_token !== null){
             const access_token = window.localStorage.getItem(ACCESS_TOKEN);
             const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
             axios.post(logoutAPI, headers)

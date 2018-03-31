@@ -100,7 +100,7 @@ class Header extends React.Component{
             // path is been changed
             let t = nextPath.split('/',2)[1];
             this.categoryStateChangeHelper(t);
-            if(this.props.authentication.isAuthenticated){
+            if(nextProps.authentication.isAuthenticated){
                 this.changeMenuMUIOptionsAuthenticated();
             }
             else{
