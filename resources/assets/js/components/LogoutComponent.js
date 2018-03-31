@@ -15,9 +15,8 @@ class LogoutComponent extends React.Component{
     componentDidMount(){
         const access_token = window.localStorage.getItem(ACCESS_TOKEN);
         if(this.props.authentication.isAuthenticated && access_token !== null){
-            const access_token = window.localStorage.getItem(ACCESS_TOKEN);
             const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
-            axios.post(logoutAPI, headers)
+            axios.post(logoutAPI, {}, {headers: headers})
                 .then(() => {
                     window.localStorage.removeItem(ACCESS_TOKEN);
                     window.localStorage.removeItem(REFRESH_TOKEN);
@@ -36,7 +35,7 @@ class LogoutComponent extends React.Component{
 
     render(){
         return (
-            <div className={"page-height-for-navbar"}>
+            <div className={"page-height-for-navbar"} ref={"logout-div"}>
                 <h3 className={"margin-five"}>{this.state.logoutMessage}</h3>
             </div>
         )

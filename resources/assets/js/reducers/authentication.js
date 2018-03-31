@@ -9,6 +9,7 @@ const authenticationReducerDefaultState = {
 export default (state = authenticationReducerDefaultState, action) => {
     switch (action.type) {
         case LOG_IN:
+            console.log("Logging user in");
             return {
                 isAuthenticated: true
             };

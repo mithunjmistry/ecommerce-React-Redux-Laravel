@@ -26,7 +26,7 @@ class LoginComponent extends React.Component{
     };
 
     componentDidMount(){
-        if(window.localStorage.getItem(ACCESS_TOKEN) !== null){
+        if(window.localStorage.getItem(ACCESS_TOKEN) !== null && this.props.isAuthenticated){
             // means the user is already logged in, check if it is valid
             this.setState(() => ({isLoading: true}));
             const access_token = window.localStorage.getItem(ACCESS_TOKEN);
