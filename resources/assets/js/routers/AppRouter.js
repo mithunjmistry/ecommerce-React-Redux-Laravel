@@ -6,36 +6,12 @@ import Category from '../components/CategoryBase';
 import SubCategory from '../components/SubCategory';
 import SearchResultsComponent from '../components/SearchResultsComponent';
 import ProductInfo from '../components/ProductInfo';
-import axios from 'axios';
-
-import { Grid, Col, Row, Carousel } from 'react-bootstrap';
-
-import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import Checkout from "../components/Checkout";
 import Order from "../components/Order";
-import LoadingScreen from "../components/LoadingScreen";
-
-const portfolioPage = () => (
-    <div>
-        <p>This is the portfolio page.</p>
-        <Link to="/portfolio/1">Portfolio 1</Link>
-        <br />
-        <Link to="/portfolio/2">Portfolio 2</Link>
-    </div>
-);
-
-const portfolioArticlePage = (props) => (
-    <div>
-        <p>This is the portfolio article {props.match.params.id}.</p>
-    </div>
-);
-
-const helpPage = (props) => (
-    <div>
-        <p>This is the help page. {props.match.params.subcategory}</p>
-        {/*<p>{props.match.params.id}</p>*/}
-    </div>
-);
+import LoginComponent from "../components/LoginComponent";
+import RegistrationComponent from "../components/RegistrationComponent";
+import LogoutComponent from "../components/LogoutComponent";
 
 const noMatchFound = () => (
     <div>
@@ -68,12 +44,13 @@ const appRouter = () => (
                 <Route path="/homerequirements/:subcategory" exact={true}
                        render={(routeProps) => (<SubCategory {...routeProps}
                                                           />)} />
-                <Route path="/electronics/:subcategory/:id" component={portfolioArticlePage}/>
                 <Route path="/search/:category/:query" exact={true} component={SearchResultsComponent} />
                 <Route path="/product/:id" exact={true} component={ProductInfo} />
                 <Route path="/checkout" exact={true} component={Checkout} />
                 <Route path="/order" exact={true} component={Order}/>
-                <Route path="/test" component={LoadingScreen}/>
+                <Route path="/login" exact={true} component={LoginComponent}/>
+                <Route path="/register" exact={true} component={RegistrationComponent}/>
+                <Route path="/logout" exact={true} component={LogoutComponent}/>
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>

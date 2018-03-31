@@ -1,15 +1,23 @@
 export const subitemsAPI = (subCategory) => (
-    `subitems/${subCategory}`
+    `api/subitems/${subCategory}`
 );
 
 export const searchProductsAPI = (category, query) => (
-    `search/${category}/${query}`
+    `api/search/${category}/${query}`
 );
 
 export const productInfoAPI = (productID) => (
-    `product/${productID}`
+    `api/product/${productID}`
 );
 
 export const subcategoryProductAPI = (subcategory) => (
-    `category/${subcategory}`
+    `api/category/${subcategory}`
 );
+
+export const loginAPI = "oauth/token";
+
+export const getUserAPI = "api/user";
+
+export const logoutAPI = "api/logout";
+
+export const registerAPI = "api/register";

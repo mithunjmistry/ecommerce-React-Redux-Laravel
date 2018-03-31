@@ -3,6 +3,10 @@ import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem, Button, Gly
 import { Link, withRouter } from 'react-router-dom';
 import ShoppingCart from '../components/ShoppingCart';
 import { connect } from 'react-redux';
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItemMUI from 'material-ui/MenuItem';
+
 
 class Header extends React.Component{
 
@@ -14,7 +18,9 @@ class Header extends React.Component{
         searchMenuItems: ["Electronics", "Books", "Home"],
         dropDownSelected: "All",
         searchBoxText: "",
-        shoppingCartOpen: false
+        shoppingCartOpen: false,
+        menuItemMUI: ["Log In", "Register"],
+        open: false
     };
 
     categoryStateChangeHelper = (t) => {
@@ -78,13 +84,36 @@ class Header extends React.Component{
         }
     };
 
+    changeMenuMUIOptionsAuthenticated = () => {
+        this.setState(() => ({menuItemMUI: ["My account", "Log out"]}));
+    };
+
+    changeMenuMUIOptionsUnauthenticated = () => {
+        this.setState(() => ({menuItemMUI: ["Log In", "Register"]}));
+    };
+
     componentWillReceiveProps(nextProps){
         let currentPath = this.props.location.pathname;
         let nextPath = nextProps.location.pathname;
-        if(currentPath !== nextPath){
+        if(currentPath !== nextPath || this.props.authentication.isAuthenticated !== nextProps.authentication.isAuthenticated){
             // path is been changed
             let t = nextPath.split('/',2)[1];
             this.categoryStateChangeHelper(t);
+            if(nextProps.authentication.isAuthenticated){
+                this.changeMenuMUIOptionsAuthenticated();
+            }
+            else{
+                this.changeMenuMUIOptionsUnauthenticated();
+            }
+        }
+    }
+
+    componentDidMount(){
+        if(this.props.authentication.isAuthenticated){
+            this.changeMenuMUIOptionsAuthenticated();
+        }
+        else{
+            this.changeMenuMUIOptionsUnauthenticated();
         }
     }
 
@@ -136,6 +165,12 @@ class Header extends React.Component{
 
     };
 
+    menuOptionsClick = (menuItemName) => {
+        this.setState(() => ({open: false}));
+        const url = menuItemName.split(" ").join("").toLowerCase();
+        this.props.history.push(url);
+    };
+
     searchBoxChange = (e) => {
         let searchBoxText = e.target.value;
         if(searchBoxText.length < 25){
@@ -153,6 +188,22 @@ class Header extends React.Component{
 
     shoppingCartModalHide = () => {
         this.setState(() => ({shoppingCartOpen: false}));
+    };
+
+    handleUserAccountClick = (event) => {
+        // This prevents ghost click.
+        event.preventDefault();
+
+        this.setState({
+            open: true,
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    handleUserAccountClose = () => {
+        this.setState({
+            open: false,
+        });
     };
 
     render(){
@@ -213,7 +264,8 @@ class Header extends React.Component{
                         </NavDropdown>
 
                     </Nav>
-                    <Navbar.Form pullRight>
+                    <div className={"pull-right display-header-right"}>
+                    <Navbar.Form>
                         <form onSubmit={this.onSearchFormSubmit}>
                         <FormGroup>
                             <InputGroup>
@@ -244,10 +296,31 @@ class Header extends React.Component{
                                     </span>
                                 }
                             </Button>
+                            <div className={"inline-div-display"}>
+                                <Button
+                                    onClick={this.handleUserAccountClick}
+                                    bsStyle={"link"}
+                                ><Glyphicon glyph={"user"} className={"cart-symbol-size"}/></Button>
+                                <Popover
+                                    open={this.state.open}
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                                    onRequestClose={this.handleUserAccountClose}
+                                    animation={PopoverAnimationVertical}
+                                >
+                                    <Menu>
+                                        {this.state.menuItemMUI.map((item, key) => (
+                                            <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
+                                        ))}
+                                    </Menu>
+                                </Popover>
+                            </div>
                         </FormGroup>
                         </form>
                     </Navbar.Form>
                     <ShoppingCart handleClose={this.shoppingCartModalHide} show={this.state.shoppingCartOpen}/>
+                    </div>
                 </Navbar.Collapse>
             </Navbar>
         )
@@ -256,7 +329,8 @@ class Header extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        shoppingCart: state.shoppingCart
+        shoppingCart: state.shoppingCart,
+        authentication: state.authentication
     };
 };
 
