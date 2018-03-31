@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Grid, Row, Col, ControlLabel, FormGroup, FormControl } from 'react-bootstrap';
+import { Button, Grid, Row, Col, ControlLabel, FormGroup, FormControl, Panel } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from "../api/axiosInstance";
-import {getUserAPI} from "../api/apiURLs";
+import {getUserAPI, registerAPI} from "../api/apiURLs";
 import {loginUser, logoutUser} from "../actions/authentication";
 import {ACCESS_TOKEN} from "../api/strings";
 import LoadingScreen from "../components/LoadingScreen";
@@ -29,7 +29,8 @@ class RegistrationComponent extends React.Component{
         email: '',
         password: '',
         confirmPassword: '',
-        isLoading: false
+        isLoading: false,
+        errors: []
     };
 
     componentDidMount(){
@@ -79,7 +80,7 @@ class RegistrationComponent extends React.Component{
         if(address1.trim().length === 0){
             addressValidation = "error";
         }
-        if(address1.length <= 45){
+        if(address1.length <= 255){
             this.setState(() => ({address1, addressValidation}));
         }
 
@@ -87,7 +88,7 @@ class RegistrationComponent extends React.Component{
 
     handleAddressTwoChange = (e) => {
         let address2 = e.target.value;
-        if(address2.length <= 45) {
+        if(address2.length <= 255) {
             this.setState(() => ({address2}));
         }
     };
@@ -167,6 +168,32 @@ class RegistrationComponent extends React.Component{
         }
     };
 
+    onRegisterClick = (e) => {
+        e.preventDefault();
+        this.setState(() => ({isLoading: true}));
+        const data = {
+            name: this.state.fullName,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.confirmPassword,
+            address1: this.state.address1,
+            address2: this.state.address2,
+            city: this.state.city,
+            state: this.state.stateName,
+            zip: this.state.zip,
+            phone: this.state.phone
+        };
+
+        axios.post(registerAPI, data)
+            .then(() => {
+                this.props.history.push("/login");
+            })
+            .catch((error) => {
+                 const errors = Object.values(error.response.data.errors);
+                 this.setState(() => ({isLoading: false, errors }));
+            });
+    };
+
     render(){
 
         if(this.state.isLoading){
@@ -178,6 +205,24 @@ class RegistrationComponent extends React.Component{
                 <Row>
                     <Col mdOffset={2} lgOffset={2} lg={7} md={7}>
                         <h3 className={"text-center"}>Register</h3>
+                        {this.state.errors.length > 0 &&
+                        <div>
+                            <Panel bsStyle="danger">
+                                <Panel.Heading>
+                                    <Panel.Title componentClass="h3">Error while registering</Panel.Title>
+                                </Panel.Heading>
+                                <Panel.Body>
+                                    <ul>
+                                        {this.state.errors.map((item) => (
+                                            item.map((error, k) => (
+                                                <li key={k}>{error}</li>
+                                            ))
+                                        ))}
+                                    </ul>
+                                </Panel.Body>
+                            </Panel>
+                        </div>
+                        }
                         <form>
 
                             <FormGroup
@@ -327,7 +372,7 @@ class RegistrationComponent extends React.Component{
                             this.state.fullNameValidation === s &&
                             !this.state.passwordValidation &&
                             this.state.emailValidation === s &&
-                            <Button type={"submit"}>Register</Button>
+                            <Button type={"submit"} onClick={this.onRegisterClick}>Register</Button>
                             }
                         </form>
                         <div>

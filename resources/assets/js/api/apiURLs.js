@@ -19,3 +19,5 @@ export const loginAPI = "oauth/token";
 export const getUserAPI = "api/user";
 
 export const logoutAPI = "api/logout";
+
+export const registerAPI = "api/register";
