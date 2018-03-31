@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Address;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -52,6 +55,12 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6',
+            'address1' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'zip' => 'required|integer|max:5',
+            'phone' => 'required|integer|max:10'
         ]);
     }
 
@@ -68,5 +77,34 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function register(Request $request){
+        $this->validator($request->all())->validate();
+
+        $user_check = User::where('email', $request['email'])->first();
+        if($user_check){
+            // the user already exists
+            return response()->json(["message" => "The user already exists"], 400);
+        }
+
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'userTypeId' => User::BUYER
+        ]);
+
+        Address::create([
+            'address1' => $request['address1'],
+            'address2' => $request['address2'],
+            'city' => $request['city'],
+            'state' => $request['state'],
+            'zip' => $request['zip'],
+            'phone' => $request['phone'],
+            'userId' => $user->id
+        ]);
+
+        return response("success", 200);
     }
 }

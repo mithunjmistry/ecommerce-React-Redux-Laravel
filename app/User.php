@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
     protected $primaryKey = "userId";
+    const BUYER = 2;
+    const SELLER = 3;
 
     /**
      * The attributes that are mass assignable.
