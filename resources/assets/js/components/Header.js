@@ -93,11 +93,6 @@ class Header extends React.Component{
         this.setState(() => ({menuItemMUI: ["Log In", "Register"]}));
     };
 
-    logout = () => {
-        window.localStorage.removeItem(ACCESS_TOKEN);
-        this.props.dispatch(logoutUser());
-    };
-
     componentWillReceiveProps(nextProps){
         let currentPath = this.props.location.pathname;
         let nextPath = nextProps.location.pathname;
@@ -295,14 +290,9 @@ class Header extends React.Component{
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                         className={"icon-menu"}
                     >
-                        {this.state.menuItemMUI.map((item, key) => {
-                            if(item.toLowerCase() === "log out"){
-                                return <MenuItemMUI primaryText={item} key={key} onClick={this.logout}/>
-                            }
-                            else{
-                                return <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
-                            }
-                        })}
+                        {this.state.menuItemMUI.map((item, key) => (
+                            <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
+                        ))}
                     </IconMenu>
                     </div>
                 </Navbar.Collapse>

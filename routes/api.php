@@ -22,3 +22,7 @@ Route::get('/category/{subcategory}', 'CategoryController@subcategory_products')
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
+
+Route::group(["middleware" => 'auth:api'], function () {
+    Route::post('logout', 'AuthenticationController@logoutAPI');
+});

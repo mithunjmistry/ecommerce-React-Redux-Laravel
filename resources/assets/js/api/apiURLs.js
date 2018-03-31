@@ -17,3 +17,5 @@ export const subcategoryProductAPI = (subcategory) => (
 export const loginAPI = "oauth/token";
 
 export const getUserAPI = "api/user";
+
+export const logoutAPI = "api/logout";

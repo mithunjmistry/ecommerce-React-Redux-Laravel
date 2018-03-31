@@ -1,4 +1,6 @@
 // default state
+import {LOG_IN, LOG_OUT} from "../api/strings";
+
 const authenticationReducerDefaultState = {
     isAuthenticated: false
 };
@@ -6,14 +8,12 @@ const authenticationReducerDefaultState = {
 // reducer which is a pure function
 export default (state = authenticationReducerDefaultState, action) => {
     switch (action.type) {
-        case 'LOG_IN':
+        case LOG_IN:
             return {
-                ...state,
                 isAuthenticated: true
             };
-        case 'LOG_OUT':
+        case LOG_OUT:
             return {
-                ...state,
                 isAuthenticated: false
             };
         default:
