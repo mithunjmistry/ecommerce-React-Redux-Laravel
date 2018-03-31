@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Row, Col, ControlLabel, FormGroup, FormControl, Panel } from 'react-bootstrap';
+import { Button, Grid, Row, Col, ControlLabel, FormGroup, FormControl, Panel, HelpBlock } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import axios from "../api/axiosInstance";
 import {getUserAPI, registerAPI} from "../api/apiURLs";
@@ -263,7 +263,8 @@ class RegistrationComponent extends React.Component{
                                     placeholder="Password"
                                     onChange={this.passwordChange}
                                 />
-                                {this.state.passwordValidation ? <span>Password doesn't match.</span> : ''}
+                                <HelpBlock>Password must of at least 6 characters.</HelpBlock>
+                                {this.state.passwordValidation ? <span className={"error-message"}>Password doesn't match.</span> : ''}
                             </FormGroup>
 
                             <FormGroup
@@ -276,7 +277,7 @@ class RegistrationComponent extends React.Component{
                                     placeholder="Confirm Password"
                                     onChange={this.confirmPasswordChange}
                                 />
-                                {this.state.passwordValidation && <span>Password doesn't match.</span>}
+                                {this.state.passwordValidation && <span className={"error-message"}>Password doesn't match.</span>}
                             </FormGroup>
 
                             <FormGroup
@@ -372,13 +373,14 @@ class RegistrationComponent extends React.Component{
                             this.state.fullNameValidation === s &&
                             !this.state.passwordValidation &&
                             this.state.emailValidation === s &&
-                            <Button type={"submit"} onClick={this.onRegisterClick}>Register</Button>
+                            this.state.password.length > 5 &&
+                            <Button type={"submit"} onClick={this.onRegisterClick} bsStyle={"primary"}>Register</Button>
                             }
                         </form>
                         <div>
                             <br/>
                             <p>Already have an account?</p>
-                            <Link to={"/login"} className='btn btn-primary'>Login</Link>
+                            <Link to={"/login"} className='btn btn-default'>Login</Link>
                         </div>
                     </Col>
                 </Row>
