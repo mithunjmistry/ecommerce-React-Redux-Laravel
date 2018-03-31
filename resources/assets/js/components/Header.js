@@ -3,12 +3,10 @@ import { Navbar, FormControl, FormGroup, Nav, NavDropdown, MenuItem, Button, Gly
 import { Link, withRouter } from 'react-router-dom';
 import ShoppingCart from '../components/ShoppingCart';
 import { connect } from 'react-redux';
-import IconMenu from 'material-ui/IconMenu';
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
 import MenuItemMUI from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {logoutUser} from "../actions/authentication";
-import {ACCESS_TOKEN} from "../api/strings";
+
 
 class Header extends React.Component{
 
@@ -21,7 +19,8 @@ class Header extends React.Component{
         dropDownSelected: "All",
         searchBoxText: "",
         shoppingCartOpen: false,
-        menuItemMUI: ["Log In", "Register"]
+        menuItemMUI: ["Log In", "Register"],
+        open: false
     };
 
     categoryStateChangeHelper = (t) => {
@@ -167,6 +166,7 @@ class Header extends React.Component{
     };
 
     menuOptionsClick = (menuItemName) => {
+        this.setState(() => ({open: false}));
         const url = menuItemName.split(" ").join("").toLowerCase();
         this.props.history.push(url);
     };
@@ -188,6 +188,22 @@ class Header extends React.Component{
 
     shoppingCartModalHide = () => {
         this.setState(() => ({shoppingCartOpen: false}));
+    };
+
+    handleUserAccountClick = (event) => {
+        // This prevents ghost click.
+        event.preventDefault();
+
+        this.setState({
+            open: true,
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    handleUserAccountClose = () => {
+        this.setState({
+            open: false,
+        });
     };
 
     render(){
@@ -280,20 +296,30 @@ class Header extends React.Component{
                                     </span>
                                 }
                             </Button>
+                            <div className={"inline-div-display"}>
+                                <Button
+                                    onClick={this.handleUserAccountClick}
+                                    bsStyle={"link"}
+                                ><Glyphicon glyph={"user"} className={"cart-symbol-size"}/></Button>
+                                <Popover
+                                    open={this.state.open}
+                                    anchorEl={this.state.anchorEl}
+                                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                                    onRequestClose={this.handleUserAccountClose}
+                                    animation={PopoverAnimationVertical}
+                                >
+                                    <Menu>
+                                        {this.state.menuItemMUI.map((item, key) => (
+                                            <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
+                                        ))}
+                                    </Menu>
+                                </Popover>
+                            </div>
                         </FormGroup>
                         </form>
                     </Navbar.Form>
                     <ShoppingCart handleClose={this.shoppingCartModalHide} show={this.state.shoppingCartOpen}/>
-                    <IconMenu
-                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                        className={"icon-menu"}
-                    >
-                        {this.state.menuItemMUI.map((item, key) => (
-                            <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
-                        ))}
-                    </IconMenu>
                     </div>
                 </Navbar.Collapse>
             </Navbar>
