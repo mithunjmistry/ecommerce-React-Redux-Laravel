@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Row, Col, ControlLabel, FormGroup, FormControl, Button} from "react-bootstrap";
+import {Grid, Row, Col, ControlLabel, FormGroup, FormControl, Button, Glyphicon} from "react-bootstrap";
 import ReactImageZoom from 'react-image-zoom';
 import StarRatingComponent from 'react-star-ratings';
 import {imageWatch} from "./image";
@@ -180,6 +180,13 @@ class ProductInfo extends React.Component {
                                 />
                             </FormGroup>
                         </div>
+
+                        {this.state.product.fastShipping ?
+                        <div className={"product-info-left-margin margin-bottom-three"}>
+                            <span className={"fast-shipping-span"}>
+                                <Glyphicon glyph={"ok"} className={"color-darkcyan"}/> This item qualifies for fast shipping.
+                            </span>
+                        </div> : ''}
 
                         <div className={"product-info-left-margin"}>
                             <span>
