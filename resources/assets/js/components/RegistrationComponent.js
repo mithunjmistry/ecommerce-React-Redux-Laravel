@@ -6,6 +6,7 @@ import {getUserAPI, registerAPI} from "../api/apiURLs";
 import {loginUser, logoutUser} from "../actions/authentication";
 import {ACCESS_TOKEN} from "../api/strings";
 import LoadingScreen from "../components/LoadingScreen";
+import { connect } from 'react-redux';
 
 const s = "success";
 
@@ -389,4 +390,4 @@ class RegistrationComponent extends React.Component{
     }
 }
 
-export default RegistrationComponent;
+export default connect()(RegistrationComponent);

@@ -34,4 +34,8 @@ class User extends Authenticatable
     public function AauthAcessToken(){
         return $this->hasMany('App\OauthAccessToken', 'user_id', 'userId');
     }
+
+    public function shoppingCartItems(){
+        return $this->hasMany('App\ShoppingCart', 'userId', 'userId');
+    }
 }

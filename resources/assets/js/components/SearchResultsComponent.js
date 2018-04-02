@@ -133,6 +133,7 @@ class SearchResultsComponent extends React.Component{
                 items.push(<CustomListGroupItem
                     key={i}
                     currentPrice={products[i].price}
+                    prevPrice={products[i].originalPrice}
                     sellerName={products[i].sellerName}
                     ratings={products[i].ratings}
                     productID={products[i].productId}

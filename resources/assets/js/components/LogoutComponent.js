@@ -15,15 +15,18 @@ class LogoutComponent extends React.Component{
     componentDidMount(){
         const access_token = window.localStorage.getItem(ACCESS_TOKEN);
         if(this.props.authentication.isAuthenticated && access_token !== null){
-            const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
-            axios.post(logoutAPI, {}, {headers: headers})
+            const headers = {
+                Accept: "application/json",
+                Authorization: `Bearer ${access_token}`
+            };
+            axios.post(logoutAPI, {}, {headers: {...headers}})
                 .then(() => {
                     window.localStorage.removeItem(ACCESS_TOKEN);
                     window.localStorage.removeItem(REFRESH_TOKEN);
                     this.props.dispatch(logoutUser());
                     this.props.history.push("/login");
                 })
-                .catch(() => {
+                .catch((error) => {
                      this.setState(() => ({logoutMessage: "Something went wrong! Please try again."}))
                 });
 
