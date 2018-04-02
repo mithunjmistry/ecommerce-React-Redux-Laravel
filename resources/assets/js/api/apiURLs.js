@@ -23,3 +23,7 @@ export const logoutAPI = "api/logout";
 export const registerAPI = "api/register";
 
 export const addToCartAPI = "api/addtocart";
+
+export const removeFromCartAPI = (productID) => (
+    `api/removefromcart/${productID}`
+);

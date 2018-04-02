@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 import axios from "../api/axiosInstance";
 import {ACCESS_TOKEN, ADD_TO_CART, EDIT_CART, EMPTY_CART, REMOVE_FROM_CART} from "../api/strings";
-import {addToCartAPI} from "../api/apiURLs";
+import {addToCartAPI, removeFromCartAPI} from "../api/apiURLs";
 // ADD_TO_CART
 const addToCartHelper = (
     {
@@ -28,7 +28,7 @@ const addToCartHelper = (
 });
 
 // REMOVE_FROM_CART
-export const removeFromCart = ({ productID } = {}) => ({
+const removeFromCartHelper = (productID) => ({
     type: REMOVE_FROM_CART,
     productID
 });
@@ -44,6 +44,26 @@ export const editCart = (productID, updates) => ({
 export const emptyCart = () => ({
     type: EMPTY_CART
 });
+
+export const removeFromCart = ({ productID } = {}) => {
+    return (dispatch, getState) => {
+        const {authentication} = getState();
+        if(authentication.isAuthenticated){
+            // make an API call
+            const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+            const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
+
+            axios.delete(removeFromCartAPI(productID), {headers: {...headers}})
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                });
+        }
+        dispatch(removeFromCartHelper(productID));
+    }
+};
 
 export const addToCart = (product = {}) => {
     return (dispatch, getState) => {

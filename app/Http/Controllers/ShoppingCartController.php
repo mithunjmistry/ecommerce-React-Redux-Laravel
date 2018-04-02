@@ -24,4 +24,13 @@ class ShoppingCartController extends Controller
         }
         return response("added to cart", 200);
     }
+
+    public function remove_from_cart($product_id){
+        if(Auth::check()) {
+            $user = Auth::user();
+            $shopping_cart = ShoppingCart::where('product_id', $product_id)->where('userId', $user->userId)->first();
+            $shopping_cart->delete();
+        }
+        return response('removed from cart', 200);
+    }
 }

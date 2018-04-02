@@ -28,4 +28,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(["middleware" => 'auth:api'], function () {
     Route::post('addtocart', 'ShoppingCartController@add_to_cart');
+    Route::delete('removefromcart/{product_id}', 'ShoppingCartController@remove_from_cart');
 });

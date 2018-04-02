@@ -167,7 +167,7 @@ class Header extends React.Component{
 
     menuOptionsClick = (menuItemName) => {
         this.setState(() => ({open: false}));
-        const url = menuItemName.split(" ").join("").toLowerCase();
+        const url = "/".concat(menuItemName.split(" ").join("").toLowerCase());
         this.props.history.push(url);
     };
 
