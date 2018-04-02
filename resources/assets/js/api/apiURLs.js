@@ -21,3 +21,5 @@ export const getUserAPI = "api/user";
 export const logoutAPI = "api/logout";
 
 export const registerAPI = "api/register";
+
+export const addToCartAPI = "api/addtocart";

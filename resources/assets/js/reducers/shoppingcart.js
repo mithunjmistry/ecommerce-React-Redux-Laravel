@@ -1,10 +1,12 @@
 // default state
+import {ADD_TO_CART, EDIT_CART, EMPTY_CART, REMOVE_FROM_CART} from "../api/strings";
+
 const shoppingCartReducerDefaultState = [];
 
 // reducer which is a pure function
 export default (state = shoppingCartReducerDefaultState, action) => {
     switch (action.type) {
-        case 'ADD_TO_CART':
+        case ADD_TO_CART:
             let idAlreadyExists = state.some(function (el) {
                 return el.productID === action.shoppingCart.productID;
             });
@@ -19,9 +21,9 @@ export default (state = shoppingCartReducerDefaultState, action) => {
                     action.shoppingCart
                 ];
             }
-        case 'REMOVE_FROM_CART':
+        case REMOVE_FROM_CART:
             return state.filter(({ productID }) => productID !== action.productID);
-        case 'EDIT_CART':
+        case EDIT_CART:
             return state.map((shoppingCart) => {
                 if (shoppingCart.productID === action.productID) {
                     return {
@@ -32,7 +34,7 @@ export default (state = shoppingCartReducerDefaultState, action) => {
                     return shoppingCart;
                 }
             });
-        case 'EMPTY_CART':
+        case EMPTY_CART:
             return (state.length = 0);
         default:
             return state;
