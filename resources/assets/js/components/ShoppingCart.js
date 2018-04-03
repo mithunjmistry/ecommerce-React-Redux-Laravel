@@ -23,8 +23,8 @@ class ShoppingCart extends React.Component{
             cartContent = (
                 <div>
                     <ListGroup className={"shopping-cart-listgroup"}>
-                        {this.props.shoppingCart.map((item) => {
-                            return <CustomListGroupItem key={item.productID} {...item} />;
+                        {this.props.shoppingCart.map((item, key) => {
+                            return <CustomListGroupItem key={item.productID} {...item} key={key} />;
                         })}
                     </ListGroup>
                     <hr/>

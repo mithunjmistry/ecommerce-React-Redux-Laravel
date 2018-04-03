@@ -3,7 +3,7 @@ import axios from "../api/axiosInstance";
 import {ACCESS_TOKEN, ADD_TO_CART, EDIT_CART, EMPTY_CART, REMOVE_FROM_CART} from "../api/strings";
 import {addToCartAPI, removeFromCartAPI} from "../api/apiURLs";
 // ADD_TO_CART
-const addToCartHelper = (
+export const addToCartHelper = (
     {
         productName,
         productImage = undefined,

@@ -27,3 +27,5 @@ export const addToCartAPI = "api/addtocart";
 export const removeFromCartAPI = (productID) => (
     `api/removefromcart/${productID}`
 );
+
+export const getUserCartAPI = "api/getusercart";

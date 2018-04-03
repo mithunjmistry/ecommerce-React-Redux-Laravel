@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,5 +33,13 @@ class ShoppingCartController extends Controller
             $shopping_cart->delete();
         }
         return response('removed from cart', 200);
+    }
+
+    public function get_user_cart(){
+        $user = Auth::user();
+        $user_cart = $user->shoppingCartItems->pluck('product_id')->toArray();
+        $products = Product::whereIn('productId', $user_cart)->get();
+
+        return response()->json($products);
     }
 }

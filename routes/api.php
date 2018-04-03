@@ -13,14 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(["middleware" => 'web'], function () {
-    Route::get('/subitems/{subcategory}', 'CategoryController@subcategories');
-    Route::get('/search/{category}/{query}', 'ProductController@search');
-    Route::get('/product/{product_id}', 'ProductController@product_info');
-    Route::get('/category/{subcategory}', 'CategoryController@subcategory_products');
-    Route::post('register', 'Auth\RegisterController@register');
-    Route::post('logout', 'AuthenticationController@logoutAPI');
-});
+Route::get('/subitems/{subcategory}', 'CategoryController@subcategories');
+Route::get('/search/{category}/{query}', 'ProductController@search');
+Route::get('/product/{product_id}', 'ProductController@product_info');
+Route::get('/category/{subcategory}', 'CategoryController@subcategory_products');
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('logout', 'AuthenticationController@logoutAPI');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return response()->json($request->user());
@@ -29,4 +27,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(["middleware" => 'auth:api'], function () {
     Route::post('addtocart', 'ShoppingCartController@add_to_cart');
     Route::delete('removefromcart/{product_id}', 'ShoppingCartController@remove_from_cart');
+    Route::get('getusercart', 'ShoppingCartController@get_user_cart');
 });

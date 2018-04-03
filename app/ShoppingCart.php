@@ -13,4 +13,8 @@ class ShoppingCart extends Model
     protected $primaryKey = "shoppingCartId";
 
     protected $guarded = [];
+
+    public function products(){
+        return $this->hasMany('App\Product', 'productId', 'product_id');
+    }
 }

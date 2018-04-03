@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Log;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -36,6 +37,8 @@ class User extends Authenticatable
     }
 
     public function shoppingCartItems(){
-        return $this->hasMany('App\ShoppingCart', 'userId', 'userId');
+        return $this->hasMany('App\ShoppingCart', 'userId', 'userId')
+                    ->where('expired', false)
+                    ->where('wishList', false);
     }
 }

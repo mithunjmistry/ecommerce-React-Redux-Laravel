@@ -2,11 +2,13 @@ import React from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock, Button, Grid, Row, Col } from 'react-bootstrap';
 import {withRouter, Link} from 'react-router-dom';
 import axios from 'axios';
-import {loginAPI, getUserAPI} from "../api/apiURLs";
+import {loginAPI, getUserAPI, getUserCartAPI} from "../api/apiURLs";
 import {loginUser, logoutUser} from "../actions/authentication";
 import { connect } from 'react-redux';
 import {ACCESS_TOKEN, REFRESH_TOKEN} from "../api/strings";
 import LoadingScreen from "../components/LoadingScreen";
+import {addToCartHelper} from "../actions/shoppingCart";
+import {imageWatch} from "./image";
 
 const FieldGroup = ({ id, label, help, ...props }) => (
         <FormGroup controlId={id}>
@@ -25,22 +27,46 @@ class LoginComponent extends React.Component{
         isLoading: false
     };
 
+    loadCartService = () => {
+        const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+        const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
+        axios.get(getUserCartAPI, {headers})
+            .then((response) => {
+                    this.props.dispatch(loginUser());
+                    response.data.map((item) => {
+                        const productName = item.name;
+                        const productImage = imageWatch;
+                        const sellerName = item.sellerName;
+                        const ratings = item.ratings;
+                        const quantity = 1;
+                        const price = item.price;
+                        const productID = item.productId;
+                        const product = {
+                            productName,
+                            productImage,
+                            sellerName,
+                            ratings,
+                            quantity,
+                            price,
+                            productID
+                        };
+                        this.props.dispatch(addToCartHelper(product));
+                    });
+                    this.props.history.push("/");
+                }
+            )
+            .catch((error) => {
+                console.log(error.response);
+                window.localStorage.removeItem(ACCESS_TOKEN);
+                this.props.dispatch(logoutUser());
+            });
+    };
+
     componentDidMount(){
         if(window.localStorage.getItem(ACCESS_TOKEN) !== null){
             // means the user is already logged in, check if it is valid
             this.setState(() => ({isLoading: true}));
-            const access_token = window.localStorage.getItem(ACCESS_TOKEN);
-            const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
-            axios.get(getUserAPI, {headers})
-                .then((response) => {
-                    this.props.dispatch(loginUser());
-                    this.props.history.push("/");
-                })
-                .catch((error) => {
-                    window.localStorage.removeItem(ACCESS_TOKEN);
-                    this.props.dispatch(logoutUser());
-                    this.setState(() => ({isLoading: false}));
-            });
+            this.loadCartService();
         }
     }
 
@@ -76,7 +102,7 @@ class LoginComponent extends React.Component{
                     window.localStorage.setItem(ACCESS_TOKEN, response.data.access_token);
                     window.localStorage.setItem(REFRESH_TOKEN, response.data.refresh_token);
                     this.props.dispatch(loginUser());
-                    this.props.history.push("/");
+                    this.loadCartService();
                 })
                 .catch((error) => (
                     this.setState(() => ({

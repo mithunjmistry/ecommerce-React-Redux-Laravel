@@ -27,6 +27,7 @@ class LogoutComponent extends React.Component{
                     this.props.history.push("/login");
                 })
                 .catch((error) => {
+                    console.log(error.response);
                      this.setState(() => ({logoutMessage: "Something went wrong! Please try again."}))
                 });
 

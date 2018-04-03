@@ -6,10 +6,10 @@ import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import '../sass/app.scss';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {addToCart} from "./actions/shoppingCart";
+import {addToCart, addToCartHelper} from "./actions/shoppingCart";
 import {imageWatch} from "./components/image";
 import axios from "./api/axiosInstance";
-import {getUserAPI} from "./api/apiURLs";
+import {getUserAPI, getUserCartAPI} from "./api/apiURLs";
 import {loginUser, logoutUser} from "./actions/authentication";
 import {ACCESS_TOKEN} from "./api/strings";
 
@@ -36,14 +36,32 @@ const product = {
     price: 19.99,
     productID: 1
 };
-store.dispatch(addToCart(product));
 
 // initial load, check if user is logged in
 const access_token = window.localStorage.getItem(ACCESS_TOKEN);
 const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
-axios.get(getUserAPI, {headers})
+axios.get(getUserCartAPI, {headers})
     .then((response) => {
         store.dispatch(loginUser());
+        response.data.map((item) => {
+            const productName = item.name;
+            const productImage = imageWatch;
+            const sellerName = item.sellerName;
+            const ratings = item.ratings;
+            const quantity = 1;
+            const price = item.price;
+            const productID = item.productId;
+            const product = {
+                productName,
+                productImage,
+                sellerName,
+                ratings,
+                quantity,
+                price,
+                productID
+            };
+            store.dispatch(addToCartHelper(product));
+        })
     })
     .catch((error) => {
         window.localStorage.removeItem(ACCESS_TOKEN);
