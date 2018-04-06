@@ -12,6 +12,7 @@ import Order from "../components/Order";
 import LoginComponent from "../components/LoginComponent";
 import RegistrationComponent from "../components/RegistrationComponent";
 import LogoutComponent from "../components/LogoutComponent";
+import MyAccount from "../components/MyAccount";
 
 const noMatchFound = () => (
     <div>
@@ -51,6 +52,7 @@ const appRouter = () => (
                 <Route path="/login" exact={true} component={LoginComponent}/>
                 <Route path="/register" exact={true} component={RegistrationComponent}/>
                 <Route path="/logout" exact={true} component={LogoutComponent}/>
+                <Route path="/myaccount" exact={true} component={MyAccount}/>
                 <Route component={noMatchFound} />
             </Switch>
             <Footer/>
