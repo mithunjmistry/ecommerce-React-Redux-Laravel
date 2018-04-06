@@ -41,4 +41,10 @@ class User extends Authenticatable
                     ->where('expired', false)
                     ->where('wishList', false);
     }
+
+    public function wishlistItems(){
+        return $this->hasMany('App\ShoppingCart', 'userId', 'userId')
+            ->where('expired', false)
+            ->where('wishList', true);
+    }
 }

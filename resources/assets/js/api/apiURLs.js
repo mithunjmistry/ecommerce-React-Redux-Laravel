@@ -29,3 +29,14 @@ export const removeFromCartAPI = (productID) => (
 );
 
 export const getUserCartAPI = "api/getusercart";
+
+export const addToWishlistAPI = "api/addtowishlist";
+
+export const removeFromWishlistAPI = (productID) => (
+    `api/removefromwishlist/${productID}`
+);
+
+export const getUserWishlistAPI = "api/getuserwishlist";
+
+export const wishlistToCartAPI = "api/wishlistcart";
+

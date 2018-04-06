@@ -25,7 +25,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(["middleware" => 'auth:api'], function () {
+    // shopping cart routes
     Route::post('addtocart', 'ShoppingCartController@add_to_cart');
     Route::delete('removefromcart/{product_id}', 'ShoppingCartController@remove_from_cart');
     Route::get('getusercart', 'ShoppingCartController@get_user_cart');
+    // wishlist routes
+    Route::get('getuserwishlist', 'WishlistController@get_user_wishlist');
+    Route::post('addtowishlist', 'WishlistController@add_to_wishlist');
+    Route::delete('removefromwishlist/{product_id}', 'WishlistController@remove_from_wishlist');
+    Route::post('wishlistcart', 'WishlistController@wishlist_to_cart');
 });

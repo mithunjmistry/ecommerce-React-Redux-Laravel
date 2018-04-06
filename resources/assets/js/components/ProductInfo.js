@@ -10,6 +10,7 @@ import axios from "../api/axiosInstance";
 import {productInfoAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import InformationPanel from "../components/InformationPanel";
+import {addToWishlist} from "../actions/wishlist";
 
 class ProductInfo extends React.Component {
 
@@ -99,6 +100,20 @@ class ProductInfo extends React.Component {
 
     handleUndoAction = () => {
         ProductInfo.removeItemFromCart(this.state.productID, this.props);
+    };
+
+    handleAddToWishlist = () => {
+        const product = {
+            productName: this.state.product.name,
+            productImage: this.state.productImage,
+            sellerName: this.state.product.sellerName,
+            ratings: this.state.product.ratings,
+            quantity: this.state.quantity,
+            price: this.state.product.price,
+            productID: this.state.productID,
+            prevPrice: this.state.product.originalPrice
+        };
+        this.props.dispatch(addToWishlist(product));
     };
 
     render(){
@@ -196,7 +211,7 @@ class ProductInfo extends React.Component {
                                     onClick={this.addToCartOnClick}
                                 >Add to Cart
                                 </Button>
-                                <Button>Add to Wishlist</Button>
+                                <Button onClick={this.handleAddToWishlist}>Add to Wishlist</Button>
                             </span>
                         </div>
                     </Col>
