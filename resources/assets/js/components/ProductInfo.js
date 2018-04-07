@@ -10,7 +10,8 @@ import axios from "../api/axiosInstance";
 import {productInfoAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import InformationPanel from "../components/InformationPanel";
-import {addToWishlist} from "../actions/wishlist";
+import {addToWishlist, removeFromWishlist} from "../actions/wishlist";
+import {ADDED_TO_CART_SNACKBAR, ADDED_TO_WISHLIST_SNACKBAR} from "../api/strings";
 
 class ProductInfo extends React.Component {
 
@@ -24,7 +25,8 @@ class ProductInfo extends React.Component {
       autoHideDuration: 3000,
       snackbarOpen:false,
       isLoading: false,
-      productNotFound: false
+      productNotFound: false,
+      snackbarMessage: ""
     };
 
     loadProductDetails = (productID) => {
@@ -69,7 +71,7 @@ class ProductInfo extends React.Component {
             productID: this.state.productID
         };
         this.props.dispatch(addToCart(product));
-        this.setState(() => ({snackbarOpen: true}))
+        this.setState(() => ({snackbarOpen: true, snackbarMessage: ADDED_TO_CART_SNACKBAR}))
     };
 
     onQuantityChange = (e) => {
@@ -99,7 +101,13 @@ class ProductInfo extends React.Component {
     };
 
     handleUndoAction = () => {
-        ProductInfo.removeItemFromCart(this.state.productID, this.props);
+        if(this.state.snackbarMessage === ADDED_TO_CART_SNACKBAR){
+            ProductInfo.removeItemFromCart(this.state.productID, this.props);
+        }
+        else{
+            this.props.dispatch(removeFromWishlist(this.state.productID));
+        }
+        this.handleSnackbarRequestClose();
     };
 
     handleAddToWishlist = () => {
@@ -114,6 +122,7 @@ class ProductInfo extends React.Component {
             prevPrice: this.state.product.originalPrice
         };
         this.props.dispatch(addToWishlist(product));
+        this.setState(() => ({snackbarOpen: true, snackbarMessage: ADDED_TO_WISHLIST_SNACKBAR}));
     };
 
     render(){
@@ -232,7 +241,7 @@ class ProductInfo extends React.Component {
                 <div>
                     <Snackbar
                         open={this.state.snackbarOpen}
-                        message={"Added to Cart"}
+                        message={this.state.snackbarMessage}
                         action="undo"
                         autoHideDuration={this.state.autoHideDuration}
                         onActionClick={this.handleUndoAction}
