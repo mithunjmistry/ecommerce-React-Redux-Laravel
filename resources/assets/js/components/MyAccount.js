@@ -41,7 +41,7 @@ class MyAccount extends React.Component{
           }
 
           return (
-              <Grid>
+              <Grid className={"minimum-height"}>
                   <Row>
                       <Col lg={12} md={12}>
                           <Panel>
