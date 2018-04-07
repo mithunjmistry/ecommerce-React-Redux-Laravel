@@ -10,6 +10,8 @@ import axios from "../api/axiosInstance";
 import {productInfoAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import InformationPanel from "../components/InformationPanel";
+import {addToWishlist, removeFromWishlist} from "../actions/wishlist";
+import {ADDED_TO_CART_SNACKBAR, ADDED_TO_WISHLIST_SNACKBAR} from "../api/strings";
 
 class ProductInfo extends React.Component {
 
@@ -23,7 +25,8 @@ class ProductInfo extends React.Component {
       autoHideDuration: 3000,
       snackbarOpen:false,
       isLoading: false,
-      productNotFound: false
+      productNotFound: false,
+      snackbarMessage: ""
     };
 
     loadProductDetails = (productID) => {
@@ -68,7 +71,7 @@ class ProductInfo extends React.Component {
             productID: this.state.productID
         };
         this.props.dispatch(addToCart(product));
-        this.setState(() => ({snackbarOpen: true}))
+        this.setState(() => ({snackbarOpen: true, snackbarMessage: ADDED_TO_CART_SNACKBAR}))
     };
 
     onQuantityChange = (e) => {
@@ -98,7 +101,28 @@ class ProductInfo extends React.Component {
     };
 
     handleUndoAction = () => {
-        ProductInfo.removeItemFromCart(this.state.productID, this.props);
+        if(this.state.snackbarMessage === ADDED_TO_CART_SNACKBAR){
+            ProductInfo.removeItemFromCart(this.state.productID, this.props);
+        }
+        else{
+            this.props.dispatch(removeFromWishlist(this.state.productID));
+        }
+        this.handleSnackbarRequestClose();
+    };
+
+    handleAddToWishlist = () => {
+        const product = {
+            productName: this.state.product.name,
+            productImage: this.state.productImage,
+            sellerName: this.state.product.sellerName,
+            ratings: this.state.product.ratings,
+            quantity: this.state.quantity,
+            price: this.state.product.price,
+            productID: this.state.productID,
+            prevPrice: this.state.product.originalPrice
+        };
+        this.props.dispatch(addToWishlist(product));
+        this.setState(() => ({snackbarOpen: true, snackbarMessage: ADDED_TO_WISHLIST_SNACKBAR}));
     };
 
     render(){
@@ -196,7 +220,7 @@ class ProductInfo extends React.Component {
                                     onClick={this.addToCartOnClick}
                                 >Add to Cart
                                 </Button>
-                                <Button>Add to Wishlist</Button>
+                                <Button onClick={this.handleAddToWishlist}>Add to Wishlist</Button>
                             </span>
                         </div>
                     </Col>
@@ -217,7 +241,7 @@ class ProductInfo extends React.Component {
                 <div>
                     <Snackbar
                         open={this.state.snackbarOpen}
-                        message={"Added to Cart"}
+                        message={this.state.snackbarMessage}
                         action="undo"
                         autoHideDuration={this.state.autoHideDuration}
                         onActionClick={this.handleUndoAction}

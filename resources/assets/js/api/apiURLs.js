@@ -23,3 +23,20 @@ export const logoutAPI = "api/logout";
 export const registerAPI = "api/register";
 
 export const addToCartAPI = "api/addtocart";
+
+export const removeFromCartAPI = (productID) => (
+    `api/removefromcart/${productID}`
+);
+
+export const getUserCartAPI = "api/getusercart";
+
+export const addToWishlistAPI = "api/addtowishlist";
+
+export const removeFromWishlistAPI = (productID) => (
+    `api/removefromwishlist/${productID}`
+);
+
+export const getUserWishlistAPI = "api/getuserwishlist";
+
+export const wishlistToCartAPI = "api/wishlistcart";
+

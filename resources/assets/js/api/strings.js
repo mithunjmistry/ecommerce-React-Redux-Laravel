@@ -13,3 +13,13 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const EDIT_CART = "EDIT_CART";
 
 export const EMPTY_CART = "EMPTY_CART";
+
+export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST";
+
+export const REMOVE_FROM_WISHLIST = "REMOVE_FROM_WISHLIST";
+
+export const EMPTY_WISHLIST = "EMPTY_WISHLIST";
+
+export const ADDED_TO_CART_SNACKBAR = "Added to Cart";
+
+export const ADDED_TO_WISHLIST_SNACKBAR = "Added to Wishlist";

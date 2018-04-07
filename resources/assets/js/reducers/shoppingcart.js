@@ -8,12 +8,10 @@ export default (state = shoppingCartReducerDefaultState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
             let idAlreadyExists = state.some(function (el) {
-                return el.productID === action.shoppingCart.productID;
+                return el.productID.toString() === action.shoppingCart.productID.toString();
             });
             if(idAlreadyExists){
-                return [
-                    ...state
-                ];
+                return state;
             }
             else{
                 return [
@@ -22,10 +20,10 @@ export default (state = shoppingCartReducerDefaultState, action) => {
                 ];
             }
         case REMOVE_FROM_CART:
-            return state.filter(({ productID }) => productID !== action.productID);
+            return state.filter(({ productID }) => productID.toString() !== action.productID.toString());
         case EDIT_CART:
             return state.map((shoppingCart) => {
-                if (shoppingCart.productID === action.productID) {
+                if (shoppingCart.productID.toString() === action.productID.toString()) {
                     return {
                         ...shoppingCart,
                         ...action.updates
