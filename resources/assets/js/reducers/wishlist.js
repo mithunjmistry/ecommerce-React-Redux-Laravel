@@ -6,7 +6,7 @@ export default (state = wishlistReducerDefaultState, action) => {
     switch (action.type) {
         case ADD_TO_WISHLIST:
             let idAlreadyExists = state.some(function (el) {
-                return el.productID === action.wishlist.productID;
+                return el.productID.toString() === action.wishlist.productID.toString();
             });
             if(idAlreadyExists){
                 return state;

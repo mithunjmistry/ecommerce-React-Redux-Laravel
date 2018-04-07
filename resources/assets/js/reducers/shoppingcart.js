@@ -8,12 +8,10 @@ export default (state = shoppingCartReducerDefaultState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
             let idAlreadyExists = state.some(function (el) {
-                return el.productID === action.shoppingCart.productID;
+                return el.productID.toString() === action.shoppingCart.productID.toString();
             });
             if(idAlreadyExists){
-                return [
-                    ...state
-                ];
+                return state;
             }
             else{
                 return [

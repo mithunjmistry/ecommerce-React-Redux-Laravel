@@ -48,12 +48,12 @@ export const addToWishlist = (product = {}) => {
             // make an API call
             const access_token = window.localStorage.getItem(ACCESS_TOKEN);
             const headers = {Accept: "application/json", Authorization: `Bearer ${access_token}`};
-            const {productID, quantity} = product;
+            const {productID} = product;
             const data = {
                 product_id: productID,
-                quantity: quantity
+                quantity: 1
             };
-            axios.post(addToWishlistAPI,data, {headers: {...headers}})
+            axios.post(addToWishlistAPI,data, {headers})
                 .then((response) => {
                     console.log(response.data);
                 })
