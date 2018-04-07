@@ -18,7 +18,7 @@ export default (state = wishlistReducerDefaultState, action) => {
                 ];
             }
         case REMOVE_FROM_WISHLIST:
-            return state.filter(({ productID }) => productID !== action.productID);
+            return state.filter(({ productID }) => productID.toString() !== action.productID.toString());
         case EMPTY_WISHLIST:
             return (state.length = 0);
         default:
