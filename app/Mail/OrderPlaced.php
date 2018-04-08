@@ -16,10 +16,10 @@ class OrderPlaced extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
         //
-        $test = "Test mailgun";
+        $this->details = $details;
     }
 
     /**
@@ -29,6 +29,18 @@ class OrderPlaced extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.orderconfirmation')->with(['test' => "Test mail"]);
+        $data = [
+            "full_name" => $this->details["name"],
+            "payment_method" => $this->details["paymentMethod"],
+            "total_amount" => $this->details["totalAmount"],
+            "street1" => $this->details["address1"],
+            "street2" => $this->details["address2"],
+            "city" => $this->details["city"],
+            "state" => $this->details["state"],
+            "zip" => $this->details["zip"],
+            "phone" => $this->details["phone"]
+        ];
+        return $this->view('emails.orderconfirmation')
+                    ->with($data);
     }
 }

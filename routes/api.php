@@ -20,7 +20,7 @@ Route::get('/category/{subcategory}', 'CategoryController@subcategory_products')
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('logout', 'AuthenticationController@logoutAPI');
 Route::post('placeorder', 'OrderController@place_order');
-Route::get('testemail', 'OrderController@test_email');
+//Route::get('testemail', 'OrderController@test_email');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return response()->json($request->user());

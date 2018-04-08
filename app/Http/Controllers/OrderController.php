@@ -72,12 +72,40 @@ class OrderController extends Controller
                         ->whereIn('product_id', $products_id)
                         ->update(['expired' => true]);
         }
+
+        Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($request));
+
         return response("order successfully placed", 200);
     }
 
-    public function test_email(){
-        Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced());
-
-        return response('sent email');
-    }
+//    public function test_email(){
+//        $details = array (
+//            'address1' => '40579 Stoughton Place',
+//            'address2' => 'Anniversary',
+//            'city' => 'Boca Raton',
+//            'state' => 'FL',
+//            'zip' => '33499',
+//            'phone' => '5614980338',
+//            'name' => 'Mithun Mistry',
+//            'email' => 'demo@email.com',
+//            'totalAmount' => 660.81,
+//            'paymentMethod' => "Credit Card",
+//            'products' =>
+//                array (
+//                    0 =>
+//                        array (
+//                            'productId' => 27,
+//                            'quantity' => 1,
+//                        ),
+//                    1 =>
+//                        array (
+//                            'productId' => 46,
+//                            'quantity' => 1,
+//                        ),
+//                ),
+//        );
+//        Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($details));
+//
+//        return response('sent email');
+//    }
 }
