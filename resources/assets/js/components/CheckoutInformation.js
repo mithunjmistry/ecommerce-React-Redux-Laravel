@@ -108,7 +108,6 @@ class CheckoutInformation extends React.Component {
                 products,
                 paymentMethod
             };
-            console.log(data);
             axios.post(placeOrderAPI, data, {...headers})
                 .then((response) => {
                     this.props.history.push("/order");

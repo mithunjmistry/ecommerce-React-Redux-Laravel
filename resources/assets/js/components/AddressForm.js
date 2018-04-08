@@ -209,23 +209,23 @@ export default class AddressForm extends React.Component {
                     </FormGroup>
                 </fieldset>
                 <div style={{margin: '12px 0'}}>
-                    <RaisedButton
-                        label={'Next'}
+                    <FlatButton
+                        label="Back"
                         disableTouchRipple={true}
                         disableFocusRipple={true}
-                        primary={true}
-                        onClick={this.handleNextAddress}
-                        style={{marginRight: 12}}
+                        onClick={this.props.handlePrev}
                     />
                 {this.state.addressValidation === s &&
                 this.state.cityValidation === s &&
                 this.state.zipValidation === s &&
                 this.state.phoneValidation === s &&
-                <FlatButton
-                    label="Back"
+                <RaisedButton
+                    label={'Next'}
                     disableTouchRipple={true}
                     disableFocusRipple={true}
-                    onClick={this.props.handlePrev}
+                    primary={true}
+                    onClick={this.handleNextAddress}
+                    style={{marginRight: 12}}
                 />
                 }
                 </div>
