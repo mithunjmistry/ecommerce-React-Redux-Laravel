@@ -10,6 +10,12 @@ import FlatButton from 'material-ui/FlatButton';
 import {Row, Col, FormGroup, ControlLabel, FormControl, Radio} from "react-bootstrap";
 import AddressForm from "./AddressForm";
 import {withRouter} from "react-router-dom";
+import axios, {getHeaders} from "../api/axiosInstance";
+import {ACCESS_TOKEN} from "../api/strings";
+import {checkoutinformationAPI, placeOrderAPI} from "../api/apiURLs";
+import {connect} from "react-redux";
+import LoadingScreen from "../components/LoadingScreen";
+import {totalReducer} from "./ShoppingCart";
 
 const FieldGroup = ({ id, label, validationState=null, ...props }) => (
         <FormGroup controlId={id} validationState={validationState}>
@@ -19,6 +25,7 @@ const FieldGroup = ({ id, label, validationState=null, ...props }) => (
         </FormGroup>
 );
 
+const s = "success";
 
 class CheckoutInformation extends React.Component {
 
@@ -31,17 +38,84 @@ class CheckoutInformation extends React.Component {
         nameValidation: null,
         emailValidation: null,
         creditCardChecked: true,
-        debitCardChecked: false
+        debitCardChecked: false,
+        nameDisabled: false,
+        emailDisabled: false,
+        loadedAddress: null,
+        isLoading: false
     };
 
-    handleNext = () => {
+    componentDidMount(){
+        // load the logged in user data
+        if(this.props.authentication.isAuthenticated) {
+            const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+            const headers = getHeaders(access_token);
+            axios.get(checkoutinformationAPI, {headers})
+                .then((response) => {
+                    const data = response.data;
+                    this.setState(() => ({
+                        loadedAddress: data,
+                        nameDisabled: true,
+                        emailDisabled: true,
+                        nameValidation: s,
+                        emailValidation: s,
+                        name: data.full_name,
+                        email: data.email
+                    }));
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                });
+        }
+    }
+
+    handleNext = (address) => {
         const {stepIndex} = this.state;
         this.setState({
             stepIndex: stepIndex + 1,
             finished: stepIndex >= 2,
         });
-        if(stepIndex >= 2){
-            this.props.history.push("/order");
+        if(stepIndex === 1){
+            this.setState(() => ({loadedAddress: address}));
+        }
+        else if(stepIndex >= 2){
+            // process the order
+            this.setState(() => ({isLoading: true}));
+            const totalAmount = this.props.shoppingCart.reduce(totalReducer, 0);
+            let headers;
+            if(this.props.authentication.isAuthenticated){
+                const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+                headers = getHeaders(access_token);
+            }
+            else{
+                headers = {}
+            }
+            let products = [];
+            this.props.shoppingCart.map((item) => (
+                products.push({
+                    productId: item.productID,
+                    quantity: item.quantity
+                })
+            ));
+            const paymentMethod = this.state.creditCardChecked ? 'Credit Card' : 'Debit Card';
+
+            const {name, email} = this.state;
+            const data = {
+                ...this.state.loadedAddress,
+                name,
+                email,
+                totalAmount,
+                products,
+                paymentMethod
+            };
+            console.log(data);
+            axios.post(placeOrderAPI, data, {...headers})
+                .then((response) => {
+                    this.props.history.push("/order");
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                });
         }
     };
 
@@ -116,7 +190,11 @@ class CheckoutInformation extends React.Component {
     }
 
     render() {
-        const {finished, stepIndex} = this.state;
+        const {stepIndex} = this.state;
+
+        if(this.state.isLoading){
+            return <LoadingScreen/>
+        }
 
         return (
 
@@ -134,6 +212,7 @@ class CheckoutInformation extends React.Component {
                                             label="Full Name"
                                             validationState={this.state.nameValidation}
                                             placeholder="Enter Full Name"
+                                            disabled={this.state.nameDisabled}
                                             value={this.state.name}
                                             onChange={this.onNameChange}
                                         />
@@ -143,6 +222,7 @@ class CheckoutInformation extends React.Component {
                                             label="Email address"
                                             validationState={this.state.emailValidation}
                                             placeholder="Enter email"
+                                            disabled={this.state.emailDisabled}
                                             value={this.state.email}
                                             onChange={this.onEmailChange}
                                         />
@@ -157,7 +237,11 @@ class CheckoutInformation extends React.Component {
                         <StepContent>
                             <Row>
                                 <Col lg={12} md={12}>
-                                    <AddressForm renderStepAction={this.renderStepActions(1)}/>
+                                    <AddressForm
+                                        loadedAddress={this.state.loadedAddress}
+                                        handleNext={this.handleNext}
+                                        handlePrev={this.handlePrev}
+                                    />
                                 </Col>
                             </Row>
                         </StepContent>
@@ -194,4 +278,11 @@ class CheckoutInformation extends React.Component {
     }
 }
 
-export default withRouter(CheckoutInformation);
+const mapStateToProps = (state) => {
+    return {
+        authentication: state.authentication,
+        shoppingCart: state.shoppingCart
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(CheckoutInformation));

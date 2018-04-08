@@ -19,6 +19,7 @@ Route::get('/product/{product_id}', 'ProductController@product_info');
 Route::get('/category/{subcategory}', 'CategoryController@subcategory_products');
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('logout', 'AuthenticationController@logoutAPI');
+Route::post('placeorder', 'OrderController@place_order');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return response()->json($request->user());
@@ -34,4 +35,6 @@ Route::group(["middleware" => 'auth:api'], function () {
     Route::post('addtowishlist', 'WishlistController@add_to_wishlist');
     Route::delete('removefromwishlist/{product_id}', 'WishlistController@remove_from_wishlist');
     Route::post('wishlistcart', 'WishlistController@wishlist_to_cart');
+    // checkout routes
+    Route::get('checkoutinformation', 'OrderController@get_checkout_user_information');
 });

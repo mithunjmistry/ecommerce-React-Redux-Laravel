@@ -1,5 +1,7 @@
 import React from "react";
 import {FormGroup, ControlLabel, FormControl, Row, Col} from "react-bootstrap";
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 const s = "success";
 
@@ -15,8 +17,28 @@ export default class AddressForm extends React.Component {
         addressValidation: null,
         cityValidation: null,
         zipValidation: null,
-        phoneValidation: null
+        phoneValidation: null,
+        editDisabled: false
     };
+
+    componentDidMount(){
+        if(this.props.loadedAddress !== null){
+            const {address1, address2, city, state: stateName, zip, phone} = this.props.loadedAddress;
+            this.setState(() => ({
+                address1,
+                address2,
+                city,
+                stateName,
+                zip,
+                phone,
+                addressValidation: s,
+                cityValidation: s,
+                zipValidation: s,
+                phoneValidation: s,
+                editDisabled: true
+            }));
+        }
+    }
 
     handleAddressOneChange = (e) => {
         let address1 = e.target.value;
@@ -82,101 +104,131 @@ export default class AddressForm extends React.Component {
         }
     };
 
+    handleNextAddress = () => {
+        const {address1, address2, city, stateName : state, zip, phone} = this.state;
+        const address = {
+            address1,
+            address2,
+            city,
+            state,
+            zip,
+            phone
+        };
+        this.props.handleNext(address);
+    };
+
 
     render(){
         return (
             <form>
-                <FormGroup
-                    controlId="formBasicAddress"
-                    validationState={this.state.addressValidation}
-                >
-                    <ControlLabel>Address</ControlLabel>
-                    <FormControl
-                        type="text"
-                        value={this.state.address1}
-                        placeholder="Address 1"
-                        onChange={this.handleAddressOneChange}
+                <fieldset disabled={this.state.editDisabled}>
+                    <FormGroup
+                        controlId="formBasicAddress"
+                        validationState={this.state.addressValidation}
+                    >
+                        <ControlLabel>Address</ControlLabel>
+                        <FormControl
+                            type="text"
+                            value={this.state.address1}
+                            placeholder="Address 1"
+                            onChange={this.handleAddressOneChange}
+                        />
+                        <FormControl.Feedback />
+                    </FormGroup>
+
+                    <FormGroup
+                        controlId="formBasicAddress2"
+                    >
+                        <FormControl
+                            type="text"
+                            value={this.state.address2}
+                            placeholder="Address 2"
+                            onChange={this.handleAddressTwoChange}
+                        />
+                    </FormGroup>
+
+                    <FormGroup
+                        controlId="formBasicCity"
+                        validationState={this.state.cityValidation}
+                    >
+                        <ControlLabel>City</ControlLabel>
+                        <FormControl
+                            type="text"
+                            value={this.state.city}
+                            placeholder="City"
+                            onChange={this.handleCityChange}
+                        />
+                        <FormControl.Feedback />
+                    </FormGroup>
+
+                    <Row>
+                        <Col lg={6} md={6}>
+                            <FormGroup
+                                controlId="formBasicState"
+                            >
+                                <ControlLabel>State</ControlLabel>
+                                <FormControl
+                                    type="text"
+                                    value={this.state.stateName}
+                                    placeholder="State"
+                                    onChange={this.handleStateChange}
+                                />
+                                <FormControl.Feedback />
+                            </FormGroup>
+                        </Col>
+
+                        <Col lg={6} md={6}>
+                            <FormGroup
+                                controlId="formBasicZip"
+                                validationState={this.state.zipValidation}
+                            >
+                                <ControlLabel>Zip</ControlLabel>
+                                <FormControl
+                                    type="number"
+                                    value={this.state.zip}
+                                    placeholder="Zip"
+                                    onChange={this.handleZipChange}
+                                />
+                                <FormControl.Feedback />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                    <FormGroup
+                        controlId="formBasicZip"
+                        validationState={this.state.phoneValidation}
+                    >
+                        <ControlLabel>Phone</ControlLabel>
+                        <FormControl
+                            type="number"
+                            value={this.state.phone}
+                            placeholder="Phone"
+                            onChange={this.handlePhoneChange}
+                        />
+                        <FormControl.Feedback />
+                    </FormGroup>
+                </fieldset>
+                <div style={{margin: '12px 0'}}>
+                    <RaisedButton
+                        label={'Next'}
+                        disableTouchRipple={true}
+                        disableFocusRipple={true}
+                        primary={true}
+                        onClick={this.handleNextAddress}
+                        style={{marginRight: 12}}
                     />
-                    <FormControl.Feedback />
-                </FormGroup>
-
-                <FormGroup
-                    controlId="formBasicAddress2"
-                >
-                    <FormControl
-                        type="text"
-                        value={this.state.address2}
-                        placeholder="Address 2"
-                        onChange={this.handleAddressTwoChange}
-                    />
-                </FormGroup>
-
-                <FormGroup
-                    controlId="formBasicCity"
-                    validationState={this.state.cityValidation}
-                >
-                    <ControlLabel>City</ControlLabel>
-                    <FormControl
-                        type="text"
-                        value={this.state.city}
-                        placeholder="City"
-                        onChange={this.handleCityChange}
-                    />
-                    <FormControl.Feedback />
-                </FormGroup>
-
-                <Row>
-                    <Col lg={6} md={6}>
-                        <FormGroup
-                            controlId="formBasicState"
-                        >
-                            <ControlLabel>State</ControlLabel>
-                            <FormControl
-                                type="text"
-                                value={this.state.stateName}
-                                placeholder="State"
-                                onChange={this.handleStateChange}
-                            />
-                            <FormControl.Feedback />
-                        </FormGroup>
-                    </Col>
-
-                    <Col lg={6} md={6}>
-                        <FormGroup
-                            controlId="formBasicZip"
-                            validationState={this.state.zipValidation}
-                        >
-                            <ControlLabel>Zip</ControlLabel>
-                            <FormControl
-                                type="number"
-                                value={this.state.zip}
-                                placeholder="Zip"
-                                onChange={this.handleZipChange}
-                            />
-                            <FormControl.Feedback />
-                        </FormGroup>
-                    </Col>
-                </Row>
-
-                <FormGroup
-                    controlId="formBasicZip"
-                    validationState={this.state.phoneValidation}
-                >
-                    <ControlLabel>Phone</ControlLabel>
-                    <FormControl
-                        type="number"
-                        value={this.state.phone}
-                        placeholder="Phone"
-                        onChange={this.handlePhoneChange}
-                    />
-                    <FormControl.Feedback />
-                </FormGroup>
                 {this.state.addressValidation === s &&
                 this.state.cityValidation === s &&
                 this.state.zipValidation === s &&
                 this.state.phoneValidation === s &&
-                this.props.renderStepAction
+                <FlatButton
+                    label="Back"
+                    disableTouchRipple={true}
+                    disableFocusRipple={true}
+                    onClick={this.props.handlePrev}
+                />
                 }
+                </div>
             </form>
         )
     }

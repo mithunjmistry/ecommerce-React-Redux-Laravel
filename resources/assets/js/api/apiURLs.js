@@ -40,3 +40,7 @@ export const getUserWishlistAPI = "api/getuserwishlist";
 
 export const wishlistToCartAPI = "api/wishlistcart";
 
+export const checkoutinformationAPI = "api/checkoutinformation";
+
+export const placeOrderAPI = "api/placeorder";
+
