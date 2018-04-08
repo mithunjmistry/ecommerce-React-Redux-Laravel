@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderPlaced;
 use App\Order;
 use App\OrderItem;
 use App\Payment;
@@ -12,6 +13,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -71,5 +73,11 @@ class OrderController extends Controller
                         ->update(['expired' => true]);
         }
         return response("order successfully placed", 200);
+    }
+
+    public function test_email(){
+        Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced());
+
+        return response('sent email');
     }
 }
