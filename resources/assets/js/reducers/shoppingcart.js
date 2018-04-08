@@ -33,7 +33,7 @@ export default (state = shoppingCartReducerDefaultState, action) => {
                 }
             });
         case EMPTY_CART:
-            return (state.length = 0);
+            return shoppingCartReducerDefaultState;
         default:
             return state;
     }

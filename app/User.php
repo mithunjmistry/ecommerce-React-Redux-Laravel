@@ -47,4 +47,8 @@ class User extends Authenticatable
             ->where('expired', false)
             ->where('wishList', true);
     }
+
+    public function address(){
+        return $this->hasOne('App\Address', 'userId', 'userId');
+    }
 }
