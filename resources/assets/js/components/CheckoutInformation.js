@@ -11,7 +11,7 @@ import {Row, Col, FormGroup, ControlLabel, FormControl, Radio} from "react-boots
 import AddressForm from "./AddressForm";
 import {withRouter} from "react-router-dom";
 import axios, {getHeaders} from "../api/axiosInstance";
-import {ACCESS_TOKEN} from "../api/strings";
+import {ACCESS_TOKEN, SUCCESSFUL_ORDER} from "../api/strings";
 import {checkoutinformationAPI, placeOrderAPI} from "../api/apiURLs";
 import {connect} from "react-redux";
 import LoadingScreen from "../components/LoadingScreen";
@@ -110,7 +110,10 @@ class CheckoutInformation extends React.Component {
             };
             axios.post(placeOrderAPI, data, {...headers})
                 .then((response) => {
-                    this.props.history.push("/order");
+                    this.props.history.push({
+                        pathname: '/order',
+                        state: { order: SUCCESSFUL_ORDER }
+                    });
                 })
                 .catch((error) => {
                     console.log(error.response);

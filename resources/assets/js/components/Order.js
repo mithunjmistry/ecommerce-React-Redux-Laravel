@@ -4,6 +4,8 @@ import OrderList from "../components/OrderList";
 import OrderGuest from "../components/OrderGuest";
 import {connect} from "react-redux";
 import {emptyCart} from "../actions/shoppingCart";
+import {SUCCESSFUL_ORDER} from "../api/strings";
+import {withRouter} from "react-router-dom";
 
 class Order extends React.Component {
 
@@ -12,12 +14,20 @@ class Order extends React.Component {
     };
 
     componentDidMount(){
-        this.props.dispatch(emptyCart());
+        if(this.props.location.state && this.props.location.state.order.toString() === SUCCESSFUL_ORDER){
+            this.props.dispatch(emptyCart());
+        }
+        else{
+            this.props.history.push("/checkout");
+        }
     }
 
     componentDidUpdate(){
-        if(this.props.shoppingCart.length > 0){
+        if(this.props.location.state && this.props.shoppingCart.length > 0 && this.props.location.state.order === SUCCESSFUL_ORDER){
             this.props.dispatch(emptyCart());
+        }
+        else if(!this.props.location.state){
+            this.props.history.push("/checkout");
         }
     }
 
@@ -40,4 +50,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Order);
+export default connect(mapStateToProps)(withRouter(Order));

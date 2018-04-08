@@ -23,3 +23,5 @@ export const EMPTY_WISHLIST = "EMPTY_WISHLIST";
 export const ADDED_TO_CART_SNACKBAR = "Added to Cart";
 
 export const ADDED_TO_WISHLIST_SNACKBAR = "Added to Wishlist";
+
+export const SUCCESSFUL_ORDER = "Successful order";
