@@ -34,13 +34,19 @@ class CustomListGroupItemOrder extends React.Component{
                 </div>
                 <div className={"media-body"}>
                     <Row>
-                        <Col lg={10} md={10} sm={12} xs={12}>
+                        <Col lg={7} md={7} sm={12} xs={12}>
                             <h4 className={"media-heading"}>{this.props.children}</h4>
                             <div className={"seller-name-div"}>
                                 <span>{this.props.sellerName}</span>
                             </div>
                             <div>
                                 <span className={"subcategory-deal-price"}>${this.props.currentPrice}</span>
+                            </div>
+                        </Col>
+
+                        <Col lg={3} md={3} sm={12} xs={12}>
+                            <div className={"star-rating-div"}>
+                                <span>Quantity: {this.props.quantity}</span>
                             </div>
                         </Col>
 

@@ -313,7 +313,7 @@ class Header extends React.Component{
                                     <Menu>
                                         {this.state.menuItemMUI.map((item, key) => {
                                             if(item === "Divider"){
-                                                return <Divider className={"menuDivider"}/>
+                                                return <Divider className={"menuDivider"} key={key}/>
                                             }
                                             return <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
                                         })}

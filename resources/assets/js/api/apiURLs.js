@@ -44,3 +44,5 @@ export const checkoutinformationAPI = "api/checkoutinformation";
 
 export const placeOrderAPI = "api/placeorder";
 
+export const userordersAPI = "api/userorders";
+
