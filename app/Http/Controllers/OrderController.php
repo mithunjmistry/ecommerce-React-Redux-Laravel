@@ -10,6 +10,7 @@ use App\PaymentMethod;
 use App\ShippingOption;
 use App\ShoppingCart;
 use App\User;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -76,6 +77,32 @@ class OrderController extends Controller
         Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($request));
 
         return response("order successfully placed", 200);
+    }
+
+    public function get_user_orders(){
+        $user = Auth::user();
+        $user_orders = $user->orders->each(function ($order){
+            $order->orderItems->each(function ($orderItem){
+               $orderItem->product;
+            });
+        });
+
+        return response()->json($user_orders);
+    }
+
+    public function order_detail($order_id){
+        $user = Auth::user();
+        $order = Order::where('orderId', $order_id)->where('userId', $user->userId)->first();
+        if($order){
+            $order->orderItems->each(function ($orderItem){
+                $orderItem->product;
+            });
+
+            $order->payment->paymentMethodData;
+
+            return response()->json($order);
+        }
+        return response("Invalid Order", 400);
     }
 
 //    public function test_email(){

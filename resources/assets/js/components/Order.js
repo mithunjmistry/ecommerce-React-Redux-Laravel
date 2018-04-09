@@ -1,17 +1,13 @@
 import React from "react";
 import {Grid, Row, Col} from "react-bootstrap";
 import OrderList from "../components/OrderList";
-import OrderGuest from "../components/OrderGuest";
+import OrderConfirmation from "./OrderConfirmation";
 import {connect} from "react-redux";
 import {emptyCart} from "../actions/shoppingCart";
 import {SUCCESSFUL_ORDER} from "../api/strings";
 import {withRouter} from "react-router-dom";
 
 class Order extends React.Component {
-
-    state = {
-        loggedIn: false
-    };
 
     componentDidMount(){
         if(this.props.location.state && this.props.location.state.order.toString() === SUCCESSFUL_ORDER){
@@ -36,7 +32,8 @@ class Order extends React.Component {
             <Grid>
                 <Row>
                     <Col lg={12} md={12}>
-                        {this.state.loggedIn ? <OrderList/> : <OrderGuest/>}
+                        <OrderConfirmation isAuthenticated={this.props.authentication.isAuthenticated}/>
+                        {this.props.authentication.isAuthenticated && <OrderList/>}
                     </Col>
                 </Row>
             </Grid>
@@ -46,7 +43,8 @@ class Order extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        shoppingCart: state.shoppingCart
+        shoppingCart: state.shoppingCart,
+        authentication: state.authentication
     };
 };
 

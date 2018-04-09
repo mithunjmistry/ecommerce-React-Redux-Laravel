@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItemMUI from 'material-ui/MenuItem';
-
+import Divider from 'material-ui/Divider';
 
 class Header extends React.Component{
 
@@ -85,7 +85,7 @@ class Header extends React.Component{
     };
 
     changeMenuMUIOptionsAuthenticated = () => {
-        this.setState(() => ({menuItemMUI: ["My account", "Log out"]}));
+        this.setState(() => ({menuItemMUI: ["My account", "My Orders", "Divider", "Log out"]}));
     };
 
     changeMenuMUIOptionsUnauthenticated = () => {
@@ -93,8 +93,8 @@ class Header extends React.Component{
     };
 
     componentWillReceiveProps(nextProps){
-        let currentPath = this.props.location.pathname;
-        let nextPath = nextProps.location.pathname;
+        let currentPath = this.props.location.pathname.toString();
+        let nextPath = nextProps.location.pathname.toString();
         if(currentPath !== nextPath || this.props.authentication.isAuthenticated !== nextProps.authentication.isAuthenticated){
             // path is been changed
             let t = nextPath.split('/',2)[1];
@@ -282,7 +282,8 @@ class Header extends React.Component{
                             >
                                 {
                                     this.state.searchMenuItems.map((menuItem) => (
-                                        <MenuItem key={menuItem} onSelect={() => this.searchCategoryChange(menuItem)}>{menuItem}</MenuItem>
+                                        <MenuItem key={menuItem}
+                                                  onSelect={() => this.searchCategoryChange(menuItem)}>{menuItem}</MenuItem>
                                     ))
                                 }
                             </DropdownButton>
@@ -310,9 +311,12 @@ class Header extends React.Component{
                                     animation={PopoverAnimationVertical}
                                 >
                                     <Menu>
-                                        {this.state.menuItemMUI.map((item, key) => (
-                                            <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
-                                        ))}
+                                        {this.state.menuItemMUI.map((item, key) => {
+                                            if(item === "Divider"){
+                                                return <Divider className={"menuDivider"} key={key}/>
+                                            }
+                                            return <MenuItemMUI primaryText={item} key={key} onClick={() => this.menuOptionsClick(item)}/>
+                                        })}
                                     </Menu>
                                 </Popover>
                             </div>

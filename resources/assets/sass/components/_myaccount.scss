@@ -13,3 +13,25 @@
     cursor: pointer;
   }
 }
+
+.order-list-panel-body{
+  li{
+    border: none !important;
+    cursor: pointer;
+  }
+}
+
+.order-panel-headings{
+  font-size: 0.9em;
+  color: #565656;
+}
+
+.order-panel-attributes{
+  font-size: 0.9em;
+  color: #6d6d6d;
+}
+
+.order-detail-heading{
+  margin-top: 1%;
+  margin-bottom: 1.5%;
+}
