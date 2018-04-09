@@ -14,7 +14,7 @@ class AdvancedFilters extends React.Component {
         const ratings = e.target.ratings.value;
         const from = e.target.from.value.trim();
         const to = e.target.to.value.trim();
-        const fast_shipping = e.target.value;
+        const fast_shipping = e.target.fast_shipping.value;
 
         if(from || to){
             if(from && to){
