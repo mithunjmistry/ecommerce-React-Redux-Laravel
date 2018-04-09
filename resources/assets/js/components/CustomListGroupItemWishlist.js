@@ -71,8 +71,8 @@ class CustomListGroupItemWishlist extends React.Component{
                         <Col md={2} lg={2} sm={12} xs={12}>
                             <div>
                               <span>
-                                  <Button bsStyle={"danger"} className={"btn-sm view-atc-button"} onClick={this.removeFromWishlistHandler}>Remove</Button>
-                                  <Button bsStyle={"primary"} className={"btn-sm view-atc-button"} onClick={this.addToCartOnClick}>Add to Cart</Button>
+                                  <Button bsStyle={"default"} className={"btn-sm view-atc-button"} onClick={this.removeFromWishlistHandler}>Remove</Button>
+                                  <Button bsStyle={"success"} className={"btn-sm view-atc-button"} onClick={this.addToCartOnClick}>Add to Cart</Button>
                               </span>
                             </div>
                         </Col>
