@@ -6,7 +6,8 @@ class AdvancedFilters extends React.Component {
 
     state = {
         priceRangeError: false,
-        priceRangeErrorMessage: ''
+        priceRangeErrorMessage: '',
+        filterApplied: undefined
     };
 
     onFormSubmit = (e) => {
@@ -31,6 +32,7 @@ class AdvancedFilters extends React.Component {
         }
 
         if(!this.state.priceRangeError){
+            this.setState(() => ({filterApplied: true}));
             const filters = {
                 ratings,
                 from,
@@ -42,7 +44,7 @@ class AdvancedFilters extends React.Component {
     };
 
     onFormReset = () => {
-        this.setState(() => ({priceRangeError: false}));
+        this.setState(() => ({priceRangeError: false, filterApplied: false}));
         this.props.clearFilters();
     };
 
@@ -52,6 +54,7 @@ class AdvancedFilters extends React.Component {
 
         return (
             <div>
+                {this.state.filterApplied && <p className={"advanced-filter-applied-text"}>Filters applied!</p>}
                 <Form onSubmit={this.onFormSubmit}>
                     <div className={"text-center margin-below"}>
                         <p>Ratings: </p>

@@ -23,7 +23,8 @@ class SearchResultsComponent extends React.Component{
       advancedFilterModalShow: false,
       products: [],
       isLoading: false,
-      originalProducts: []
+      originalProducts: [],
+      filterApplied: undefined
     };
 
     componentDidMount(){
@@ -189,7 +190,8 @@ class SearchResultsComponent extends React.Component{
                 else{
                     return a.timeStamp < b.timeStamp ? 1 : -1;
                 }
-            })
+            }),
+            filterApplied: true
         }));
     };
 
@@ -210,7 +212,8 @@ class SearchResultsComponent extends React.Component{
                     else{
                         return a.timeStamp < b.timeStamp ? 1 : -1;
                     }
-                })
+                }),
+                filterApplied: undefined
             }
             ));
     };
@@ -263,7 +266,10 @@ class SearchResultsComponent extends React.Component{
                         </div>
 
                         <div className={"total-products-count"}>
-                            <p>Total {this.state.products.length} product found</p>
+                            <span>Total {this.state.products.length} product found</span>
+                            {this.state.filterApplied &&
+                            <span className={"advanced-filter-applied-search-page"}> (Filters applied)</span>
+                            }
                         </div>
 
                         {products.length > 0 ? <div>
@@ -283,7 +289,7 @@ class SearchResultsComponent extends React.Component{
                             </div>
                         </div> :
 
-                        <Row>
+                        <Row className={"star-rating-div"}>
                             <Col lg={11} md={11}>
                                 <Panel bsStyle="warning">
                                     <Panel.Heading>
