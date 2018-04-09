@@ -42,6 +42,7 @@ class AdvancedFilters extends React.Component {
     };
 
     onFormReset = () => {
+        this.setState(() => ({priceRangeError: false}));
         this.props.clearFilters();
     };
 

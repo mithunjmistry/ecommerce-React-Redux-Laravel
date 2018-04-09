@@ -35,4 +35,14 @@ export const MORE_THAN_THREE = "More than 3";
 export const ONE_TO_THREE = "1 to 3";
 
 export const YES = "Yes";
+
 export const NO = "No";
+
+export const RATINGS = "Ratings";
+
+export const PRICE_HIGH_TO_LOW = "Price: High to Low";
+
+export const PRICE_LOW_TO_HIGH = "Price: Low to High";
+
+export const NEW = "New";
+

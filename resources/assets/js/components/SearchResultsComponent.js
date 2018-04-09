@@ -8,13 +8,16 @@ import axios from "../api/axiosInstance";
 import {searchProductsAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import {Link} from "react-router-dom";
-import {ANY, MORE_THAN_FOUR, MORE_THAN_THREE, NO, ONE_TO_THREE, YES} from "../api/strings";
+import {
+    ANY, MORE_THAN_FOUR, MORE_THAN_THREE, NEW, NO, ONE_TO_THREE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, RATINGS,
+    YES
+} from "../api/strings";
 
 class SearchResultsComponent extends React.Component{
 
     state = {
-      sortBySelected: "Relevance",
-      sortByOptions: ["Price: Low to High", "Price: High to Low", "New"],
+      sortBySelected: NEW,
+      sortByOptions: [PRICE_LOW_TO_HIGH, PRICE_HIGH_TO_LOW, RATINGS],
       activePage: 1,
       totalItemsCount: 55,
       advancedFilterModalShow: false,
@@ -68,36 +71,45 @@ class SearchResultsComponent extends React.Component{
 
     sortByChange = (selectedSortBy) => {
         switch(selectedSortBy){
-            case 'Price: Low to High':
+            case PRICE_LOW_TO_HIGH:
                 this.setState((prevState) => {
                     return {
                         sortByOptions:
                             prevState.sortByOptions.concat(prevState.sortBySelected).filter((menuItem) => (
-                                menuItem !== "Price: Low to High"
+                                menuItem !== PRICE_LOW_TO_HIGH
                             )),
-                        sortBySelected: "Price: Low to High"
+                        sortBySelected: PRICE_LOW_TO_HIGH,
+                        products: prevState.products.sort((a, b) => {
+                            return a.price > b.price ? 1 : -1;
+                        })
                     }
                 });
                 break;
-            case 'Price: High to Low':
+            case PRICE_HIGH_TO_LOW:
                 this.setState((prevState) => {
                     return {
                         sortByOptions:
                             prevState.sortByOptions.concat(prevState.sortBySelected).filter((menuItem) => (
-                                menuItem !== "Price: High to Low"
+                                menuItem !== PRICE_HIGH_TO_LOW
                             )),
-                        sortBySelected: "Price: High to Low"
+                        sortBySelected: PRICE_HIGH_TO_LOW,
+                        products: prevState.products.sort((a, b) => {
+                            return a.price < b.price ? 1 : -1;
+                        })
                     }
                 });
                 break;
-            case 'New':
+            case RATINGS:
                 this.setState((prevState) => {
                     return {
                         sortByOptions:
                             prevState.sortByOptions.concat(prevState.sortBySelected).filter((menuItem) => (
-                                menuItem !== "New"
+                                menuItem !== RATINGS
                             )),
-                        sortBySelected: "New"
+                        sortBySelected: RATINGS,
+                        products: prevState.products.sort((a, b) => {
+                            return a.ratings < b.ratings ? 1 : -1;
+                        })
                     }
                 });
                 break;
@@ -106,9 +118,12 @@ class SearchResultsComponent extends React.Component{
                     return {
                         sortByOptions:
                             prevState.sortByOptions.concat(prevState.sortBySelected).filter((menuItem) => (
-                                menuItem !== "Relevance"
+                                menuItem !== NEW
                             )),
-                        sortBySelected: "Relevance"
+                        sortBySelected: NEW,
+                        products: prevState.products.sort((a, b) => {
+                            return a.timeStamp < b.timeStamp ? 1 : -1;
+                        })
                     }
                 });
                 break;
@@ -124,6 +139,7 @@ class SearchResultsComponent extends React.Component{
     };
 
     applyFilters = ({ratings = ANY, from, to, fast_shipping = ANY}) => {
+        const {sortBySelected} = this.state;
         this.setState(() => ({
             products: this.state.originalProducts.filter((product) => {
                 const rating = ((r) => {switch (r){
@@ -160,12 +176,43 @@ class SearchResultsComponent extends React.Component{
                 })(fast_shipping);
 
                 return rating && from_to && shipping;
+            }).sort((a, b) => {
+                if(sortBySelected === RATINGS){
+                    return a.ratings < b.ratings ? 1 : -1;
+                }
+                else if(sortBySelected === PRICE_LOW_TO_HIGH){
+                    return a.price > b.price ? 1 : -1;
+                }
+                else if(sortBySelected === PRICE_HIGH_TO_LOW){
+                    return a.price < b.price ? 1 : -1;
+                }
+                else{
+                    return a.timeStamp < b.timeStamp ? 1 : -1;
+                }
             })
         }));
     };
 
     clearFilters = () => {
-        this.setState(() => ({products: this.state.originalProducts}));
+        const {sortBySelected} = this.state;
+        this.setState(() => (
+            {
+                products: this.state.originalProducts.sort((a, b) => {
+                    if(sortBySelected === RATINGS){
+                        return a.ratings < b.ratings ? 1 : -1;
+                    }
+                    else if(sortBySelected === PRICE_LOW_TO_HIGH){
+                        return a.price > b.price ? 1 : -1;
+                    }
+                    else if(sortBySelected === PRICE_HIGH_TO_LOW){
+                        return a.price < b.price ? 1 : -1;
+                    }
+                    else{
+                        return a.timeStamp < b.timeStamp ? 1 : -1;
+                    }
+                })
+            }
+            ));
     };
 
     render() {
