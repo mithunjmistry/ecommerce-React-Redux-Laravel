@@ -7,6 +7,7 @@ use App\Order;
 use App\OrderItem;
 use App\Payment;
 use App\PaymentMethod;
+use App\PromoCode;
 use App\ShippingOption;
 use App\ShoppingCart;
 use App\User;
@@ -103,6 +104,26 @@ class OrderController extends Controller
             return response()->json($order);
         }
         return response("Invalid Order", 400);
+    }
+
+    public function validate_promo_code($user, $promoCode){
+        $datetime = date("Y-m-d H:i:s");
+        $promo_code = PromoCode::where('promoCode', $promoCode)
+                                ->where('beginsOn', '<', $datetime)
+                                ->where('endsOn', '>', $datetime)
+                                ->with(['usedBy' => function($query) use($user){
+                                    $query->where('userId', $user->userId);
+                                }])->first();
+        return $promo_code;
+    }
+
+    public function validate_promo_api(Request $request){
+        $user = Auth::user();
+        $promo = $this->validate_promo_code($user, $request['promoCode']);
+        if($promo){
+            return response()->json($promo);
+        }
+        return response("Invalid promo code.", 400);
     }
 
 //    public function test_email(){

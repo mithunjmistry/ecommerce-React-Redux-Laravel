@@ -41,4 +41,6 @@ Route::group(["middleware" => 'auth:api'], function () {
     // user order routes
     Route::get('userorders', 'OrderController@get_user_orders');
     Route::get('order/{order_id}', 'OrderController@order_detail');
+    // validate promo code
+    Route::post('validatepromo', 'OrderController@validate_promo_api');
 });
