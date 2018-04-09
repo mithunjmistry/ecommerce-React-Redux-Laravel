@@ -78,6 +78,17 @@ class OrderController extends Controller
         return response("order successfully placed", 200);
     }
 
+    public function get_user_orders(){
+        $user = Auth::user();
+        $user_orders = $user->orders->each(function ($order){
+            $order->orderItems->each(function ($orderItem){
+               $orderItem->product;
+            });
+        });
+
+        return response()->json($user_orders);
+    }
+
 //    public function test_email(){
 //        $details = array (
 //            'address1' => '40579 Stoughton Place',

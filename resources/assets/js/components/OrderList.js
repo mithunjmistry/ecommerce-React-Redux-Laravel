@@ -50,7 +50,7 @@ class OrderList extends React.Component {
         return (
           <Grid className={"minimum-height"}>
               <Row>
-                  <Col lg={9} md={9} lgOffset={1} mdOffset={1}>
+                  <Col lg={10} md={10} lgOffset={1} mdOffset={1}>
                       <h4>My Orders</h4>
                       <hr/>
                       <br/>
@@ -79,7 +79,7 @@ class OrderList extends React.Component {
                                     orderDate={item.orderDate}
                                     orderTotal={item.orderTotal}
                                     itemCount={itemCount}
-                                    orderID={item.orderId}
+                                    orderID={item.orderID}
                                 >
                                     {products}
                                 </OrderPanels>
