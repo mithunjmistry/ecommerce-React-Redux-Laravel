@@ -14,13 +14,13 @@ const OrderPanels = (props) => (
             <Panel.Title>
                 <Row>
                     <Col lg={3} md={3}>
-                        <span className={"bold-text"}>Order Placed:</span>
+                        <span className={"bold-text order-panel-headings"}>Order Placed:</span>
                     </Col>
                     <Col lg={3} md={3}>
-                        <span className={"bold-text"}>Total:</span>
+                        <span className={"bold-text order-panel-headings"}>Total:</span>
                     </Col>
                     <Col lg={4} md={4}>
-                        <span className={"bold-text"}>Items:</span>
+                        <span className={"bold-text order-panel-headings"}>Items:</span>
                     </Col>
                     <Col lg={2} md={2}>
                         <Link to={`/order/${props.orderID}`}>View details</Link>
@@ -29,13 +29,13 @@ const OrderPanels = (props) => (
 
                 <Row>
                     <Col lg={3} md={3}>
-                        {props.orderDate.split(" ")[0]}
+                        <span className={"order-panel-attributes"}>{props.orderDate.split(" ")[0]}</span>
                     </Col>
                     <Col lg={3} md={3}>
-                        ${props.orderTotal}
+                        <span className={"order-panel-attributes"}>${props.orderTotal}</span>
                     </Col>
                     <Col lg={3} md={3}>
-                        {props.itemCount}
+                        <span className={"order-panel-attributes"}>{props.itemCount}</span>
                     </Col>
                     <Col lg={3} md={3}>
 
