@@ -8,6 +8,7 @@ import axios from "../api/axiosInstance";
 import {searchProductsAPI} from "../api/apiURLs";
 import LoadingScreen from "../components/LoadingScreen";
 import {Link} from "react-router-dom";
+import {ANY, MORE_THAN_FOUR, MORE_THAN_THREE, NO, ONE_TO_THREE, YES} from "../api/strings";
 
 class SearchResultsComponent extends React.Component{
 
@@ -18,7 +19,8 @@ class SearchResultsComponent extends React.Component{
       totalItemsCount: 55,
       advancedFilterModalShow: false,
       products: [],
-      isLoading: false
+      isLoading: false,
+      originalProducts: []
     };
 
     componentDidMount(){
@@ -29,6 +31,7 @@ class SearchResultsComponent extends React.Component{
         this.setState(() => ({isLoading: true}));
         axios.get(url).then((response) => (this.setState(
                 {
+                    originalProducts: response.data,
                     products: response.data,
                     totalItemsCount: response.data.length,
                     isLoading: false,
@@ -48,6 +51,7 @@ class SearchResultsComponent extends React.Component{
             this.setState(() => ({isLoading: true}));
             axios.get(url).then((response) => (this.setState(
                 {
+                    originalProducts: response.data,
                     products: response.data,
                     totalItemsCount: response.data.length,
                     isLoading: false,
@@ -119,6 +123,51 @@ class SearchResultsComponent extends React.Component{
         this.setState(() => ({advancedFilterModalShow: false}));
     };
 
+    applyFilters = ({ratings = ANY, from, to, fast_shipping = ANY}) => {
+        this.setState(() => ({
+            products: this.state.originalProducts.filter((product) => {
+                const rating = ((r) => {switch (r){
+                    case MORE_THAN_FOUR:{
+                        return product.ratings > 4;
+                    }
+                    case MORE_THAN_THREE:{
+                        return product.ratings > 3;
+                    }
+                    case ONE_TO_THREE:{
+                        return (product.ratings >= 1 && product.ratings <= 3);
+                    }
+                    default:{
+                        return product;
+                    }
+                }})(ratings);
+                let from_to = product;
+                if(from && to){
+                    from_to = product.price >= from && product.price <= to;
+                }
+
+                const shipping = ((s) => {
+                    switch (s){
+                        case YES:{
+                            return product.fastShipping.toString() === "1";
+                        }
+                        case NO:{
+                            return product.fastShipping.toString() === "0";
+                        }
+                        default:{
+                            return product;
+                        }
+                    }
+                })(fast_shipping);
+
+                return rating && from_to && shipping;
+            })
+        }));
+    };
+
+    clearFilters = () => {
+        this.setState(() => ({products: this.state.originalProducts}));
+    };
+
     render() {
         if(this.state.isLoading){
             return <LoadingScreen/>
@@ -146,8 +195,8 @@ class SearchResultsComponent extends React.Component{
         }
 
         return (
-            <Grid>
-                {this.state.products.length > 0 ?
+            <Grid className={"minimum-height"}>
+                {this.state.originalProducts.length > 0 ?
                     <Row>
                     <Col lg={10} md={10} sm={12} xs={12}>
                         <div>
@@ -170,26 +219,45 @@ class SearchResultsComponent extends React.Component{
                             <p>Total {this.state.products.length} product found</p>
                         </div>
 
-                        <div>
-                            <ListGroup className={'search-results-list'}>
-                                {items}
-                            </ListGroup>
-                        </div>
+                        {products.length > 0 ? <div>
+                            <div>
+                                <ListGroup className={'search-results-list'}>
+                                    {items}
+                                </ListGroup>
+                            </div>
 
-                        <div className={'pagination-div'}>
-                            <Pagination
-                                activePage={this.state.activePage}
-                                itemsCountPerPage={10}
-                                totalItemsCount={this.state.totalItemsCount}
-                                onChange={this.handlePageChange}
-                            />
-                        </div>
+                            <div className={'pagination-div'}>
+                                <Pagination
+                                    activePage={this.state.activePage}
+                                    itemsCountPerPage={10}
+                                    totalItemsCount={this.state.totalItemsCount}
+                                    onChange={this.handlePageChange}
+                                />
+                            </div>
+                        </div> :
+
+                        <Row>
+                            <Col lg={11} md={11}>
+                                <Panel bsStyle="warning">
+                                    <Panel.Heading>
+                                        <Panel.Title componentClass="h3">No products found</Panel.Title>
+                                    </Panel.Heading>
+                                    <Panel.Body>
+                                        No products found for this filter. Please try different filters or clear filters.
+                                    </Panel.Body>
+                                </Panel>
+                            </Col>
+                        </Row>
+                        }
                     </Col>
                     <Col lg={2} md={2} smHidden xsHidden>
                         <h4 className={"advanced-filter-heading"}>Advanced Filters</h4>
                         <Row>
                             <Col lg={12} md={12}>
-                                <AdvancedFilters/>
+                                <AdvancedFilters
+                                    applyFilters={this.applyFilters}
+                                    clearFilters={this.clearFilters}
+                                />
                             </Col>
                         </Row>
                     </Col>
@@ -213,7 +281,12 @@ class SearchResultsComponent extends React.Component{
                         </div>
                     </Col>
                 </Row>}
-                <AdvancedFiltersModal handleClose={this.advancedFiltersModalHide} show={this.state.advancedFilterModalShow}/>
+                <AdvancedFiltersModal
+                    handleClose={this.advancedFiltersModalHide}
+                    show={this.state.advancedFilterModalShow}
+                    applyFilters={this.applyFilters}
+                    clearFilters={this.clearFilters}
+                />
             </Grid>
         )
     }

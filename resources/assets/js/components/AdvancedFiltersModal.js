@@ -8,7 +8,7 @@ const AdvancedFiltersModal = (props) => (
             <Modal.Title>Advanced Filters</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <AdvancedFilters/>
+            <AdvancedFilters applyFilters={props.applyFilters} clearFilters={props.clearFilters}/>
         </Modal.Body>
     </Modal>
 );

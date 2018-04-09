@@ -25,3 +25,14 @@ export const ADDED_TO_CART_SNACKBAR = "Added to Cart";
 export const ADDED_TO_WISHLIST_SNACKBAR = "Added to Wishlist";
 
 export const SUCCESSFUL_ORDER = "Successful order";
+
+export const ANY = "Any";
+
+export const MORE_THAN_FOUR = "More than 4";
+
+export const MORE_THAN_THREE = "More than 3";
+
+export const ONE_TO_THREE = "1 to 3";
+
+export const YES = "Yes";
+export const NO = "No";
