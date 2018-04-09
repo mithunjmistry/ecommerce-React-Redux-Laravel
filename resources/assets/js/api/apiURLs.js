@@ -46,3 +46,6 @@ export const placeOrderAPI = "api/placeorder";
 
 export const userordersAPI = "api/userorders";
 
+export const orderDetailAPI = (order_id) => (
+    `api/order/${order_id}`
+);

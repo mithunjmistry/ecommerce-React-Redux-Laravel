@@ -15,4 +15,13 @@ class Order extends Model
         return $this->hasMany('App\OrderItem', 'orderId', 'orderId')
                     ->select(['quantity', 'productId']);
     }
+
+    public function payment(){
+        return $this->hasOne('App\Payment', 'paymentId', 'paymentId');
+    }
+
+    public function orderItemsRaw(){
+        return $this->hasMany('App\OrderItem', 'orderId', 'orderId');
+    }
+
 }

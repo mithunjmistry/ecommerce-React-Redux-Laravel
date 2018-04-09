@@ -38,5 +38,7 @@ Route::group(["middleware" => 'auth:api'], function () {
     Route::post('wishlistcart', 'WishlistController@wishlist_to_cart');
     // checkout routes
     Route::get('checkoutinformation', 'OrderController@get_checkout_user_information');
+    // user order routes
     Route::get('userorders', 'OrderController@get_user_orders');
+    Route::get('order/{order_id}', 'OrderController@order_detail');
 });

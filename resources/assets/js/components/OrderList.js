@@ -23,7 +23,12 @@ const OrderPanels = (props) => (
                         <span className={"bold-text order-panel-headings"}>Items:</span>
                     </Col>
                     <Col lg={2} md={2}>
-                        <Link to={`/order/${props.orderID}`}>View details</Link>
+                        <Link to={{
+                            pathname: `/order/${props.orderID}`,
+                            state: { authenticated: true }
+                        }}>
+                            View details
+                        </Link>
                     </Col>
                 </Row>
 
