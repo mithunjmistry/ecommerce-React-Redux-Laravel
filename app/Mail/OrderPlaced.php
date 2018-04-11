@@ -38,7 +38,8 @@ class OrderPlaced extends Mailable
             "city" => $this->details["city"],
             "state" => $this->details["state"],
             "zip" => $this->details["zip"],
-            "phone" => $this->details["phone"]
+            "phone" => $this->details["phone"],
+            "amount_paid" => $this->details["amountDue"]
         ];
         return $this->view('emails.orderconfirmation')
                     ->with($data);

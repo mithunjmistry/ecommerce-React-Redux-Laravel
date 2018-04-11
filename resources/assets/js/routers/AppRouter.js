@@ -13,8 +13,8 @@ import LoginComponent from "../components/LoginComponent";
 import RegistrationComponent from "../components/RegistrationComponent";
 import LogoutComponent from "../components/LogoutComponent";
 import MyAccount from "../components/MyAccount";
-import OrderList from "../components/OrderList";
 import OrderDetail from "../components/OrderDetail";
+import MyOrders from "../components/MyOrders";
 
 const noMatchFound = () => (
     <div>
@@ -55,7 +55,7 @@ const appRouter = () => (
                 <Route path="/register" exact={true} component={RegistrationComponent}/>
                 <Route path="/logout" exact={true} component={LogoutComponent}/>
                 <Route path="/myaccount" exact={true} component={MyAccount}/>
-                <Route path="/myorders" exact={true} component={OrderList}/>
+                <Route path="/myorders" exact={true} component={MyOrders}/>
                 <Route path="/order/:id" exact={true} component={OrderDetail} />
                 <Route component={noMatchFound} />
             </Switch>

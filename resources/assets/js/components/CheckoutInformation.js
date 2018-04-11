@@ -45,7 +45,8 @@ class CheckoutInformation extends React.Component {
         isLoading: false,
         promoCodeError: undefined,
         promoCodeMessage: undefined,
-        promoCode: ""
+        promoCode: "",
+        promoCodeResponse: {}
     };
 
     componentDidMount(){
@@ -102,10 +103,15 @@ class CheckoutInformation extends React.Component {
             ));
             const paymentMethod = this.state.creditCardChecked ? 'Credit Card' : 'Debit Card';
 
-            let {name, email, promoCode, promoCodeError} = this.state;
-            if(!!promoCodeError){
-                promoCode = ""
+            const {name, email, promoCodeResponse} = this.state;
+            let promoCodeId = null;
+            let amountDue = totalAmount;
+            if(typeof promoCodeResponse.promoCodeId !== 'undefined'){
+                promoCodeId = promoCodeResponse.promoCodeId;
+                const discount = parseFloat(promoCodeResponse.discount);
+                amountDue = parseFloat(totalAmount) - discount;
             }
+
             const data = {
                 ...this.state.loadedAddress,
                 name,
@@ -113,7 +119,8 @@ class CheckoutInformation extends React.Component {
                 totalAmount,
                 products,
                 paymentMethod,
-                promoCode
+                promoCodeId,
+                amountDue
             };
             axios.post(placeOrderAPI, data, {...headers})
                 .then((response) => {
@@ -192,14 +199,16 @@ class CheckoutInformation extends React.Component {
                         this.setState(() => ({
                             promoCodeError: true,
                             promoCodeMessage: "You have already used this promo code",
-                            promoCode
+                            promoCode,
+                            promoCodeResponse: {}
                         }));
                     }
                     else{
                         this.setState(() => ({
                             promoCode,
                             promoCodeError: undefined,
-                            promoCodeMessage: "Promo code applied successfully"
+                            promoCodeMessage: "Promo code applied successfully",
+                            promoCodeResponse: response_data
                         }))
                     }
                 })
@@ -207,7 +216,8 @@ class CheckoutInformation extends React.Component {
                     this.setState(() => ({
                         promoCodeError: true,
                         promoCodeMessage: "Invalid promo code",
-                        promoCode: ""
+                        promoCode: "",
+                        promoCodeResponse: {}
                     }));
                 });
         }
@@ -253,6 +263,15 @@ class CheckoutInformation extends React.Component {
 
         if(this.state.isLoading){
             return <LoadingScreen/>
+        }
+
+        const totalAmount = this.props.shoppingCart.reduce(totalReducer, 0);
+
+        let discount = 0.0;
+        let amountDue = totalAmount;
+        if(typeof this.state.promoCodeResponse.promoCodeId !== 'undefined'){
+            discount = parseFloat(this.state.promoCodeResponse.discount);
+            amountDue = parseFloat(totalAmount) - discount;
         }
 
         return (
@@ -341,6 +360,11 @@ class CheckoutInformation extends React.Component {
                                     </Form>
                                     <FormGroup>
                                         <ControlLabel>Payment Method</ControlLabel>
+                                        <p>Total Amount: ${totalAmount}</p>
+                                        {(typeof this.state.promoCodeResponse.promoCodeId !== 'undefined') &&
+                                        <p>Discount applied: ${discount}</p>}
+                                        <p>Amount Due: ${amountDue.toFixed(2)}</p>
+                                        <hr/>
                                         <Radio name="radioGroup" value="1"
                                                onClick={this.handlePaymentMethod}
                                                checked={this.state.creditCardChecked}

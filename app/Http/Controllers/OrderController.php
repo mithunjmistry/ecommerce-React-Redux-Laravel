@@ -38,11 +38,12 @@ class OrderController extends Controller
         }
         $datetime = date("Y-m-d H:i:s");
         $total_amount = $request['totalAmount'];
+        $amount_paid = $request['amountDue'];
 
         $payment_method = PaymentMethod::where('paymentMethod', $request['paymentMethod'])->first();
 
         $payment = new Payment();
-        $payment->amount = $total_amount;
+        $payment->amount = $amount_paid;
         $payment->status = "Successful";
         $payment->timeStamp = $datetime;
         $payment->paymentMethodId = $payment_method->paymentMethodId;
@@ -54,6 +55,7 @@ class OrderController extends Controller
         $order->paymentId = $payment->paymentId;
         $order->userId = $user_id;
         $order->shippingOptionsId = ShippingOption::ORDER_PLACED;
+        $order->promoCodeId = $request['promoCodeId'];
         $order->save();
 
         $products = $request['products'];

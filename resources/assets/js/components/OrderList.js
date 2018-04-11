@@ -88,45 +88,41 @@ class OrderList extends React.Component {
         }
 
         return (
-          <Grid className={"minimum-height"}>
-              <Row>
-                  <Col lg={10} md={10} lgOffset={1} mdOffset={1}>
-                      <h4>My Orders</h4>
-                      <hr/>
-                      <br/>
-                      {this.state.orders.length === 0 ?
-                      <p>You have no order history. Please continue shopping with us.</p> :
-                      this.state.orders.map((item) => {
-                          let products = (
-                              <ListGroup>
-                                  {item.order_items.map((order_item) => (
-                                      <CustomListGroupItem
-                                          key={order_item.product.productId}
-                                          sellerName={order_item.product.sellerName}
-                                          ratings={order_item.product.ratings}
-                                          productID={order_item.product.productId}
-                                          currentPrice={order_item.product.price}
-                                          quantity={order_item.quantity}
-                                      >
-                                          {order_item.product.name}
-                                      </CustomListGroupItem>
-                                  ))}
-                              </ListGroup>
-                          );
-                          return <OrderPanels
-                                    key={item.orderId}
-                                    orderDate={item.orderDate}
-                                    orderTotal={item.totalAmount}
-                                    itemCount={item.order_items.length}
-                                    orderID={item.orderId}
-                                >
-                                    {products}
-                                </OrderPanels>
-                      })
-                      }
-                  </Col>
-              </Row>
-          </Grid>
+          <div>
+              <h4>My Orders</h4>
+              <hr/>
+              <br/>
+              {this.state.orders.length === 0 ?
+              <p>You have no order history. Please continue shopping with us.</p> :
+              this.state.orders.map((item) => {
+                  let products = (
+                      <ListGroup>
+                          {item.order_items.map((order_item) => (
+                              <CustomListGroupItem
+                                  key={order_item.product.productId}
+                                  sellerName={order_item.product.sellerName}
+                                  ratings={order_item.product.ratings}
+                                  productID={order_item.product.productId}
+                                  currentPrice={order_item.product.price}
+                                  quantity={order_item.quantity}
+                              >
+                                  {order_item.product.name}
+                              </CustomListGroupItem>
+                          ))}
+                      </ListGroup>
+                  );
+                  return <OrderPanels
+                            key={item.orderId}
+                            orderDate={item.orderDate}
+                            orderTotal={item.totalAmount}
+                            itemCount={item.order_items.length}
+                            orderID={item.orderId}
+                        >
+                            {products}
+                        </OrderPanels>
+              })
+              }
+          </div>
         );
     }
 }

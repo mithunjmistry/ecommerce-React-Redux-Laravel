@@ -3,6 +3,7 @@
     <p>Your order is being placed successfully. Here are the details - </p>
     <p><strong>Payment method: </strong>{{ $payment_method }}</p>
     <p><strong>Order Total: </strong>${{$total_amount}}</p>
+    <p><strong>Amount paid: </strong>${{$amount_paid}}</p>
     <p><strong>Phone: </strong>{!! $phone !!}</p>
     <p><strong>Shipping address: </strong></p>
     <p>{{ $full_name }}<br>
