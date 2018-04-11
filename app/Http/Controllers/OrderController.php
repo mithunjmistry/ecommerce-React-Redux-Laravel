@@ -11,6 +11,7 @@ use App\PromoCode;
 use App\ShippingOption;
 use App\ShoppingCart;
 use App\User;
+use App\UserPromoCode;
 use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,13 @@ class OrderController extends Controller
         $order->shippingOptionsId = ShippingOption::ORDER_PLACED;
         $order->promoCodeId = $request['promoCodeId'];
         $order->save();
+
+        if($request['promoCodeId']){
+            $user_promo_code_used = new UserPromoCode();
+            $user_promo_code_used->userId = $user_id;
+            $user_promo_code_used->promoCodeId = $request['promoCodeId'];
+            $user_promo_code_used->save();
+        }
 
         $products = $request['products'];
         $products_id = [];
