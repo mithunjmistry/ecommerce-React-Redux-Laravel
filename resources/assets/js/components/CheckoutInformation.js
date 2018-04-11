@@ -329,35 +329,37 @@ class CheckoutInformation extends React.Component {
                         <StepContent>
                             <Row>
                                 <Col lg={12} md={12}>
-                                    <Form onSubmit={this.onPromoCodeFormSubmit}>
-                                        <FormGroup controlId={"promo-code-text"}>
-                                            <ControlLabel>Promo Code</ControlLabel>
-                                            <FormControl
-                                                type="text"
-                                                placeholder="Promo Code"
-                                                max={45}
-                                                name={"promo_code"}
-                                                className={"fifty-width"}
-                                                value={this.state.promoCode}
-                                                onChange={this.promoCodeChange}
-                                            />
-                                            {this.state.promoCodeError ?
-                                                <p className={"error-message"}>
-                                                    {this.state.promoCodeMessage}
-                                                </p> :
-                                                <p className={"promo-successfully-applied"}>
-                                                    {this.state.promoCodeMessage}
-                                                </p>
-                                            }
-                                            <Button
-                                                bsStyle={"primary"}
-                                                type={"submit"}
-                                                className={"star-rating-div btn-sm"}
-                                            >
-                                                Apply
-                                            </Button>
-                                        </FormGroup>
-                                    </Form>
+                                    {this.props.authentication.isAuthenticated &&
+                                        <Form onSubmit={this.onPromoCodeFormSubmit}>
+                                            <FormGroup controlId={"promo-code-text"}>
+                                                <ControlLabel>Promo Code</ControlLabel>
+                                                <FormControl
+                                                    type="text"
+                                                    placeholder="Promo Code"
+                                                    max={45}
+                                                    name={"promo_code"}
+                                                    className={"fifty-width"}
+                                                    value={this.state.promoCode}
+                                                    onChange={this.promoCodeChange}
+                                                />
+                                                {this.state.promoCodeError ?
+                                                    <p className={"error-message"}>
+                                                        {this.state.promoCodeMessage}
+                                                    </p> :
+                                                    <p className={"promo-successfully-applied"}>
+                                                        {this.state.promoCodeMessage}
+                                                    </p>
+                                                }
+                                                <Button
+                                                    bsStyle={"primary"}
+                                                    type={"submit"}
+                                                    className={"star-rating-div btn-sm"}
+                                                >
+                                                    Apply
+                                                </Button>
+                                            </FormGroup>
+                                        </Form>
+                                    }
                                     <FormGroup>
                                         <ControlLabel>Payment Method</ControlLabel>
                                         <p>Total Amount: ${totalAmount.toFixed(2)}</p>
