@@ -86,14 +86,12 @@ class CheckoutInformation extends React.Component {
             // process the order
             this.setState(() => ({isLoading: true}));
             const totalAmount = this.props.shoppingCart.reduce(totalReducer, 0);
-            let headers;
+            let headers = {};
             if(this.props.authentication.isAuthenticated){
                 const access_token = window.localStorage.getItem(ACCESS_TOKEN);
                 headers = getHeaders(access_token);
             }
-            else{
-                headers = {}
-            }
+
             let products = [];
             this.props.shoppingCart.map((item) => (
                 products.push({
