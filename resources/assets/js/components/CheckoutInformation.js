@@ -7,12 +7,12 @@ import {
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import {Row, Col, FormGroup, ControlLabel, FormControl, Radio} from "react-bootstrap";
+import {Row, Col, FormGroup, ControlLabel, FormControl, Radio, Form, Button} from "react-bootstrap";
 import AddressForm from "./AddressForm";
 import {withRouter} from "react-router-dom";
 import axios, {getHeaders} from "../api/axiosInstance";
 import {ACCESS_TOKEN, SUCCESSFUL_ORDER} from "../api/strings";
-import {checkoutinformationAPI, placeOrderAPI} from "../api/apiURLs";
+import {checkoutinformationAPI, placeOrderAPI, validatePromoAPI} from "../api/apiURLs";
 import {connect} from "react-redux";
 import LoadingScreen from "../components/LoadingScreen";
 import {totalReducer} from "./ShoppingCart";
@@ -42,7 +42,11 @@ class CheckoutInformation extends React.Component {
         nameDisabled: false,
         emailDisabled: false,
         loadedAddress: null,
-        isLoading: false
+        isLoading: false,
+        promoCodeError: undefined,
+        promoCodeMessage: undefined,
+        promoCode: "",
+        promoCodeResponse: {}
     };
 
     componentDidMount(){
@@ -99,14 +103,24 @@ class CheckoutInformation extends React.Component {
             ));
             const paymentMethod = this.state.creditCardChecked ? 'Credit Card' : 'Debit Card';
 
-            const {name, email} = this.state;
+            const {name, email, promoCodeResponse} = this.state;
+            let promoCodeId = null;
+            let amountDue = totalAmount;
+            if(typeof promoCodeResponse.promoCodeId !== 'undefined'){
+                promoCodeId = promoCodeResponse.promoCodeId;
+                const discount = parseFloat(promoCodeResponse.discount);
+                amountDue = parseFloat(totalAmount) - discount;
+            }
+
             const data = {
                 ...this.state.loadedAddress,
                 name,
                 email,
                 totalAmount,
                 products,
-                paymentMethod
+                paymentMethod,
+                promoCodeId,
+                amountDue
             };
             axios.post(placeOrderAPI, data, {...headers})
                 .then((response) => {
@@ -165,6 +179,59 @@ class CheckoutInformation extends React.Component {
       this.setState((prevState) => ({creditCardChecked: !prevState.creditCardChecked, debitCardChecked: !prevState.debitCardChecked}));
     };
 
+    onPromoCodeFormSubmit = (e) => {
+        e.preventDefault();
+        const promoCode = e.target.promo_code.value.trim();
+        if(promoCode.length === 0){
+            this.setState(() => ({promoCodeError: true, promoCodeMessage: "Promo code cannot be empty."}));
+        }
+        else{
+            // validate promo code
+            const access_token = window.localStorage.getItem(ACCESS_TOKEN);
+            const headers = getHeaders(access_token);
+            const data = {
+                promoCode
+            };
+            axios.post(validatePromoAPI, data, {headers})
+                .then((response) => {
+                    const response_data = response.data;
+                    if(response_data.used_by.length > 0){
+                        this.setState(() => ({
+                            promoCodeError: true,
+                            promoCodeMessage: "You have already used this promo code",
+                            promoCode,
+                            promoCodeResponse: {}
+                        }));
+                    }
+                    else{
+                        this.setState(() => ({
+                            promoCode,
+                            promoCodeError: undefined,
+                            promoCodeMessage: "Promo code applied successfully",
+                            promoCodeResponse: response_data
+                        }))
+                    }
+                })
+                .catch(() => {
+                    this.setState(() => ({
+                        promoCodeError: true,
+                        promoCodeMessage: "Invalid promo code",
+                        promoCode: "",
+                        promoCodeResponse: {}
+                    }));
+                });
+        }
+    };
+
+    promoCodeChange = (e) => {
+          const promoCode = e.target.value.trim();
+          if(promoCode.length < 25){
+              this.setState(() => ({
+                 promoCode
+              }));
+          }
+    };
+
     renderStepActions(step) {
         const {stepIndex} = this.state;
 
@@ -196,6 +263,15 @@ class CheckoutInformation extends React.Component {
 
         if(this.state.isLoading){
             return <LoadingScreen/>
+        }
+
+        const totalAmount = this.props.shoppingCart.reduce(totalReducer, 0);
+
+        let discount = 0.0;
+        let amountDue = totalAmount;
+        if(typeof this.state.promoCodeResponse.promoCodeId !== 'undefined'){
+            discount = parseFloat(this.state.promoCodeResponse.discount);
+            amountDue = parseFloat(totalAmount) - discount;
         }
 
         return (
@@ -253,7 +329,42 @@ class CheckoutInformation extends React.Component {
                         <StepContent>
                             <Row>
                                 <Col lg={12} md={12}>
+                                    <Form onSubmit={this.onPromoCodeFormSubmit}>
+                                        <FormGroup controlId={"promo-code-text"}>
+                                            <ControlLabel>Promo Code</ControlLabel>
+                                            <FormControl
+                                                type="text"
+                                                placeholder="Promo Code"
+                                                max={45}
+                                                name={"promo_code"}
+                                                className={"fifty-width"}
+                                                value={this.state.promoCode}
+                                                onChange={this.promoCodeChange}
+                                            />
+                                            {this.state.promoCodeError ?
+                                                <p className={"error-message"}>
+                                                    {this.state.promoCodeMessage}
+                                                </p> :
+                                                <p className={"promo-successfully-applied"}>
+                                                    {this.state.promoCodeMessage}
+                                                </p>
+                                            }
+                                            <Button
+                                                bsStyle={"primary"}
+                                                type={"submit"}
+                                                className={"star-rating-div btn-sm"}
+                                            >
+                                                Apply
+                                            </Button>
+                                        </FormGroup>
+                                    </Form>
                                     <FormGroup>
+                                        <ControlLabel>Payment Method</ControlLabel>
+                                        <p>Total Amount: ${totalAmount.toFixed(2)}</p>
+                                        {(typeof this.state.promoCodeResponse.promoCodeId !== 'undefined') &&
+                                        <p>Discount applied: ${discount.toFixed(2)}</p>}
+                                        <p>Amount Due: ${amountDue.toFixed(2)}</p>
+                                        <hr/>
                                         <Radio name="radioGroup" value="1"
                                                onClick={this.handlePaymentMethod}
                                                checked={this.state.creditCardChecked}

@@ -29,7 +29,7 @@ class Order extends React.Component {
 
     render(){
         return (
-            <Grid>
+            <Grid className={"minimum-height"}>
                 <Row>
                     <Col lg={12} md={12}>
                         <OrderConfirmation isAuthenticated={this.props.authentication.isAuthenticated}/>

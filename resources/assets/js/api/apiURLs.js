@@ -49,3 +49,5 @@ export const userordersAPI = "api/userorders";
 export const orderDetailAPI = (order_id) => (
     `api/order/${order_id}`
 );
+
+export const validatePromoAPI = "api/validatepromo";

@@ -7,6 +7,7 @@ use App\Order;
 use App\OrderItem;
 use App\Payment;
 use App\PaymentMethod;
+use App\PromoCode;
 use App\ShippingOption;
 use App\ShoppingCart;
 use App\User;
@@ -37,11 +38,12 @@ class OrderController extends Controller
         }
         $datetime = date("Y-m-d H:i:s");
         $total_amount = $request['totalAmount'];
+        $amount_paid = $request['amountDue'];
 
         $payment_method = PaymentMethod::where('paymentMethod', $request['paymentMethod'])->first();
 
         $payment = new Payment();
-        $payment->amount = $total_amount;
+        $payment->amount = $amount_paid;
         $payment->status = "Successful";
         $payment->timeStamp = $datetime;
         $payment->paymentMethodId = $payment_method->paymentMethodId;
@@ -53,6 +55,7 @@ class OrderController extends Controller
         $order->paymentId = $payment->paymentId;
         $order->userId = $user_id;
         $order->shippingOptionsId = ShippingOption::ORDER_PLACED;
+        $order->promoCodeId = $request['promoCodeId'];
         $order->save();
 
         $products = $request['products'];
@@ -100,9 +103,31 @@ class OrderController extends Controller
 
             $order->payment->paymentMethodData;
 
+            $order->promoCode;
+
             return response()->json($order);
         }
         return response("Invalid Order", 400);
+    }
+
+    public function validate_promo_code($user, $promoCode){
+        $datetime = date("Y-m-d H:i:s");
+        $promo_code = PromoCode::where('promoCode', $promoCode)
+                                ->where('beginsOn', '<', $datetime)
+                                ->where('endsOn', '>', $datetime)
+                                ->with(['usedBy' => function($query) use($user){
+                                    $query->where('userId', $user->userId);
+                                }])->first();
+        return $promo_code;
+    }
+
+    public function validate_promo_api(Request $request){
+        $user = Auth::user();
+        $promo = $this->validate_promo_code($user, $request['promoCode']);
+        if($promo){
+            return response()->json($promo);
+        }
+        return response("Invalid promo code.", 400);
     }
 
 //    public function test_email(){
