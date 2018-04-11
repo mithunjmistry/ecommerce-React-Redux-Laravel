@@ -131,7 +131,7 @@ class OrderDetail extends React.Component{
                                     </Col>
 
                                     <Col lg={4} md={4}>
-                                        <span className={"order-panel-attributes one-em-font"}>${orderDetail.totalAmount}</span>
+                                        <span className={"order-panel-attributes one-em-font"}>${parseFloat(orderDetail.totalAmount).toFixed(2)}</span>
                                     </Col>
 
                                     <Col lg={2} md={2}>
@@ -140,6 +140,24 @@ class OrderDetail extends React.Component{
 
                                     <Col lg={4} md={4}>
                                         <span className={"order-panel-attributes one-em-font"}>{orderDetail.order_items.length}</span>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col lg={2} md={2}>
+                                        <span className={"order-panel-headings one-em-font bold-text"}>Amount Paid: </span>
+                                    </Col>
+
+                                    <Col lg={4} md={4}>
+                                        <span className={"order-panel-attributes one-em-font"}>${parseFloat(orderDetail.payment.amount).toFixed(2)}</span>
+                                    </Col>
+
+                                    <Col lg={2} md={2}>
+                                        <span className={"order-panel-headings one-em-font bold-text"}>Promo Code: </span>
+                                    </Col>
+
+                                    <Col lg={4} md={4}>
+                                        <span className={"order-panel-attributes one-em-font"}>{orderDetail.promo_code ? (orderDetail.promo_code.promoCode.concat(` ($${orderDetail.promo_code.discount.toFixed(2)} discount)`)) : 'Not Applied'}</span>
                                     </Col>
                                 </Row>
                             </Panel.Body>

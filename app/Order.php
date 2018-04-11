@@ -20,8 +20,8 @@ class Order extends Model
         return $this->hasOne('App\Payment', 'paymentId', 'paymentId');
     }
 
-    public function orderItemsRaw(){
-        return $this->hasMany('App\OrderItem', 'orderId', 'orderId');
+    public function promoCode(){
+        return $this->hasOne('App\PromoCode', 'promoCodeId', 'promoCodeId');
     }
 
 }

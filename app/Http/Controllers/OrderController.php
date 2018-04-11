@@ -103,6 +103,8 @@ class OrderController extends Controller
 
             $order->payment->paymentMethodData;
 
+            $order->promoCode;
+
             return response()->json($order);
         }
         return response("Invalid Order", 400);

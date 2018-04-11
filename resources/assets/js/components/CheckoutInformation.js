@@ -360,9 +360,9 @@ class CheckoutInformation extends React.Component {
                                     </Form>
                                     <FormGroup>
                                         <ControlLabel>Payment Method</ControlLabel>
-                                        <p>Total Amount: ${totalAmount}</p>
+                                        <p>Total Amount: ${totalAmount.toFixed(2)}</p>
                                         {(typeof this.state.promoCodeResponse.promoCodeId !== 'undefined') &&
-                                        <p>Discount applied: ${discount}</p>}
+                                        <p>Discount applied: ${discount.toFixed(2)}</p>}
                                         <p>Amount Due: ${amountDue.toFixed(2)}</p>
                                         <hr/>
                                         <Radio name="radioGroup" value="1"
