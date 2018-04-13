@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShippingOption extends Model
 {
     //
-    protected $table = "shippingoptions";
+    protected $table = "shippingOptions";
     protected $primaryKey = "shippingOptionsId";
     public $timestamps = false;
 

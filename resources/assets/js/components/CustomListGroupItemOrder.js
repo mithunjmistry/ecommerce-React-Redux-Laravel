@@ -16,7 +16,7 @@ class CustomListGroupItemOrder extends React.Component{
             sellerName: this.props.sellerName,
             ratings: this.props.ratings ? this.props.ratings : undefined,
             quantity: 1,
-            price: this.props.currentPrice,
+            price: this.props.actualPrice,
             productID: this.props.productID
         };
         this.props.dispatch(addToCart(product));

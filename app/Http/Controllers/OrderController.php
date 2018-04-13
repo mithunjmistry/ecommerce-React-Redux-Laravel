@@ -15,6 +15,7 @@ use App\UserPromoCode;
 use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -43,47 +44,51 @@ class OrderController extends Controller
 
         $payment_method = PaymentMethod::where('paymentMethod', $request['paymentMethod'])->first();
 
-        $payment = new Payment();
-        $payment->amount = $amount_paid;
-        $payment->status = "Successful";
-        $payment->timeStamp = $datetime;
-        $payment->paymentMethodId = $payment_method->paymentMethodId;
-        $payment->save();
+        DB::transaction(function () use ($amount_paid, $datetime, $payment_method, $total_amount, $user, $request, $user_id) {
 
-        $order = new Order();
-        $order->orderDate = $datetime;
-        $order->totalAmount = $total_amount;
-        $order->paymentId = $payment->paymentId;
-        $order->userId = $user_id;
-        $order->shippingOptionsId = ShippingOption::ORDER_PLACED;
-        $order->promoCodeId = $request['promoCodeId'];
-        $order->save();
+            $payment = new Payment();
+            $payment->amount = $amount_paid;
+            $payment->status = "Successful";
+            $payment->timeStamp = $datetime;
+            $payment->paymentMethodId = $payment_method->paymentMethodId;
+            $payment->save();
 
-        if($request['promoCodeId']){
-            $user_promo_code_used = new UserPromoCode();
-            $user_promo_code_used->userId = $user_id;
-            $user_promo_code_used->promoCodeId = $request['promoCodeId'];
-            $user_promo_code_used->save();
-        }
+            $order = new Order();
+            $order->orderDate = $datetime;
+            $order->totalAmount = $total_amount;
+            $order->paymentId = $payment->paymentId;
+            $order->userId = $user_id;
+            $order->shippingOptionsId = ShippingOption::ORDER_PLACED;
+            $order->promoCodeId = $request['promoCodeId'];
+            $order->save();
 
-        $products = $request['products'];
-        $products_id = [];
-        foreach ($products as $product){
-            $order_item = new OrderItem();
-            $order_item->quantity = $product['quantity'];
-            $order_item->productId = $product['productId'];
-            $order_item->orderId = $order->orderId;
-            $order_item->save();
+            if ($request['promoCodeId']) {
+                $user_promo_code_used = new UserPromoCode();
+                $user_promo_code_used->userId = $user_id;
+                $user_promo_code_used->promoCodeId = $request['promoCodeId'];
+                $user_promo_code_used->save();
+            }
 
-            array_push($products_id, $product['productId']);
-        }
+            $products = $request['products'];
+            $products_id = [];
+            foreach ($products as $product) {
+                $order_item = new OrderItem();
+                $order_item->quantity = $product['quantity'];
+                $order_item->productId = $product['productId'];
+                $order_item->price = $product['price'];
+                $order_item->orderId = $order->orderId;
+                $order_item->save();
 
-        if($user){
-            ShoppingCart::where('userId', $user_id)
-                        ->where('wishList', false)
-                        ->whereIn('product_id', $products_id)
-                        ->update(['expired' => true]);
-        }
+                array_push($products_id, $product['productId']);
+            }
+
+            if ($user) {
+                ShoppingCart::where('userId', $user_id)
+                    ->where('wishList', false)
+                    ->whereIn('product_id', $products_id)
+                    ->update(['expired' => true]);
+            }
+        });
 
         Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($request));
 

@@ -17,7 +17,7 @@ class AddPromocodeidColumnToOrder extends Migration
             //
             $table->integer('promoCodeId')->nullable();
 
-            $table->foreign('promoCodeId')->references('promoCodeId')->on('promocode');
+            $table->foreign('promoCodeId')->references('promoCodeId')->on('promoCode');
         });
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PromoCode extends Model
 {
     //
-    protected $table = "promocode";
+    protected $table = "promoCode";
     protected $primaryKey = "promoCodeId";
 
     public function usedBy(){
