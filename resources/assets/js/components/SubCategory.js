@@ -89,6 +89,7 @@ class SubCategory extends React.Component{
                                     sellerName={item.sellerName}
                                     ratings={item.ratings}
                                     productID={item.productId}
+                                    image={item.photo.photo}
                                 >
                                     {item.name}
                                 </CustomListGroupItem>
@@ -114,7 +115,7 @@ class SubCategory extends React.Component{
                                     sellerName={item.sellerName}
                                     ratings={item.ratings}
                                     productID={item.productId}
-
+                                    image={item.photo.photo}
                                 >
                                     {item.name}
                                 </CustomListGroupItem>

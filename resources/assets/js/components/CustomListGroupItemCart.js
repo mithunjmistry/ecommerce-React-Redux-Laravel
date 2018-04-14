@@ -57,7 +57,7 @@ class CustomListGroupItemCart extends React.Component{
     };
 
     removeFromCart = () => {
-        ProductInfo.removeItemFromCart(this.state.productID, this.props);
+        ProductInfo.removeItemFromCart(this.props.productID, this.props);
     };
 
     render() {
