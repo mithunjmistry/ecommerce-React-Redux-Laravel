@@ -99,9 +99,11 @@ class OrderController extends Controller
         $user = Auth::user();
         $user_orders = $user->orders->each(function ($order){
             $order->orderItems->each(function ($orderItem){
-               $orderItem->product;
+               $orderItem->product->photo;
             });
         });
+
+        Log::info($user_orders);
 
         return response()->json($user_orders);
     }
