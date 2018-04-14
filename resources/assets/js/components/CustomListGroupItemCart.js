@@ -14,15 +14,14 @@ const tooltip = (
 class CustomListGroupItemCart extends React.Component{
 
     state = {
-        quantity: this.props.quantity,
-        productID: this.props.productID
+        quantity: this.props.quantity
     };
 
     editCart = (quantity) => {
         let updates = {
           quantity
         };
-        this.props.dispatch(editCart(this.state.productID, updates));
+        this.props.dispatch(editCart(this.props.productID, updates));
     };
 
     onQuantityChange = (e) => {
