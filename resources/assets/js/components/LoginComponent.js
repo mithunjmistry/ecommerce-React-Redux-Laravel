@@ -35,7 +35,7 @@ class LoginComponent extends React.Component{
                     this.props.dispatch(loginUser());
                     response.data.map((item) => {
                         const productName = item.name;
-                        const productImage = imageWatch;
+                        const productImage = item.image;
                         const sellerName = item.sellerName;
                         const ratings = item.ratings;
                         const quantity = 1;

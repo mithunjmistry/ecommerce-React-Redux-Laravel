@@ -2,7 +2,7 @@ import React from "react";
 import {Grid, Row, Col, ControlLabel, FormGroup, FormControl, Button, Glyphicon} from "react-bootstrap";
 import ReactImageZoom from 'react-image-zoom';
 import StarRatingComponent from 'react-star-ratings';
-import {imageWatch} from "./image";
+import {image} from "./image";
 import {addToCart, removeFromCart} from "../actions/shoppingCart";
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
@@ -18,7 +18,6 @@ class ProductInfo extends React.Component {
     state = {
       product: {},
       prevPrice: null,
-      productImage: imageWatch,
       quantity: 1,
       numberOfRatings: 239,
       productID: undefined,
@@ -63,7 +62,7 @@ class ProductInfo extends React.Component {
         // dispatching an action to redux store
         const product = {
             productName: this.state.product.name,
-            productImage: this.state.productImage,
+            productImage: this.state.product.image,
             sellerName: this.state.product.sellerName,
             ratings: this.state.product.ratings,
             quantity: this.state.quantity,
@@ -113,7 +112,7 @@ class ProductInfo extends React.Component {
     handleAddToWishlist = () => {
         const product = {
             productName: this.state.product.name,
-            productImage: this.state.productImage,
+            productImage: this.state.product.image,
             sellerName: this.state.product.sellerName,
             ratings: this.state.product.ratings,
             quantity: this.state.quantity,
@@ -140,6 +139,7 @@ class ProductInfo extends React.Component {
 
         return (
             <Grid>
+                {console.log(this.state.product)}
                 <Row>
                     <Col lg={4} md={4}>
                         <div className={"margin-div-five"}>
@@ -147,7 +147,7 @@ class ProductInfo extends React.Component {
                                 width: 200,
                                 height: 250,
                                 zoomWidth: 500,
-                                img: this.state.productImage,
+                                img: this.state.product.image ? this.state.product.image : image,
                                 zoomStyle: 'z-index: 999;',
                             }} />
                         </div>
@@ -220,7 +220,8 @@ class ProductInfo extends React.Component {
                                     onClick={this.addToCartOnClick}
                                 >Add to Cart
                                 </Button>
-                                <Button onClick={this.handleAddToWishlist}>Add to Wishlist</Button>
+                                {this.props.authentication.isAuthenticated &&
+                                <Button onClick={this.handleAddToWishlist}>Add to Wishlist</Button>}
                             </span>
                         </div>
                     </Col>
@@ -254,4 +255,10 @@ class ProductInfo extends React.Component {
     }
 }
 
-export default connect()(ProductInfo);
+const mapStateToProps = (state) => {
+    return {
+        authentication: state.authentication
+    };
+};
+
+export default connect(mapStateToProps)(ProductInfo);

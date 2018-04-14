@@ -236,6 +236,7 @@ class SearchResultsComponent extends React.Component{
                     sellerName={products[i].sellerName}
                     ratings={products[i].ratings}
                     productID={products[i].productId}
+                    image={products[i].image}
                 >
                     {products[i].name}
                 </CustomListGroupItem>);

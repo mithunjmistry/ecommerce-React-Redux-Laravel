@@ -31,7 +31,7 @@ class CustomListGroupItemProduct extends React.Component{
         return (
             <li className="list-group-item" onClick={() => this.viewClickHandler(`/product/${this.props.productID}`)}>
                 <div className={"media-left"}>
-                    <img className="media-object" src={image} alt="..." />
+                    <img className="media-object" height={64} width={64} src={this.props.image ? this.props.image : image} alt="..." />
                 </div>
                 <div className={"media-body"}>
                     <Row>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Photo;
 use App\Product;
 use App\ShoppingCart;
 use Illuminate\Http\Request;
@@ -41,8 +42,14 @@ class ShoppingCartController extends Controller
     public function get_user_cart(){
         $user = Auth::user();
         $user_cart = $user->shoppingCartItems->pluck('product_id')->toArray();
-        $products = Product::whereIn('productId', $user_cart)->get();
+        $products = Product::whereIn('productId', $user_cart)->get()->toArray();
 
-        return response()->json($products);
+        $p = [];
+        foreach ($products as $product){
+            $product['image'] = 'data:image/jpeg;base64,'.base64_encode(Photo::where('productId', $product['productId'])->first()->photo);
+            array_push($p, $product);
+        }
+
+        return response()->json($p);
     }
 }

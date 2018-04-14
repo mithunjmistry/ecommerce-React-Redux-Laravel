@@ -30,11 +30,11 @@ class ShoppingCart extends React.Component{
                     <hr/>
                     <div className={"total-cart-label-div"}>
                         <Row>
-                            <Col lg={10} md={10}>
+                            <Col lg={9} md={9}>
                                 <span className={"total-cart-label"}>Total:</span>
                             </Col>
 
-                            <Col lg={2} md={2}>
+                            <Col lg={3} md={3}>
                                 <span className={"total-cart-amount"}>
                                     ${parseFloat(total).toFixed(2)}
                                 </span>

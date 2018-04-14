@@ -58,7 +58,7 @@ class CustomListGroupItemCheckout extends React.Component{
                 </div>
                 <div className={"media-body"}>
                     <Row>
-                        <Col lg={6} md={6} sm={12} xs={12}>
+                        <Col lg={5} md={5} sm={12} xs={12}>
                             <h4 className={"media-heading"}>{this.props.productName}</h4>
                             <div className={"seller-name-div"}>
                                 <span>{this.props.sellerName}</span>
@@ -100,7 +100,7 @@ class CustomListGroupItemCheckout extends React.Component{
                             </div>
                         </Col>
 
-                        <Col md={2} lg={2} sm={12} xs={12}>
+                        <Col md={3} lg={3} sm={12} xs={12}>
                             <div className={"checkout-price-div"}>
                               <span className={"cart-price"}>
                                   ${parseFloat(parseFloat(this.props.price) * parseInt(this.state.quantity)).toFixed(2)}

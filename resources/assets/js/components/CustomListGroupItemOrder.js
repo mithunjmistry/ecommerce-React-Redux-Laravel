@@ -30,7 +30,7 @@ class CustomListGroupItemOrder extends React.Component{
         return (
             <li className="list-group-item" onClick={() => this.viewClickHandler(`/product/${this.props.productID}`)}>
                 <div className={"media-left"}>
-                    <img className="media-object" src={image} alt="..." />
+                    <img className="media-object" width={64} height={64} src={image} alt="..." />
                 </div>
                 <div className={"media-body"}>
                     <Row>

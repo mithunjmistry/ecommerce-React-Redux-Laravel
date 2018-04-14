@@ -8,7 +8,6 @@ import {ACCESS_TOKEN} from "../api/strings";
 import {getHeaders} from "../api/axiosInstance";
 import {connect} from "react-redux";
 import {addToWishlistHelper} from "../actions/wishlist";
-import {imageWatch} from "./image";
 
 class WishList extends React.Component{
 
@@ -27,7 +26,7 @@ class WishList extends React.Component{
                 products.map((item) => {
                    this.props.dispatch(addToWishlistHelper({
                        productName: item.name,
-                       productImage: imageWatch,
+                       productImage: item.image,
                        sellerName: item.sellerName,
                        ratings: item.ratings,
                        quantity: 1,
@@ -62,6 +61,7 @@ class WishList extends React.Component{
                             sellerName={item.sellerName}
                             ratings={item.ratings}
                             productID={item.productID}
+                            image={item.productImage}
                         >
                             {item.productName}
                         </CustomListGroupItem>
