@@ -18,7 +18,7 @@ class WishlistController extends Controller
 
         $p = [];
         foreach ($products as $product){
-            $product['image'] = 'data:image/jpeg;base64,'.base64_encode(Photo::where('productId', $product['productId'])->first()->photo);
+            $product['image'] = Photo::where('productId', $product['productId'])->first()->photo;
             array_push($p, $product);
         }
 

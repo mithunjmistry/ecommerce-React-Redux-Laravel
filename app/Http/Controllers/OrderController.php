@@ -103,8 +103,6 @@ class OrderController extends Controller
             });
         });
 
-        Log::info($user_orders);
-
         return response()->json($user_orders);
     }
 

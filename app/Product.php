@@ -11,6 +11,7 @@ class Product extends Model
     protected $primaryKey = "productId";
 
     public function photo(){
-        return $this->hasOne('App\Photo', 'productId', 'productId');
+        return $this->hasOne('App\Photo', 'productId', 'productId')
+                    ->select(['photo']);
     }
 }

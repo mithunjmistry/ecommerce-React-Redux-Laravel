@@ -139,7 +139,6 @@ class ProductInfo extends React.Component {
 
         return (
             <Grid>
-                {console.log(this.state.product)}
                 <Row>
                     <Col lg={4} md={4}>
                         <div className={"margin-div-five"}>

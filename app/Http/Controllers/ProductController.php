@@ -25,7 +25,7 @@ class ProductController extends Controller
                             ->get()->toArray();
         $p = [];
         foreach ($products as $product){
-            $product['image'] = 'data:image/jpeg;base64,'.base64_encode(Photo::where('productId', $product['productId'])->first()->photo);
+            $product['image'] = Photo::where('productId', $product['productId'])->first()->photo;
             array_push($p, $product);
         }
 
@@ -36,7 +36,7 @@ class ProductController extends Controller
     public function product_info($product_id){
         try {
             $product = Product::where('productId', $product_id)->firstOrFail()->toArray();
-            $product['image'] = 'data:image/jpeg;base64,'.base64_encode(Photo::where('productId', $product_id)->first()->photo);
+            $product['image'] = Photo::where('productId', $product_id)->first()->photo;
         }catch(ModelNotFoundException $e){
             return response(json_encode("Product not found"), 400);
         }

@@ -156,7 +156,7 @@ class Header extends React.Component{
         e.preventDefault();
         let searchCategorySelected = this.state.dropDownSelected;
         let searchQuery = this.state.searchBoxText;
-        if(searchQuery.length > 0){
+        if(searchQuery.length > 1){
             this.props.history.push("/search/"+searchCategorySelected.toLowerCase()+"/"+searchQuery);
         }
         else{

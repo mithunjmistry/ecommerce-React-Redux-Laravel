@@ -114,6 +114,7 @@ class SubCategory extends React.Component{
                                     sellerName={item.sellerName}
                                     ratings={item.ratings}
                                     productID={item.productId}
+
                                 >
                                     {item.name}
                                 </CustomListGroupItem>

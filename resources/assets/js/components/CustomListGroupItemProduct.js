@@ -13,7 +13,7 @@ class CustomListGroupItemProduct extends React.Component{
         // dispatching an action to redux store
         const product = {
             productName: this.props.children,
-            productImage: image,
+            productImage: this.props.image,
             sellerName: this.props.sellerName,
             ratings: this.props.ratings ? this.props.ratings : undefined,
             quantity: 1,

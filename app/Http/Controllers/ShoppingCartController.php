@@ -34,7 +34,9 @@ class ShoppingCartController extends Controller
                                             ->where('userId', $user->userId)
                                             ->where('wishList', false)
                                             ->first();
-            $shopping_cart->delete();
+            if($shopping_cart){
+                $shopping_cart->delete();
+            }
         }
         return response('removed from cart', 200);
     }
@@ -46,7 +48,7 @@ class ShoppingCartController extends Controller
 
         $p = [];
         foreach ($products as $product){
-            $product['image'] = 'data:image/jpeg;base64,'.base64_encode(Photo::where('productId', $product['productId'])->first()->photo);
+            $product['image'] = Photo::where('productId', $product['productId'])->first()->photo;
             array_push($p, $product);
         }
 
