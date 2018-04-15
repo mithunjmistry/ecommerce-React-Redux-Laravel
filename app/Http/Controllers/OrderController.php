@@ -111,7 +111,7 @@ class OrderController extends Controller
         $order = Order::where('orderId', $order_id)->where('userId', $user->userId)->first();
         if($order){
             $order->orderItems->each(function ($orderItem){
-                $orderItem->product;
+                $orderItem->product->photo;
             });
 
             $order->payment->paymentMethodData;

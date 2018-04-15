@@ -207,6 +207,8 @@ class OrderDetail extends React.Component{
                                             productID={order_item.product.productId}
                                             currentPrice={order_item.product.price}
                                             quantity={order_item.quantity}
+                                            image={order_item.product.photo.photo}
+                                            actualPrice={order_item.price}
                                         >
                                             {order_item.product.name}
                                         </CustomListGroupItem>
