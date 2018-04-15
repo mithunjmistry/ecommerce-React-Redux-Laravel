@@ -14,12 +14,12 @@ const Footer = () => (
                         <tr>
                             <td><Link to={"/myaccount"}>My Account</Link></td>
                             <td><Link to={"/about"}>About Project</Link></td>
-                            <td>FAQs</td>
+                            <td>People</td>
                         </tr>
                         <tr>
                             <td><Link to={"/myorders"}>My Orders</Link></td>
-                            <td>Mission</td>
-                            <td>Become a Seller</td>
+                            <td>Demo Video</td>
+                            <td>Contact</td>
                         </tr>
                         </tbody>
                     </Table>

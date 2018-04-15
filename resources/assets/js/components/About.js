@@ -20,30 +20,32 @@ const About = () => (
                                        distance={30}
                                        speed={1000}
                                        wait={300}>
-                <p className={"sixzero-weight"}>Libraries and Technologies used :</p>
-                <Row>
-                    <Col lg={6} md={6}>
-                        <ListGroup>
-                            <ListGroupItem>Redux</ListGroupItem>
-                            <ListGroupItem>React-router</ListGroupItem>
-                            <ListGroupItem>React-Bootstrap</ListGroupItem>
-                            <ListGroupItem>Material UI</ListGroupItem>
-                            <ListGroupItem>Axios</ListGroupItem>
-                            <ListGroupItem>Redux Thunk</ListGroupItem>
-                        </ListGroup>
-                    </Col>
+                    <div>
+                        <p className={"sixzero-weight"}>Libraries and Technologies used :</p>
+                        <Row>
+                            <Col lg={6} md={6}>
+                                <ListGroup>
+                                    <ListGroupItem>Redux</ListGroupItem>
+                                    <ListGroupItem>React-router</ListGroupItem>
+                                    <ListGroupItem>React-Bootstrap</ListGroupItem>
+                                    <ListGroupItem>Material UI</ListGroupItem>
+                                    <ListGroupItem>Axios</ListGroupItem>
+                                    <ListGroupItem>Redux Thunk</ListGroupItem>
+                                </ListGroup>
+                            </Col>
 
-                    <Col lg={6} md={6}>
-                        <ListGroup>
-                            <ListGroupItem>PHP Laravel 5.6</ListGroupItem>
-                            <ListGroupItem>Laravel Passport</ListGroupItem>
-                            <ListGroupItem>SASS with SASS loader</ListGroupItem>
-                            <ListGroupItem>Webpack</ListGroupItem>
-                            <ListGroupItem>Babel</ListGroupItem>
-                            <ListGroupItem>Loadash</ListGroupItem>
-                        </ListGroup>
-                    </Col>
-                </Row>
+                            <Col lg={6} md={6}>
+                                <ListGroup>
+                                    <ListGroupItem>PHP Laravel 5.6</ListGroupItem>
+                                    <ListGroupItem>Laravel Passport</ListGroupItem>
+                                    <ListGroupItem>SASS with SASS loader</ListGroupItem>
+                                    <ListGroupItem>Webpack</ListGroupItem>
+                                    <ListGroupItem>Babel</ListGroupItem>
+                                    <ListGroupItem>Loadash</ListGroupItem>
+                                </ListGroup>
+                            </Col>
+                        </Row>
+                    </div>
                 </LoadingOrderAnimation>
 
                 <LoadingOrderAnimation animation="fade-in"
@@ -51,22 +53,24 @@ const About = () => (
                                        distance={30}
                                        speed={1000}
                                        wait={1000}>
-                <p className={"sixzero-weight"}>Database and Cloud technologies :</p>
-                <Row>
-                    <Col lg={6} md={6}>
-                        <ListGroup>
-                            <ListGroupItem>MySQL</ListGroupItem>
-                            <ListGroupItem>RDBMS on AWS</ListGroupItem>
-                        </ListGroup>
-                    </Col>
+                    <div>
+                        <p className={"sixzero-weight"}>Database and Cloud technologies :</p>
+                        <Row>
+                            <Col lg={6} md={6}>
+                                <ListGroup>
+                                    <ListGroupItem>MySQL</ListGroupItem>
+                                    <ListGroupItem>RDBMS on AWS</ListGroupItem>
+                                </ListGroup>
+                            </Col>
 
-                    <Col lg={6} md={6}>
-                        <ListGroup>
-                            <ListGroupItem>Google App Engine</ListGroupItem>
-                            <ListGroupItem>Docker Image</ListGroupItem>
-                        </ListGroup>
-                    </Col>
-                </Row>
+                            <Col lg={6} md={6}>
+                                <ListGroup>
+                                    <ListGroupItem>Google App Engine</ListGroupItem>
+                                    <ListGroupItem>Docker Image</ListGroupItem>
+                                </ListGroup>
+                            </Col>
+                        </Row>
+                    </div>
                 </LoadingOrderAnimation>
             </Col>
         </Row>
