@@ -16,6 +16,7 @@ import MyAccount from "../components/MyAccount";
 import OrderDetail from "../components/OrderDetail";
 import MyOrders from "../components/MyOrders";
 import NotFoundPage from "../components/NotFoundPage";
+import About from "../components/About";
 
 const appRouter = () => (
     <BrowserRouter>
@@ -50,6 +51,7 @@ const appRouter = () => (
                 <Route path="/myaccount" exact={true} component={MyAccount}/>
                 <Route path="/myorders" exact={true} component={MyOrders}/>
                 <Route path="/order/:id" exact={true} component={OrderDetail} />
+                <Route path="/about" exact={true} component={About}/>
                 <Route component={NotFoundPage} />
             </Switch>
             <Footer/>

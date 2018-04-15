@@ -13,7 +13,7 @@ const Footer = () => (
                         <tbody>
                         <tr>
                             <td><Link to={"/myaccount"}>My Account</Link></td>
-                            <td>About</td>
+                            <td><Link to={"/about"}>About Project</Link></td>
                             <td>FAQs</td>
                         </tr>
                         <tr>
