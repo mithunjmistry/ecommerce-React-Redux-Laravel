@@ -9,13 +9,13 @@ export default class HomePage extends React.Component{
                 <Col lg={12} md={12}>
                     <Carousel interval={2500}>
                         <Carousel.Item>
-                            <img width={1750} height={250} alt="900x500" src="/images/offerone.png" />
+                            <img width={1750} height={450} alt="Browse our offers." src="/images/offerone.jpg" />
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img width={1750} height={250} alt="900x500" src="/images/offertwo.png" />
+                            <img width={1750} height={450} alt="Browse our offers." src="/images/offertwo.jpg" />
                         </Carousel.Item>
                         <Carousel.Item>
-                            <img width={1750} height={250} alt="900x500" src="/images/offerthree.png" />
+                            <img width={1750} height={450} alt="Browse our offers." src="/images/offerthree.jpg" />
                         </Carousel.Item>
                     </Carousel>
                 </Col>

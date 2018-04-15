@@ -317,18 +317,16 @@ class SearchResultsComponent extends React.Component{
                     </Col>
                 </Row> :
                 <Row>
-                    <Col lg={12}>
-                        <div className={"page-height-for-navbar"}>
+                    <Col lg={10} md={10} lgOffset={1} mdOffset={1}>
+                        <div className={"minimum-height text-center"}>
                             <Panel bsStyle="primary">
                                 <Panel.Heading>
                                     <Panel.Title componentClass="h3">No results found</Panel.Title>
                                 </Panel.Heading>
                                 <Panel.Body>
+                                    <img src={"/images/noproductfound.jpg"} alt={"No product found"}/>
                                     <h4>We will try to get this product for you in future!</h4>
                                     <p>Please give a chance by searching for another product.</p>
-                                    <div>
-                                        <Glyphicon glyph={"shopping-cart"} className={"empty-checkout-size"}/>
-                                    </div>
                                     <Link to={"/"}>Continue Shopping</Link>
                                 </Panel.Body>
                             </Panel>
