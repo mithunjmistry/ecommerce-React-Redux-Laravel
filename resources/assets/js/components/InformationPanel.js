@@ -6,7 +6,7 @@ const InformationPanel = (props) => (
     <Grid>
         <Row>
             <Col lg={12}>
-                <div className={"page-height-for-navbar"}>
+                <div className={"minimum-height"}>
                     <Panel bsStyle="primary">
                         <Panel.Heading>
                             <Panel.Title componentClass="h3">{props.panelTitle}</Panel.Title>

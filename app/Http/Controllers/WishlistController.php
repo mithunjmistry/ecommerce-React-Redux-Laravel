@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Photo;
 use App\Product;
 use App\ShoppingCart;
 use Illuminate\Http\Request;
@@ -13,9 +14,15 @@ class WishlistController extends Controller
     public function get_user_wishlist(){
         $user = Auth::user();
         $user_wishlist = $user->wishlistItems->pluck('product_id')->toArray();
-        $products = Product::whereIn('productId', $user_wishlist)->get();
+        $products = Product::whereIn('productId', $user_wishlist)->get()->toArray();
 
-        return response()->json($products);
+        $p = [];
+        foreach ($products as $product){
+            $product['image'] = Photo::where('productId', $product['productId'])->first()->photo;
+            array_push($p, $product);
+        }
+
+        return response()->json($p);
     }
 
     public function add_to_wishlist(Request $request){

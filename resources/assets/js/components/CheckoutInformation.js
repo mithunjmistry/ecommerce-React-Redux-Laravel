@@ -96,7 +96,8 @@ class CheckoutInformation extends React.Component {
             this.props.shoppingCart.map((item) => (
                 products.push({
                     productId: item.productID,
-                    quantity: item.quantity
+                    quantity: item.quantity,
+                    price: item.price
                 })
             ));
             const paymentMethod = this.state.creditCardChecked ? 'Credit Card' : 'Debit Card';

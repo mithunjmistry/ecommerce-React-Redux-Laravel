@@ -14,15 +14,14 @@ const tooltip = (
 class CustomListGroupItemCart extends React.Component{
 
     state = {
-        quantity: this.props.quantity,
-        productID: this.props.productID
+        quantity: this.props.quantity
     };
 
     editCart = (quantity) => {
         let updates = {
           quantity
         };
-        this.props.dispatch(editCart(this.state.productID, updates));
+        this.props.dispatch(editCart(this.props.productID, updates));
     };
 
     onQuantityChange = (e) => {
@@ -57,7 +56,7 @@ class CustomListGroupItemCart extends React.Component{
     };
 
     removeFromCart = () => {
-        ProductInfo.removeItemFromCart(this.state.productID, this.props);
+        ProductInfo.removeItemFromCart(this.props.productID, this.props);
     };
 
     render() {
@@ -87,7 +86,7 @@ class CustomListGroupItemCart extends React.Component{
                             </div>
                         </Col>
 
-                        <Col lg={4} md={4} sm={12} xs={12}>
+                        <Col lg={3} md={3} sm={12} xs={12}>
                             <div className={"star-rating-div"}>
                                 <span>
                                     <Button onClick={this.onQuantityDecrease}>-</Button>
@@ -103,7 +102,7 @@ class CustomListGroupItemCart extends React.Component{
                             </div>
                         </Col>
 
-                        <Col md={1} lg={1} sm={12} xs={12}>
+                        <Col md={2} lg={2} sm={12} xs={12}>
                             <div className={"cart-price-div"}>
                               <span className={"cart-price"}>
                                   ${parseFloat(parseFloat(this.props.price) * parseInt(this.state.quantity)).toFixed(2)}

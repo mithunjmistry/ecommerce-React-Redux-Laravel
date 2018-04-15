@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar, Grid, Row, Table, Col } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 const Footer = () => (
     <footer className={'footer'}>
@@ -11,22 +12,25 @@ const Footer = () => (
                     <Table responsive className={'table-footer'}>
                         <tbody>
                         <tr>
-                            <td>My Account</td>
+                            <td><Link to={"/myaccount"}>My Account</Link></td>
                             <td>About</td>
                             <td>FAQs</td>
                         </tr>
                         <tr>
-                            <td>Orders</td>
+                            <td><Link to={"/myorders"}>My Orders</Link></td>
                             <td>Mission</td>
                             <td>Become a Seller</td>
                         </tr>
-                        <tr>
-                            <td>Offers</td>
-                            <td>Contact Us</td>
-                            <td>Shipping Policy</td>
-                        </tr>
                         </tbody>
                     </Table>
+                </Col>
+            </Row>
+
+            <Row>
+                <Col lg={12}>
+                    <div className={"text-center copyright-height"}>
+                        Copyright &copy; {(new Date().getFullYear())} | ekart
+                    </div>
                 </Col>
             </Row>
         </Grid>

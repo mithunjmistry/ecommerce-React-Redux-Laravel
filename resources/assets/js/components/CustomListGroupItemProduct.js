@@ -13,7 +13,7 @@ class CustomListGroupItemProduct extends React.Component{
         // dispatching an action to redux store
         const product = {
             productName: this.props.children,
-            productImage: image,
+            productImage: this.props.image,
             sellerName: this.props.sellerName,
             ratings: this.props.ratings ? this.props.ratings : undefined,
             quantity: 1,
@@ -31,7 +31,7 @@ class CustomListGroupItemProduct extends React.Component{
         return (
             <li className="list-group-item" onClick={() => this.viewClickHandler(`/product/${this.props.productID}`)}>
                 <div className={"media-left"}>
-                    <img className="media-object" src={image} alt="..." />
+                    <img className="media-object" height={64} width={64} src={this.props.image ? this.props.image : image} alt="..." />
                 </div>
                 <div className={"media-body"}>
                     <Row>

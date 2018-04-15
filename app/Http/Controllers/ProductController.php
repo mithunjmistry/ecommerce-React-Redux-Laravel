@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Photo;
 use App\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -21,15 +22,21 @@ class ProductController extends Controller
                                 $inner_query->orWhere('productDescription', 'LIKE', "%$query%");
                             })
                             ->orderBy('timeStamp', 'desc')
-                            ->get();
+                            ->get()->toArray();
+        $p = [];
+        foreach ($products as $product){
+            $product['image'] = Photo::where('productId', $product['productId'])->first()->photo;
+            array_push($p, $product);
+        }
 
-        return response()->json($products);
+        return response()->json($p);
 
     }
 
     public function product_info($product_id){
         try {
-            $product = Product::where('productId', $product_id)->firstOrFail();
+            $product = Product::where('productId', $product_id)->firstOrFail()->toArray();
+            $product['image'] = Photo::where('productId', $product_id)->first()->photo;
         }catch(ModelNotFoundException $e){
             return response(json_encode("Product not found"), 400);
         }

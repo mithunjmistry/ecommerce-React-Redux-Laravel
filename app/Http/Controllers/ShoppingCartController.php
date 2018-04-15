@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Photo;
 use App\Product;
 use App\ShoppingCart;
 use Illuminate\Http\Request;
@@ -33,7 +34,9 @@ class ShoppingCartController extends Controller
                                             ->where('userId', $user->userId)
                                             ->where('wishList', false)
                                             ->first();
-            $shopping_cart->delete();
+            if($shopping_cart){
+                $shopping_cart->delete();
+            }
         }
         return response('removed from cart', 200);
     }
@@ -41,8 +44,14 @@ class ShoppingCartController extends Controller
     public function get_user_cart(){
         $user = Auth::user();
         $user_cart = $user->shoppingCartItems->pluck('product_id')->toArray();
-        $products = Product::whereIn('productId', $user_cart)->get();
+        $products = Product::whereIn('productId', $user_cart)->get()->toArray();
 
-        return response()->json($products);
+        $p = [];
+        foreach ($products as $product){
+            $product['image'] = Photo::where('productId', $product['productId'])->first()->photo;
+            array_push($p, $product);
+        }
+
+        return response()->json($p);
     }
 }

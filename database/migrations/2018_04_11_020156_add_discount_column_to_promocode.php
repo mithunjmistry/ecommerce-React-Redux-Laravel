@@ -13,7 +13,7 @@ class AddDiscountColumnToPromocode extends Migration
      */
     public function up()
     {
-        Schema::table('promocode', function (Blueprint $table) {
+        Schema::table('promoCode', function (Blueprint $table) {
             //
             $table->double('discount')->default(5);
         });
@@ -26,7 +26,7 @@ class AddDiscountColumnToPromocode extends Migration
      */
     public function down()
     {
-        Schema::table('promocode', function (Blueprint $table) {
+        Schema::table('promoCode', function (Blueprint $table) {
             //
             $table->dropColumn('discount');
         });

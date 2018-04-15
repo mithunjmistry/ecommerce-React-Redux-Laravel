@@ -13,7 +13,7 @@ class Order extends Model
 
     public function orderItems(){
         return $this->hasMany('App\OrderItem', 'orderId', 'orderId')
-                    ->select(['quantity', 'productId']);
+                    ->select(['quantity', 'productId', 'price']);
     }
 
     public function payment(){

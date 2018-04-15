@@ -33,8 +33,12 @@ class CategoryController extends Controller
     public function subcategory_products($subcategory){
         $category_obj = Category::where('subCategory', $subcategory)->first();
         if($category_obj) {
-            $new_arrivals = $category_obj->new_arrivals;
-            $featured = $category_obj->featured;
+            $new_arrivals = $category_obj->new_arrivals->each(function ($product){
+                $product->photo;
+            });
+            $featured = $category_obj->featured->each(function ($product){
+                $product->photo;
+            });
 
             $result = ["featured" => $featured, "new_arrivals" => $new_arrivals];
             return response()->json($result);

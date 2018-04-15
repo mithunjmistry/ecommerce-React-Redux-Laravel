@@ -11,4 +11,16 @@
   .navbar {
     margin-bottom: 0;
   }
+  
+  a{
+    color: #333;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
+
+.copyright-height{
+  min-height: 40px;
+  margin-left: -5%;
 }

@@ -103,8 +103,10 @@ class OrderList extends React.Component {
                                   sellerName={order_item.product.sellerName}
                                   ratings={order_item.product.ratings}
                                   productID={order_item.product.productId}
-                                  currentPrice={order_item.product.price}
+                                  currentPrice={order_item.price}
                                   quantity={order_item.quantity}
+                                  actualPrice={order_item.product.price}
+                                  image={order_item.product.photo.photo}
                               >
                                   {order_item.product.name}
                               </CustomListGroupItem>

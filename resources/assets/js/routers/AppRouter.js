@@ -15,14 +15,7 @@ import LogoutComponent from "../components/LogoutComponent";
 import MyAccount from "../components/MyAccount";
 import OrderDetail from "../components/OrderDetail";
 import MyOrders from "../components/MyOrders";
-
-const noMatchFound = () => (
-    <div>
-        404! No page found.
-        <br />
-        <Link to="/">Go home</Link>
-    </div>
-);
+import NotFoundPage from "../components/NotFoundPage";
 
 const appRouter = () => (
     <BrowserRouter>
@@ -57,7 +50,7 @@ const appRouter = () => (
                 <Route path="/myaccount" exact={true} component={MyAccount}/>
                 <Route path="/myorders" exact={true} component={MyOrders}/>
                 <Route path="/order/:id" exact={true} component={OrderDetail} />
-                <Route component={noMatchFound} />
+                <Route component={NotFoundPage} />
             </Switch>
             <Footer/>
         </div>

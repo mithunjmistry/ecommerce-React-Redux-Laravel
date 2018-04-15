@@ -12,6 +12,7 @@ import {
     ANY, MORE_THAN_FOUR, MORE_THAN_THREE, NEW, NO, ONE_TO_THREE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, RATINGS,
     YES
 } from "../api/strings";
+import ScrollToTop from "react-scroll-up";
 
 class SearchResultsComponent extends React.Component{
 
@@ -236,6 +237,7 @@ class SearchResultsComponent extends React.Component{
                     sellerName={products[i].sellerName}
                     ratings={products[i].ratings}
                     productID={products[i].productId}
+                    image={products[i].image}
                 >
                     {products[i].name}
                 </CustomListGroupItem>);
@@ -246,6 +248,12 @@ class SearchResultsComponent extends React.Component{
 
         return (
             <Grid className={"minimum-height"}>
+                <ScrollToTop showUnder={110}>
+                    <div className={"text-center"}>
+                        <Glyphicon glyph={"arrow-up"}/>
+                        <p>Back to Top</p>
+                    </div>
+                </ScrollToTop>
                 {this.state.originalProducts.length > 0 ?
                     <Row>
                     <Col lg={10} md={10} sm={12} xs={12}>
@@ -316,18 +324,16 @@ class SearchResultsComponent extends React.Component{
                     </Col>
                 </Row> :
                 <Row>
-                    <Col lg={12}>
-                        <div className={"page-height-for-navbar"}>
+                    <Col lg={10} md={10} lgOffset={1} mdOffset={1}>
+                        <div className={"minimum-height text-center"}>
                             <Panel bsStyle="primary">
                                 <Panel.Heading>
                                     <Panel.Title componentClass="h3">No results found</Panel.Title>
                                 </Panel.Heading>
                                 <Panel.Body>
+                                    <img src={"/images/noproductfound.jpg"} alt={"No product found"}/>
                                     <h4>We will try to get this product for you in future!</h4>
                                     <p>Please give a chance by searching for another product.</p>
-                                    <div>
-                                        <Glyphicon glyph={"shopping-cart"} className={"empty-checkout-size"}/>
-                                    </div>
                                     <Link to={"/"}>Continue Shopping</Link>
                                 </Panel.Body>
                             </Panel>
