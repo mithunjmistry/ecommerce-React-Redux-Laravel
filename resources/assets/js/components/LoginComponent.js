@@ -120,7 +120,7 @@ class LoginComponent extends React.Component{
         }
 
         return (
-            <Grid className={"page-height-for-navbar"}>
+            <Grid className={"minimum-height"}>
                 <Row>
                     <Col mdOffset={2} lgOffset={2} lg={7} md={7}>
                         <h3 className={"text-center"}>Login</h3>

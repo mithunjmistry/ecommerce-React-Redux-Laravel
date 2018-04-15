@@ -39,7 +39,7 @@ class LogoutComponent extends React.Component{
 
     render(){
         return (
-            <div className={"page-height-for-navbar"} ref={"logout-div"}>
+            <div className={"minimum-height"} ref={"logout-div"}>
                 <h3 className={"margin-five"}>{this.state.logoutMessage}</h3>
             </div>
         )
