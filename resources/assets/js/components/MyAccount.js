@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Col, Row, Panel, Glyphicon} from "react-bootstrap";
+import {Grid, Col, Row, Panel} from "react-bootstrap";
 import {connect} from "react-redux";
 import LoadingScreen from "../components/LoadingScreen";
 import {withRouter} from 'react-router-dom';
@@ -7,7 +7,6 @@ import axios from '../api/axiosInstance';
 import {getUserAPI} from "../api/apiURLs";
 import {ACCESS_TOKEN} from "../api/strings";
 import WishList from "./WishList";
-import ScrollToTop from "react-scroll-up";
 
 class MyAccount extends React.Component{
     state = {
@@ -43,12 +42,6 @@ class MyAccount extends React.Component{
 
           return (
               <Grid className={"minimum-height"}>
-                  <ScrollToTop showUnder={110}>
-                      <div className={"text-center"}>
-                          <Glyphicon glyph={"arrow-up"}/>
-                          <p>Back to Top</p>
-                      </div>
-                  </ScrollToTop>
                   <Row>
                       <Col lg={12} md={12}>
                           <Panel>

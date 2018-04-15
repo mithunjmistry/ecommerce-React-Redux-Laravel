@@ -1,5 +1,5 @@
 import React from "react";
-import {Panel} from "react-bootstrap";
+import {Panel, Glyphicon} from "react-bootstrap";
 import axios from '../api/axiosInstance';
 import LoadingScreen from '../components/LoadingScreen';
 import CustomListGroupItem from './CustomListGroupItemWishlist';
@@ -8,6 +8,7 @@ import {ACCESS_TOKEN} from "../api/strings";
 import {getHeaders} from "../api/axiosInstance";
 import {connect} from "react-redux";
 import {addToWishlistHelper} from "../actions/wishlist";
+import ScrollToTop from "react-scroll-up";
 
 class WishList extends React.Component{
 
@@ -49,6 +50,12 @@ class WishList extends React.Component{
 
         return (
             <Panel>
+                <ScrollToTop showUnder={110}>
+                    <div className={"text-center"}>
+                        <Glyphicon glyph={"arrow-up"}/>
+                        <p>Back to Top</p>
+                    </div>
+                </ScrollToTop>
                 <Panel.Heading>
                     <Panel.Title componentClass="h3" className={"text-center"}>My Wishlist</Panel.Title>
                 </Panel.Heading>
