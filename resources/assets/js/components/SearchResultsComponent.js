@@ -12,6 +12,7 @@ import {
     ANY, MORE_THAN_FOUR, MORE_THAN_THREE, NEW, NO, ONE_TO_THREE, PRICE_HIGH_TO_LOW, PRICE_LOW_TO_HIGH, RATINGS,
     YES
 } from "../api/strings";
+import ScrollToTop from "react-scroll-up";
 
 class SearchResultsComponent extends React.Component{
 
@@ -247,6 +248,12 @@ class SearchResultsComponent extends React.Component{
 
         return (
             <Grid className={"minimum-height"}>
+                <ScrollToTop showUnder={110}>
+                    <div className={"text-center"}>
+                        <Glyphicon glyph={"arrow-up"}/>
+                        <p>Back to Top</p>
+                    </div>
+                </ScrollToTop>
                 {this.state.originalProducts.length > 0 ?
                     <Row>
                     <Col lg={10} md={10} sm={12} xs={12}>
