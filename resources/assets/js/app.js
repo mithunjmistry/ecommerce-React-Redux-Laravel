@@ -14,7 +14,6 @@ import {loginUser, logoutUser} from "./actions/authentication";
 import {ACCESS_TOKEN} from "./api/strings";
 
 const store = configureStore();
-console.log(store.getState());
 
 const App = () => (
     <MuiThemeProvider>
