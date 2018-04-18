@@ -74,7 +74,7 @@ const People = () => (
                                             <li>Implemented custom Redux middleware using <strong>redux-thunk</strong> and used axios for async data loading.</li>
                                             <li>Integrated & configured domains for <strong>Mailgun API</strong> based email service which improved email sending speed by 20% over SMTP.</li>
                                             <li>Deployed web application on <strong>Google Cloud</strong>, RDBMS on <strong>AWS</strong> and configured domains via <strong>GoDaddy</strong>.</li>
-                                            <li>Implemented Server side <strong>LRU cache</strong> using <strong>Redis</strong> on cloud reducing database calls by 60% and reduced response time from 3 seconds to 1.2 second.</li>
+                                            <li>Implemented Server side <strong>LRU cache</strong> using <strong>Redis</strong> on cloud reducing database calls by 60% and reduced server response time from 3 seconds to 1.2 second.</li>
                                         </ul>
                                     </ListGroupItem>
                                 </ListGroup>

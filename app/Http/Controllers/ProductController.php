@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     //
     public function search($category, $query){
-        $p = Cache::tags([$category, $query])->get('productSearch');
+        $p = Cache::store('redis')->tags([$category, $query])->get('productSearch');
         if(!$p) {
             $category_id = $category != 'all' ? Category::where('categoryDescription', $category)->pluck('categoryId')->toArray() : Category::all(['categoryId'])->pluck('categoryId')->toArray();
             $original_query = $query;
@@ -33,7 +33,7 @@ class ProductController extends Controller
                 array_push($p, $product);
             }
 
-            Cache::tags([$category, $original_query])->put('productSearch', $p, 15);
+            Cache::store('redis')->tags([$category, $original_query])->put('productSearch', $p, 15);
         }
 
         return response()->json($p);
