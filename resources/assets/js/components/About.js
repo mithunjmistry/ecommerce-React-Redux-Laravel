@@ -41,7 +41,7 @@ const About = () => (
                                     <ListGroupItem>SASS with SASS loader</ListGroupItem>
                                     <ListGroupItem>Webpack</ListGroupItem>
                                     <ListGroupItem>Babel</ListGroupItem>
-                                    <ListGroupItem>Loadash</ListGroupItem>
+                                    <ListGroupItem>Lodash</ListGroupItem>
                                 </ListGroup>
                             </Col>
                         </Row>
