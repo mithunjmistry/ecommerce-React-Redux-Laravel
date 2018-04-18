@@ -108,16 +108,15 @@ class OrderController extends Controller
         $user = Auth::user();
         $user_id = $user->userId;
         $cache_key = "allorders$user_id";
-        $user_orders = Cache::get($cache_key);
-        if(!$user_orders) {
+        $user_orders = Cache::remember($cache_key, 15, function () use ($user){
             $user_orders = $user->orders->each(function ($order) {
                 $order->orderItems->each(function ($orderItem) {
                     $orderItem->product->photo;
                 });
             });
 
-            Cache::put($cache_key, $user_orders, 15);
-        }
+            return $user_orders;
+        });
 
         return response()->json($user_orders);
     }
