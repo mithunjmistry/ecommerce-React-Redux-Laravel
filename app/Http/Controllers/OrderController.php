@@ -99,7 +99,12 @@ class OrderController extends Controller
             }
         });
 
-        Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($request));
+        try{
+            Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($request));
+        }
+        catch (\Exception $e) {
+            Log::info($e);
+        }
 
         return response("order successfully placed", 200);
     }
