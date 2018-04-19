@@ -28,6 +28,10 @@ const People = () => (
                                     <a href={"https://github.com/mithunjmistry"} target={"_blank"}>
                                         <img src={"/images/git.png"}/>
                                     </a>
+
+                                    <a href="https://stackoverflow.com/cv/mithunjmistry" target="_blank">
+                                        <img src={"/images/stackoverflow.png"} alt="Stack Overflow"/>
+                                    </a>
                                 </span>
                             </Col>
 
@@ -75,6 +79,39 @@ const People = () => (
                                             <li>Integrated & configured domains for <strong>Mailgun API</strong> based email service which improved email sending speed by 20% over SMTP.</li>
                                             <li>Deployed web application on <strong>Google Cloud</strong>, RDBMS on <strong>AWS</strong> and configured domains via <strong>GoDaddy</strong>.</li>
                                             <li>Implemented Server side <strong>LRU cache</strong> using <strong>Redis</strong> on cloud reducing database calls by 60% and reduced server response time from 3 seconds to 1.2 second.</li>
+                                            <li>Integrated <strong>Verifalia email validation</strong> API that avoided spam registrations.</li>
+                                        </ul>
+                                    </ListGroupItem>
+                                </ListGroup>
+                            </Col>
+                        </Row>
+
+                        <hr/>
+
+                        <Row>
+                            <Col lg={4} md={4}>
+                                <img width={185} height={185} src={"/images/noavatar.jpg"}/>
+                                <h3 className={"sixzero-weight"}>Kuldeep</h3>
+                                <p>MS Computer Science</p>
+                                <span>
+                                    <a href={"https://www.linkedin.com/in/kuldeepsinh-c-470b55151/"} target={"_blank"}>
+                                        <img src={"/images/linkedin.jpg"}/>
+                                    </a>
+
+                                    <a href={"https://github.com/KuldeepSinh24"} target={"_blank"}>
+                                        <img src={"/images/git.png"}/>
+                                    </a>
+                                </span>
+                            </Col>
+
+                            <Col lg={8} md={8}>
+                                <ListGroup>
+                                    <ListGroupItem>
+                                        <p className={"project-contributions"}>Project contributions - </p>
+                                        <ul>
+                                            <li>Responsible for database schema design using <strong>ER diagram</strong> and normalized database.</li>
+                                            <li>Utilize tools such as <strong>Oracle Workbench</strong> for MySQL database management.</li>
+                                            <li><strong>ETL</strong> for user, product data using tools like Excel for initial setup of database with information.</li>
                                         </ul>
                                     </ListGroupItem>
                                 </ListGroup>
