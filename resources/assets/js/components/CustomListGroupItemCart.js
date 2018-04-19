@@ -4,6 +4,7 @@ import StarRatingComponent from 'react-star-ratings';
 import ProductInfo from "./ProductInfo";
 import { connect } from 'react-redux';
 import {editCart} from "../actions/shoppingCart";
+import { withRouter } from 'react-router-dom';
 
 const tooltip = (
     <Tooltip id="tooltip">
@@ -25,18 +26,21 @@ class CustomListGroupItemCart extends React.Component{
     };
 
     onQuantityChange = (e) => {
+        e.stopPropagation();
         let quantity = e.target.value;
         this.setState(() => ({quantity}));
     };
 
-    onQuantityIncrease = () => {
+    onQuantityIncrease = (e) => {
+        e.stopPropagation();
         if(parseInt(this.state.quantity) < 99){
             this.setState((prevState) => ({quantity: prevState.quantity + 1}));
             this.editCart(parseInt(this.state.quantity) + 1);
         }
     };
 
-    onQuantityDecrease = () => {
+    onQuantityDecrease = (e) => {
+        e.stopPropagation();
         if(parseInt(this.state.quantity) > 1) {
             this.setState((prevState) => ({quantity: prevState.quantity - 1}));
             this.editCart(parseInt(this.state.quantity) - 1);
@@ -44,6 +48,7 @@ class CustomListGroupItemCart extends React.Component{
     };
 
     onQuantityBlur = (e) => {
+        e.stopPropagation();
         let quantity = e.target.value;
         if(quantity.length > 0 && parseInt(quantity) > 0 && parseInt(quantity) < 100){
             this.setState(() => ({quantity}));
@@ -55,14 +60,20 @@ class CustomListGroupItemCart extends React.Component{
         }
     };
 
-    removeFromCart = () => {
+    removeFromCart = (e) => {
+        e.stopPropagation();
         ProductInfo.removeItemFromCart(this.props.productID, this.props);
+    };
+
+    viewClickHandler = (routeName) => {
+        this.props.handleClose();
+        this.props.history.push(routeName);
     };
 
     render() {
         return (
             <li className="list-group-item">
-                <div className={"media-left"}>
+                <div className={"media-left cursor-pointer"} onClick={() => this.viewClickHandler(`/product/${this.props.productID}`)}>
                     <img className="media-object" src={this.props.productImage} alt="..." width={64} height={64} />
                 </div>
                 <div className={"media-body"}>
@@ -124,4 +135,4 @@ class CustomListGroupItemCart extends React.Component{
     }
 }
 
-export default connect()(CustomListGroupItemCart);
+export default connect()(withRouter(CustomListGroupItemCart));
