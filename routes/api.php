@@ -21,6 +21,7 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::post('logout', 'AuthenticationController@logoutAPI');
 Route::post('placeorder', 'OrderController@place_order');
 //Route::get('testemail', 'OrderController@test_email');
+Route::post('contact', 'ContactController@contact');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return response()->json($request->user());

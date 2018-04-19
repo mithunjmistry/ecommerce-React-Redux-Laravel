@@ -19,7 +19,7 @@ const Footer = () => (
                         <tr>
                             <td><Link to={"/myorders"}>My Orders</Link></td>
                             <td>Demo Video</td>
-                            <td>Contact</td>
+                            <td><Link to={"/contact"}>Contact</Link></td>
                         </tr>
                         </tbody>
                     </Table>

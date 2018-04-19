@@ -6,7 +6,7 @@ import NoCheckoutItems from "../components/NoCheckoutItems";
 import CheckoutInformation from "../components/CheckoutInformation";
 
 const Checkout = (props) => (
-    <Grid>
+    <Grid className={"minimum-height"}>
         <Row>
             <h2 className={"checkout-title"}>Checkout</h2>
             <hr/>
