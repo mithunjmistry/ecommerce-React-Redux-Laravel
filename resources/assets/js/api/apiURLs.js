@@ -51,3 +51,5 @@ export const orderDetailAPI = (order_id) => (
 );
 
 export const validatePromoAPI = "api/validatepromo";
+
+export const contactAPI = "api/contact";

@@ -9,4 +9,5 @@ class UserPromoCode extends Model
     //
     protected $table = "user_has_promoCode";
     public $timestamps = false;
+    protected $guarded = [];
 }

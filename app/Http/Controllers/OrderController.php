@@ -15,6 +15,7 @@ use App\UserPromoCode;
 use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -26,9 +27,15 @@ class OrderController extends Controller
         // user information to send
         // Full Name, Email, address-1, address-2, city, state, zip, phone
         $user = Auth::user();
-        $checkout_information = $user->join('address', 'address.userId', '=', 'users.userId')
-                                        ->select('address.*', 'users.name as full_name', 'users.email as email')
-                                        ->first();
+        $user_id = $user->userId;
+        $cache_key = "checkoutInformation$user_id";
+        $checkout_information = Cache::get($cache_key);
+        if(!$checkout_information) {
+            $checkout_information = $user->join('address', 'address.userId', '=', 'users.userId')
+                ->select('address.*', 'users.name as full_name', 'users.email as email')
+                ->first();
+            Cache::put($cache_key, $checkout_information, 15);
+        }
         return response()->json($checkout_information);
     }
 
@@ -37,6 +44,8 @@ class OrderController extends Controller
         $user_id = null;
         if($user){
             $user_id = $user->userId;
+            $cache_key = "allorders$user_id";
+            Cache::forget($cache_key);
         }
         $datetime = date("Y-m-d H:i:s");
         $total_amount = $request['totalAmount'];
@@ -90,17 +99,28 @@ class OrderController extends Controller
             }
         });
 
-        Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($request));
+        try{
+            Mail::to("ecommerceccare@gmail.com")->send(new OrderPlaced($request));
+        }
+        catch (\Exception $e) {
+            Log::info($e);
+        }
 
         return response("order successfully placed", 200);
     }
 
     public function get_user_orders(){
         $user = Auth::user();
-        $user_orders = $user->orders->each(function ($order){
-            $order->orderItems->each(function ($orderItem){
-               $orderItem->product->photo;
+        $user_id = $user->userId;
+        $cache_key = "allorders$user_id";
+        $user_orders = Cache::remember($cache_key, 15, function () use ($user){
+            $user_orders = $user->orders->each(function ($order) {
+                $order->orderItems->each(function ($orderItem) {
+                    $orderItem->product->photo;
+                });
             });
+
+            return $user_orders;
         });
 
         return response()->json($user_orders);
@@ -108,19 +128,29 @@ class OrderController extends Controller
 
     public function order_detail($order_id){
         $user = Auth::user();
-        $order = Order::where('orderId', $order_id)->where('userId', $user->userId)->first();
-        if($order){
-            $order->orderItems->each(function ($orderItem){
-                $orderItem->product->photo;
-            });
-
-            $order->payment->paymentMethodData;
-
-            $order->promoCode;
-
-            return response()->json($order);
+        $user_id = $user->userId;
+        $cache_key = "orderDetail$order_id$user_id";
+        $res = Cache::get($cache_key);
+        if($res){
+            return response()->json($res);
         }
-        return response("Invalid Order", 400);
+        else {
+            $order = Order::where('orderId', $order_id)->where('userId', $user_id)->first();
+            if ($order) {
+                $order->orderItems->each(function ($orderItem) {
+                    $orderItem->product->photo;
+                });
+
+                $order->payment->paymentMethodData;
+
+                $order->promoCode;
+
+                Cache::put($cache_key, $order, 15);
+
+                return response()->json($order);
+            }
+            return response("Invalid Order", 400);
+        }
     }
 
     public function validate_promo_code($user, $promoCode){

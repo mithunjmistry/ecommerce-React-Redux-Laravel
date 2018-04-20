@@ -11,7 +11,9 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.6.*",
         "laravel/passport": "^5.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "predis/predis": "^1.1",
+        "verifalia/sdk": "^1.2"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

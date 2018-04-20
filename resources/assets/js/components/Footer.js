@@ -13,13 +13,13 @@ const Footer = () => (
                         <tbody>
                         <tr>
                             <td><Link to={"/myaccount"}>My Account</Link></td>
-                            <td>About</td>
-                            <td>FAQs</td>
+                            <td><Link to={"/about"}>About Project</Link></td>
+                            <td><Link to={"/people"}>People</Link></td>
                         </tr>
                         <tr>
                             <td><Link to={"/myorders"}>My Orders</Link></td>
-                            <td>Mission</td>
-                            <td>Become a Seller</td>
+                            <td><a href="https://youtu.be/8nqrYOmumXM" target={"_blank"}>Demo Video</a></td>
+                            <td><Link to={"/contact"}>Contact</Link></td>
                         </tr>
                         </tbody>
                     </Table>

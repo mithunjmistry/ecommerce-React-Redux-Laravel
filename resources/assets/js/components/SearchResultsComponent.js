@@ -142,79 +142,87 @@ class SearchResultsComponent extends React.Component{
 
     applyFilters = ({ratings = ANY, from, to, fast_shipping = ANY}) => {
         const {sortBySelected} = this.state;
-        this.setState(() => ({
-            products: this.state.originalProducts.filter((product) => {
-                const rating = ((r) => {switch (r){
-                    case MORE_THAN_FOUR:{
-                        return product.ratings > 4;
+        const products = this.state.originalProducts.filter((product) => {
+            const rating = ((r) => {switch (r){
+                case MORE_THAN_FOUR:{
+                    return product.ratings > 4;
+                }
+                case MORE_THAN_THREE:{
+                    return product.ratings > 3;
+                }
+                case ONE_TO_THREE:{
+                    return (product.ratings >= 1 && product.ratings <= 3);
+                }
+                default:{
+                    return product;
+                }
+            }})(ratings);
+            let from_to = product;
+            if(from && to){
+                from_to = product.price >= from && product.price <= to;
+            }
+
+            const shipping = ((s) => {
+                switch (s){
+                    case YES:{
+                        return product.fastShipping.toString() === "1";
                     }
-                    case MORE_THAN_THREE:{
-                        return product.ratings > 3;
-                    }
-                    case ONE_TO_THREE:{
-                        return (product.ratings >= 1 && product.ratings <= 3);
+                    case NO:{
+                        return product.fastShipping.toString() === "0";
                     }
                     default:{
                         return product;
                     }
-                }})(ratings);
-                let from_to = product;
-                if(from && to){
-                    from_to = product.price >= from && product.price <= to;
                 }
+            })(fast_shipping);
 
-                const shipping = ((s) => {
-                    switch (s){
-                        case YES:{
-                            return product.fastShipping.toString() === "1";
-                        }
-                        case NO:{
-                            return product.fastShipping.toString() === "0";
-                        }
-                        default:{
-                            return product;
-                        }
-                    }
-                })(fast_shipping);
+            return rating && from_to && shipping;
+        }).sort((a, b) => {
+            if(sortBySelected === RATINGS){
+                return a.ratings < b.ratings ? 1 : -1;
+            }
+            else if(sortBySelected === PRICE_LOW_TO_HIGH){
+                return a.price > b.price ? 1 : -1;
+            }
+            else if(sortBySelected === PRICE_HIGH_TO_LOW){
+                return a.price < b.price ? 1 : -1;
+            }
+            else{
+                return a.timeStamp < b.timeStamp ? 1 : -1;
+            }
+        });
 
-                return rating && from_to && shipping;
-            }).sort((a, b) => {
-                if(sortBySelected === RATINGS){
-                    return a.ratings < b.ratings ? 1 : -1;
-                }
-                else if(sortBySelected === PRICE_LOW_TO_HIGH){
-                    return a.price > b.price ? 1 : -1;
-                }
-                else if(sortBySelected === PRICE_HIGH_TO_LOW){
-                    return a.price < b.price ? 1 : -1;
-                }
-                else{
-                    return a.timeStamp < b.timeStamp ? 1 : -1;
-                }
-            }),
-            filterApplied: true
+        this.setState(() => ({
+            products,
+            filterApplied: true,
+            totalItemsCount: products.length,
+            activePage: 1
         }));
     };
 
     clearFilters = () => {
         const {sortBySelected} = this.state;
+        const products = this.state.originalProducts.sort((a, b) => {
+            if(sortBySelected === RATINGS){
+                return a.ratings < b.ratings ? 1 : -1;
+            }
+            else if(sortBySelected === PRICE_LOW_TO_HIGH){
+                return a.price > b.price ? 1 : -1;
+            }
+            else if(sortBySelected === PRICE_HIGH_TO_LOW){
+                return a.price < b.price ? 1 : -1;
+            }
+            else{
+                return a.timeStamp < b.timeStamp ? 1 : -1;
+            }
+        });
+
         this.setState(() => (
             {
-                products: this.state.originalProducts.sort((a, b) => {
-                    if(sortBySelected === RATINGS){
-                        return a.ratings < b.ratings ? 1 : -1;
-                    }
-                    else if(sortBySelected === PRICE_LOW_TO_HIGH){
-                        return a.price > b.price ? 1 : -1;
-                    }
-                    else if(sortBySelected === PRICE_HIGH_TO_LOW){
-                        return a.price < b.price ? 1 : -1;
-                    }
-                    else{
-                        return a.timeStamp < b.timeStamp ? 1 : -1;
-                    }
-                }),
-                filterApplied: undefined
+                products,
+                filterApplied: undefined,
+                totalItemsCount: products.length,
+                activePage: 1
             }
             ));
     };

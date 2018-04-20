@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a46904cb3021f195f95db25a99121381",
+    "content-hash": "8a8e39090e126975a6720c2ad54a581a",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -1951,6 +1951,56 @@
             "time": "2018-02-19T04:29:13+00:00"
         },
         {
+            "name": "predis/predis",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2016-06-16T16:22:20+00:00"
+        },
+        {
             "name": "psr/container",
             "version": "1.0.0",
             "source": {
@@ -3263,6 +3313,54 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "verifalia/sdk",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/verifalia/verifalia-php-sdk.git",
+                "reference": "503d63b1686675f2078af6f7d024c0560cac48ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/verifalia/verifalia-php-sdk/zipball/503d63b1686675f2078af6f7d024c0560cac48ef",
+                "reference": "503d63b1686675f2078af6f7d024c0560cac48ef",
+                "shasum": ""
+            },
+            "require": {
+                "lib-curl": "*",
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Verifalia\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Verifalia REST API - PHP SDK and helper library for email validation",
+            "homepage": "http://verifalia.com",
+            "keywords": [
+                "MX",
+                "cleaning",
+                "email",
+                "free",
+                "hygiene",
+                "list",
+                "mailbox",
+                "saas",
+                "scrub",
+                "service",
+                "smtp",
+                "validation",
+                "verifalia",
+                "verification"
+            ],
+            "time": "2016-07-14T10:27:32+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
