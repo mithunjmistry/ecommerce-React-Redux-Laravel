@@ -18,7 +18,7 @@ const Footer = () => (
                         </tr>
                         <tr>
                             <td><Link to={"/myorders"}>My Orders</Link></td>
-                            <td>Demo Video</td>
+                            <td><a href="https://youtu.be/8nqrYOmumXM" target={"_blank"}>Demo Video</a></td>
                             <td><Link to={"/contact"}>Contact</Link></td>
                         </tr>
                         </tbody>
