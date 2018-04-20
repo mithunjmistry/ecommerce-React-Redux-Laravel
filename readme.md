@@ -2,6 +2,10 @@ Project demo video link -
 https://youtu.be/8nqrYOmumXM
 
 E-commerce application with PHP Laravel backend and React-Redux frontend: 
+
+React files are present in resources/assets/js and SCSS files in resources/assets/sass
+
+Instructions - 
 1. Install npm, composer and yarn
 2. Run "composer install"
 3. Rename .env.example to .env
