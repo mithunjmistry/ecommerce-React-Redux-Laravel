@@ -27,6 +27,7 @@ class CreateProductTable extends Migration
             $table->foreign('categoryId')->references('categoryId')->on('category');
             $table->decimal('prevPrice')->nullable();
             $table->text('snackbarMessage')->nullable();
+            $table->dateTime('timeStamp')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

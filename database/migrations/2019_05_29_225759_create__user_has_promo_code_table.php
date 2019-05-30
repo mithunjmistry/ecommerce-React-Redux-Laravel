@@ -16,7 +16,7 @@ class CreateUserHasPromoCodeTable extends Migration
         Schema::create('UserHasPromoCode', function (Blueprint $table) {
             $table->increments('UserHasPromoCodeId');
             $table->integer('userId')->unsigned()->nullable();
-            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('userId')->references('userId')->on('users');
             $table->integer('promoCodeId')->unsigned()->nullable();
             $table->foreign('promoCodeId')->references('promoCodeId')->on('promoCode');
         });
