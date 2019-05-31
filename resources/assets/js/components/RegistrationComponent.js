@@ -13,7 +13,7 @@ const s = "success";
 class RegistrationComponent extends React.Component{
 
     state = {
-        usernameValidation: null,
+        usernameValidation: true,
         passwordValidation: false,
         fullNameValidation: null,
         address1: '',

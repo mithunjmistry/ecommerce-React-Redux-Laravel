@@ -19,7 +19,7 @@ class CreateShoppingCartTable extends Migration
             $table->integer('productId')->unsigned()->nullable();
             $table->foreign('productId')->references('productId')->on('product');
             $table->integer('userId')->unsigned()->nullable();
-            $table->foreign('userId')->references('UserId')->on('users');
+            $table->foreign('userId')->references('id')->on('users');
             $table->boolean('wishList')->default(false);
             $table->boolean('expired')->default(false);
             $table->integer('quantity')->nullable();

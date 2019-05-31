@@ -20,7 +20,7 @@ class CreateOrderTable extends Migration
             $table->integer('paymentId')->unsigned()->nullable();
             $table->foreign('paymentId')->references('paymentId')->on('payment');
             $table->integer('userId')->unsigned()->nullable();
-            $table->foreign('userId')->references('UserId')->on('users');
+            $table->foreign('userId')->references('id')->on('users');
             $table->integer('shippingOptionsId')->unsigned()->nullable();
             $table->foreign('shippingOptionsId')->references('shippingOptionsId')->on('shippingOptions');
             $table->integer('promoCodeId')->unsigned()->nullable();

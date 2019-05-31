@@ -18,16 +18,12 @@ class CreateAddressTable extends Migration
             $table->string('address1')->nullable();
             $table->string('address2')->nullable();
             $table->string('city')->nullable();
-            $table->string('stateName')->nullable();
+            $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->string('phone')->nullable();
-            $table->string('addressValidation')->nullable();
-            $table->string('cityValidation')->nullable();
-            $table->string('zipValidation')->nullable();
-            $table->string('phoneValidation')->nullable();
             $table->boolean('editDisabled')->default(false);
             $table->integer('userId')->unsigned()->nullable();
-            $table->foreign('userId')->references('UserId')->on('users');
+            $table->foreign('userId')->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -102,7 +102,7 @@ class RegisterController extends Controller
             'state' => $request['state'],
             'zip' => $request['zip'],
             'phone' => $request['phone'],
-            'userId' => $user->id
+            'userId' => User::where('email', $request['email'])->first()->id
         ]);
 
         return response("success", 200);
