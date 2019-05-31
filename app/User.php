@@ -10,7 +10,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
-    protected $primaryKey = "id";
+    protected $primaryKey = "userId";
     const BUYER = 2;
     const SELLER = 3;
 
@@ -33,27 +33,27 @@ class User extends Authenticatable
     ];
 
     public function AauthAcessToken(){
-        return $this->hasMany('App\OauthAccessToken', 'user_id', 'id');
+        return $this->hasMany('App\OauthAccessToken', 'userId', 'userId');
     }
 
     public function shoppingCartItems(){
-        return $this->hasMany('App\ShoppingCart', 'userId', 'id')
+        return $this->hasMany('App\ShoppingCart', 'userId', 'userId')
                     ->where('expired', false)
                     ->where('wishList', false);
     }
 
     public function wishlistItems(){
-        return $this->hasMany('App\ShoppingCart', 'userId', 'id')
+        return $this->hasMany('App\ShoppingCart', 'userId', 'userId')
             ->where('expired', false)
             ->where('wishList', true);
     }
 
     public function address(){
-        return $this->hasOne('App\Address', 'userId', 'id');
+        return $this->hasOne('App\Address', 'userId', 'userId');
     }
 
     public function orders(){
-        return $this->hasMany('App\Order', 'userId', 'id')
+        return $this->hasMany('App\Order', 'userId', 'userId')
                     ->orderByDesc('orderDate')
                     ->select(['orderId', 'orderDate', 'totalAmount']);
     }

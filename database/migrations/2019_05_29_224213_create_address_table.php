@@ -23,7 +23,7 @@ class CreateAddressTable extends Migration
             $table->string('phone')->nullable();
             $table->boolean('editDisabled')->default(false);
             $table->integer('userId')->unsigned()->nullable();
-            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('userId')->references('userId')->on('users');
             $table->timestamps();
         });
     }
