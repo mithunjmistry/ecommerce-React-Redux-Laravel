@@ -17,6 +17,7 @@ class CreatePaymentTable extends Migration
             $table->increments('paymentId');
             $table->decimal('amount')->nullable();
             $table->text('status')->nullable();
+            $table->dateTime('timeStamp')->nullable();
             $table->integer('paymentMethodId')->unsigned()->nullable();
             $table->foreign('paymentMethodId')->references('paymentMethodId')->on('paymentMethod');
             $table->timestamps();

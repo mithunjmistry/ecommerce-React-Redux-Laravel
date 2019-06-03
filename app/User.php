@@ -33,7 +33,7 @@ class User extends Authenticatable
     ];
 
     public function AauthAcessToken(){
-        return $this->hasMany('App\OauthAccessToken', 'userId', 'userId');
+        return $this->hasMany('App\OauthAccessToken', 'user_id', 'userId');
     }
 
     public function shoppingCartItems(){
