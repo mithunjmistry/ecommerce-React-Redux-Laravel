@@ -44,8 +44,8 @@ class UserSeeder extends Seeder
         ]);
 
         \App\Photo::create([
-            'photo' => 'DELIVERED',
-            'productId' => 0x8,
+            'photo' => 0x8,
+            'productId' => 1,
             'created_at' => NULL,
             'updated_at' => NULL,
         ]);
