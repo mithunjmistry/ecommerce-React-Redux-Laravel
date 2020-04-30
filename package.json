@@ -21,7 +21,7 @@
         "bootstrap": "3.3.7",
         "cross-env": "^5.1",
         "css-loader": "^0.28.9",
-        "jquery": "^3.2",
+        "jquery": "^3.5",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "material-ui": "^0.20.0",
