@@ -23,7 +23,7 @@
         "css-loader": "^0.28.9",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
-        "lodash": "^4.17.4",
+        "lodash": "^4.17.21",
         "material-ui": "^0.20.0",
         "node-sass": "^4.7.2",
         "normalize.css": "^8.0.0",
