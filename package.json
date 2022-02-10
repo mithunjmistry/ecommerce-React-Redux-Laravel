@@ -25,7 +25,7 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "material-ui": "^0.20.0",
-        "node-sass": "^4.7.2",
+        "node-sass": "^7.0.0",
         "normalize.css": "^8.0.0",
         "popper.js": "^1.12",
         "react": "^16.2.0",
