@@ -18,7 +18,7 @@
         "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "babel-preset-env": "1.5.2",
         "babel-preset-react": "^6.23.0",
-        "bootstrap": "3.3.7",
+        "bootstrap": "3.4.1",
         "cross-env": "^5.1",
         "css-loader": "^0.28.9",
         "jquery": "^3.2",
